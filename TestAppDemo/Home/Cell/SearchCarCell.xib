@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchCarCell" rowHeight="143" id="ww3-gC-4nY" customClass="SearchCarCell">
+            <rect key="frame" x="0.0" y="0.0" width="366" height="147"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ww3-gC-4nY" id="5g6-5q-H1G">
+                <rect key="frame" x="0.0" y="0.0" width="366" height="146.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车牌:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aA-1E-zcv">
+                        <rect key="frame" x="26" y="21" width="314" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车主:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P1x-3K-ztk">
+                        <rect key="frame" x="26" y="50" width="314" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="手机号:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Bu-sK-vi2">
+                        <rect key="frame" x="26" y="79" width="314" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="车型:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vNN-4x-EHy">
+                        <rect key="frame" x="26" y="108" width="314" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="vNN-4x-EHy" firstAttribute="leading" secondItem="5g6-5q-H1G" secondAttribute="leadingMargin" constant="10" id="1Br-GM-tHh"/>
+                    <constraint firstItem="P1x-3K-ztk" firstAttribute="top" secondItem="8aA-1E-zcv" secondAttribute="bottom" constant="8" symbolic="YES" id="4sZ-UX-oWK"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="P1x-3K-ztk" secondAttribute="trailing" constant="10" id="5Ct-DG-zNu"/>
+                    <constraint firstItem="8aA-1E-zcv" firstAttribute="top" secondItem="5g6-5q-H1G" secondAttribute="topMargin" constant="10" id="K1f-nL-tZT"/>
+                    <constraint firstItem="1Bu-sK-vi2" firstAttribute="top" secondItem="P1x-3K-ztk" secondAttribute="bottom" constant="8" id="Msm-EG-RvF"/>
+                    <constraint firstItem="8aA-1E-zcv" firstAttribute="leading" secondItem="5g6-5q-H1G" secondAttribute="leadingMargin" constant="10" id="O1E-Fj-2SD"/>
+                    <constraint firstItem="P1x-3K-ztk" firstAttribute="top" secondItem="8aA-1E-zcv" secondAttribute="bottom" constant="8" id="Sgx-na-41J"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="1Bu-sK-vi2" secondAttribute="trailing" constant="10" id="XeR-RY-U2i"/>
+                    <constraint firstItem="1Bu-sK-vi2" firstAttribute="leading" secondItem="5g6-5q-H1G" secondAttribute="leadingMargin" constant="10" id="ak2-Oy-xm3"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="8aA-1E-zcv" secondAttribute="trailing" constant="10" id="h3r-e9-FfE"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="vNN-4x-EHy" secondAttribute="trailing" constant="10" id="twc-uF-Yoz"/>
+                    <constraint firstItem="vNN-4x-EHy" firstAttribute="top" secondItem="1Bu-sK-vi2" secondAttribute="bottom" constant="8" id="xT6-ok-y78"/>
+                    <constraint firstItem="P1x-3K-ztk" firstAttribute="leading" secondItem="5g6-5q-H1G" secondAttribute="leadingMargin" constant="10" id="zbV-YR-SBf"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="carOwnerLabel" destination="P1x-3K-ztk" id="OGC-td-ztd"/>
+                <outlet property="licensePlateLabel" destination="8aA-1E-zcv" id="i46-zo-4Ev"/>
+                <outlet property="phoneLabel" destination="1Bu-sK-vi2" id="12s-5f-wew"/>
+                <outlet property="vehicleTypeLabel" destination="vNN-4x-EHy" id="ODa-7q-dZG"/>
+            </connections>
+            <point key="canvasLocation" x="152" y="88.605697151424295"/>
+        </tableViewCell>
+    </objects>
+</document>

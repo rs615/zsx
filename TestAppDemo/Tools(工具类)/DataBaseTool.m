@@ -1,0 +1,236 @@
+//
+//  DataBaseTool.m
+//  TestAppDemo
+//
+//  Created by rs l on 2019/8/12.
+//  Copyright © 2019年 黎鹏. All rights reserved.
+//
+
+#import "DataBaseTool.h"
+@implementation DataBaseTool
+
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        NSString *dbPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"my_database.db"];
+        //        NSLog(@"%@", dbPath);
+        NSLog(@"%@",dbPath);
+        _queue = [FMDatabaseQueue databaseQueueWithPath:dbPath];
+        _db = [FMDatabase databaseWithPath:dbPath];//创建数据库
+#ifdef DEBUG // 调试状态
+        _db.logsErrors = YES;//错误信息自动打印
+#else // 发布状态
+        _db.logsErrors = NO;//错误信息自动打印关闭
+#endif
+        //使用数据库之前打开数据库
+        if ([_db open]) {
+            NSLog(@"open database successed");
+        }
+        
+        NSString* sql = @"create table car_info(id integer primary key autoincrement, cjhm varchar, custom5 varchar,customer_id varchar,cx varchar,cz varchar,fdjhm varchar,linkman varchar,mc varchar,mobile varchar,ns_date varchar,openid varchar,phone varchar,gzms varchar,gls varchar,memo varchar,keys_no varchar,vipnumber varchar)";
+        if (![_db executeUpdate:sql]) {
+            NSLog(@"car_info创建失败");
+        }
+        NSString* sqlRepair = @"create table repair_info(id integer primary key autoincrement, xlz varchar, xlg varchar)";
+        if (![_db executeUpdate:sqlRepair]) {
+            NSLog(@"repair_info创建失败");
+        }
+        NSString* sqlFirstIcon = @"create table first_icon(id integer primary key autoincrement, imageurl varchar, wxgz varchar)";
+        if (![_db executeUpdate:sqlFirstIcon]) {
+            NSLog(@"first_icon创建失败");
+        }
+        NSString* sqlSeconndIcon = @"create table second_icon(id integer primary key autoincrement, cx varchar, is_quick_project varchar,lb varchar,mc varchar,pgzgs varchar,pycode varchar,spj varchar,tybz varchar,wxgz varchar,xlf varchar)";
+        if (![_db executeUpdate:sqlSeconndIcon]) {
+            NSLog(@"second_icon创建失败");
+        }
+        NSString* sqlPartsInfo = @"create table parts_info(id integer primary key autoincrement, pjbm varchar, pjmc varchar,ck varchar,cd varchar,cx varchar,dw varchar,cangwei varchar,bz varchar,type varchar,kcl varchar,xsj varchar,pjjj varchar)";
+        if (![_db executeUpdate:sqlPartsInfo]) {
+            NSLog(@"parts_info创建失败");
+        }
+        NSString* sqlManagerInfo = @"create table manager_info(id integer primary key autoincrement, assign varchar, cjhm varchar,jsd_id varchar,cp varchar,cx varchar,jc_date varchar,states varchar,wxgz varchar,xlg varchar,jcr varchar,ywg_date varchar)";
+        if (![_db executeUpdate:sqlManagerInfo]) {
+            NSLog(@"manager_info创建失败");
+        }
+    }
+    return self;
+}
+
++(instancetype)shareInstance
+{
+    static DataBaseTool *_sharedManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _sharedManager = [DataBaseTool new];
+    });
+    return _sharedManager;
+}
+
+//插入carInfo
+-(void)insertCarInfo:(CarInfoModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:@"INSERT INTO car_info(cjhm, custom5,customer_id,cx,cz,fdjhm,linkman,mc,mobile,ns_date,openid,phone,gzms,gls,memo,keys_no,vipnumber) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mc,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber];
+            if (!res) {
+                NSLog(@"录入失败");
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+//更新carInfo
+-(void)updateCarInfo:(CarInfoModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:@"update car_info set cjnm=%@,custom5=%@,customer_id=%@,cx=%@,cz=%@,fdjhm=%@,linkman=%@,mobile=%@,ns_date=%@,openid=%@,phone=%@,gzms=%@,gls=%@,memo=%@,keys_no=%@,vipnumber=%@ where mc = %@",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber,item.mc];
+            if (!res) {
+                NSLog(@"更新失败");
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+-(void)insertCarListData:(NSArray *)array{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            for(int i=0;i<array.count;i++){
+                CarInfoModel* item = (CarInfoModel*)[array objectAtIndex:i];
+                BOOL res = [_db executeUpdate:@"INSERT INTO car_info(cjhm, custom5,customer_id,cx,cz,fdjhm,linkman,mc,mobile,ns_date,openid,phone,gzms,gls,memo,keys_no,vipnumber) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mc,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+    
+}
+
+//搜索汽车列表
+-(NSMutableArray *)querySearchCarListData:(NSString*)param{
+    NSMutableArray *array = [NSMutableArray array];
+    
+    NSString* sql = @"select * from car_info";
+    
+    if(![param isEqualToString:@""]&&param!=NULL){
+        //模糊查询需要转义
+        sql = [NSString stringWithFormat:@"select * from car_info where mc like '%%%@%%' or mobile like '%%%@%%' or vipnumber like '%%%@%%'",param,param,param];
+    }
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            CarInfoModel* bean = [[CarInfoModel alloc] init];
+            bean.ID = [cursor intForColumn:@"ID"];
+            bean.cjhm = [cursor stringForColumn:@"cjhm"];
+            bean.custom5 = [cursor stringForColumn:@"custom5"];
+            bean.customer_id = [cursor stringForColumn:@"customer_id"];
+            bean.cx = [cursor stringForColumn:@"cx"];
+            bean.cz = [cursor stringForColumn:@"cz"];
+            bean.fdjhm = [cursor stringForColumn:@"fdjhm"];
+            bean.linkman = [cursor stringForColumn:@"linkman"];
+            bean.mc = [cursor stringForColumn:@"mc"];
+            bean.mobile = [cursor stringForColumn:@"mobile"];
+            bean.ns_date = [cursor stringForColumn:@"ns_date"];
+            bean.openid = [cursor stringForColumn:@"openid"];
+            bean.phone = [cursor stringForColumn:@"phone"];
+            bean.vipnumber = [cursor stringForColumn:@"vipnumber"];
+            bean.gzms = [cursor stringForColumn:@"gzms"];
+            bean.gls = [cursor stringForColumn:@"gls"];
+            bean.memo = [cursor stringForColumn:@"memo"];
+            bean.keys_no = [cursor stringForColumn:@"keys_no"];
+            [array addObject:bean];
+        }
+    }
+    [_db close];
+    
+    return array;
+}
+
+-(int)querySearchListNum{
+    int count = 0;
+    if ([_db open]) {
+        FMResultSet *result = [_db executeQuery:@"select count(*) from car_info"];
+        if([result next]){
+            count = [result intForColumnIndex:0];
+        }
+    }
+    [_db close];
+    return count;
+}
+
+/*
+ islike  模糊查询
+ */
+-(NSMutableArray*)queryCarListData:(NSString*)param isLike:(BOOL) like{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select * from car_info";
+    if(![param isEqualToString:@""]&&param!=NULL){
+        //模糊查询需要转义
+        sql = [NSString stringWithFormat:@"select * from car_info where mc like '%%%@%%' limit 50 offset 0",param];
+    }
+    if(!like){
+        sql = [NSString stringWithFormat:@"select * from car_info where mc ='%@' limit 50 offset 0",param];
+    }
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            CarInfoModel* bean = [[CarInfoModel alloc] init];
+            bean.ID = [cursor intForColumn:@"ID"];
+            bean.cjhm = [cursor stringForColumn:@"cjhm"];
+            bean.custom5 = [cursor stringForColumn:@"custom5"];
+            bean.customer_id = [cursor stringForColumn:@"customer_id"];
+            bean.cx = [cursor stringForColumn:@"cx"];
+            bean.cz = [cursor stringForColumn:@"cz"];
+            bean.fdjhm = [cursor stringForColumn:@"fdjhm"];
+            bean.linkman = [cursor stringForColumn:@"linkman"];
+            bean.mc = [cursor stringForColumn:@"mc"];
+            bean.mobile = [cursor stringForColumn:@"mobile"];
+            bean.ns_date = [cursor stringForColumn:@"ns_date"];
+            bean.openid = [cursor stringForColumn:@"openid"];
+            bean.phone = [cursor stringForColumn:@"phone"];
+            bean.vipnumber = [cursor stringForColumn:@"vipnumber"];
+            bean.gzms = [cursor stringForColumn:@"gzms"];
+            bean.gls = [cursor stringForColumn:@"gls"];
+            bean.memo = [cursor stringForColumn:@"memo"];
+            bean.keys_no = [cursor stringForColumn:@"keys_no"];
+            [array addObject:bean];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+@end
