@@ -179,6 +179,9 @@ static CGFloat const kItemCellHeight = 40;
 - (void)setDataSource:(NSArray *)dataSource {
     _dataSource = dataSource;
     if (dataSource.count > 0) {
+        if(dataSource.count==1){
+            _selectedIndex = 0;
+        }
         [self selectedItemAtIndex:_selectedIndex];
     }
 }

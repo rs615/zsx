@@ -21,6 +21,11 @@
     self.navigationController.navigationBar.hidden = YES;
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.hidden = NO;
+
+}
 /*
 #pragma mark - Navigation
 
@@ -55,6 +60,12 @@
     [titleView addSubview:line];
     titleView.tag = 10000;
     [self.view addSubview:titleView];
+}
+
+
+//返回
+-(void)backBtnClick{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 

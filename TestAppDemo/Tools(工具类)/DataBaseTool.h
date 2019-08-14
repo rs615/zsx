@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "FMDB.h"
 #import "CarInfoModel.h"
-
+#import "ManageInfoModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DataBaseTool : NSObject
@@ -19,6 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(instancetype )shareInstance;
 
+#pragma carInfo
 - (void)insertCarListData:(NSArray *)array;
 
 -(NSMutableArray *)querySearchCarListData:(NSString*)param;
@@ -31,6 +32,12 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)insertCarInfo:(CarInfoModel*)item;
 
 -(void)updateCarInfo:(CarInfoModel*)item;
+
+#pragma managerInfo
+
+-(NSMutableArray*)queryWxgzList:(NSString*)states;
+-(void)insertManagerListData:(NSArray *)array states:(NSString*)states;
+-(NSMutableArray*)queryManagerList:(NSString*)cp wxgz:(NSString*)wxgz assgin:(NSString*)assgin orderStr:(NSString*)orderStr states:(NSString*)states;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -10,6 +10,8 @@
 #import "SearchCarViewController.h"
 #import "CarInfoModel.h"
 #import "ToolsObject.h"
+#import "ProjectViewController.h"
+#import "HNAlertView.h"
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 
@@ -444,7 +446,9 @@
     model.linkman = linkman;
     model.gls = gls;
     model.custom5 = tjr;
-    
+    model.fdjhm = @"";
+    model.jsd_id = @"";
+    model.openid = @"";
     NSMutableArray* array = [[DataBaseTool shareInstance] queryCarListData:mc isLike:false];
     if(array.count==0){
         //新增新的car
@@ -463,6 +467,20 @@
 
 #pragma mark - 关注
 -(void)attention:(UIButton *)sender{
+    __weak HomeViewController *safeSelf = self;
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = @"asa_to_sql";
+    dict[@"function"] = @"sp_fun_get_wxgzh_account";//上传
+    dict[@"company_code"] = @"A";
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            
+        }
+    } failure:^(NSError * _Nonnull error) {
+        [ToolsObject show:@"网络错误" With:safeSelf];
+        [safeSelf.progress hideAnimated:YES];
+    }];
+
 }
 
 
@@ -522,7 +540,21 @@
             //更新本地数据库
             [[DataBaseTool shareInstance] updateCarInfo:model];
             //显示进场Dialog
-            
+            UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,270*PXSCALE,80*PXSCALEH)];
+            UILabel *jdrLabel = [PublicFunction getlabel:CGRectMake(20, 10*PXSCALEH, contentView.bounds.size.width-40, 30) text:[NSString stringWithFormat:@"接待人员: %@",jcr] fontSize:14 color:SetColor(@"#111111", 1.0) align:@"left"];
+            [contentView addSubview:jdrLabel];
+            UILabel *jcDateLabel = [PublicFunction getlabel:CGRectMake(20, 10*PXSCALEH+jdrLabel.frame.origin.y+jdrLabel.bounds.size.height, contentView.bounds.size.width-40, 30) text:[NSString stringWithFormat:@"进厂时间: %@",jc_date] fontSize:14 color:SetColor(@"#111111", 1.0) align:@"left"];
+            [contentView addSubview:jcDateLabel];
+            HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"进入该车" withSurceBtnTitle:@"返回接车" WithMsg:@"" withTitle:@"该车辆已进场" contentView: contentView];
+            alertView.contentView = [[UIView alloc] initWithFrame:CGRectMake(alertView.contentView.frame.origin.x, alertView.contentView.frame.origin.y,  alertView.contentView.bounds.size.width, 150)];
+//            alertView.contentView.backgroundColor = [UIColor redColor];
+            [alertView showHNAlertView:^(NSInteger index) {
+                if(index == 0){
+                    [safeSelf enterProject];
+                }else{
+                    
+                }
+            }];
             [safeSelf.progress hideAnimated:YES];
         }else{
             //车辆未进厂,生成接车单
@@ -567,6 +599,12 @@
     }];
 }
 
+#pragma mark - 进入工单
+-(void)enterProject{
+    ProjectViewController *vc  =[[ProjectViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 
 #pragma mark - 生成接车单
 -(void)createPickUpOrder:(CarInfoModel*) model {
@@ -606,6 +644,8 @@
             }else{
                 //进入工单页面
                 [safeSelf.progress hideAnimated:YES];
+                [safeSelf enterProject];
+
             }
             //sp.putString(Constance.JSD_ID,jsd_id);
             //sp.putString(Constance.CUSTOMER_ID,carInfo.getCustomer_id());

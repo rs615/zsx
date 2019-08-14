@@ -6,12 +6,16 @@
 //  Copyright © 2019年 黎鹏. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-NS_ASSUME_NONNULL_BEGIN
+typedef void(^alertBlock)(NSInteger index);
 
-@interface HNAlertView : NSObject
+@interface HNAlertView : UIView
 
+@property (strong, nonatomic) UIView *contentView;
+
+-(id)initWithCancleTitle:(NSString *)cancel withSurceBtnTitle:(NSString *)sureTitle WithMsg:(NSString *)msg withTitle:(NSString *)title contentView:(UIView*)content;
+@property (nonatomic,strong)UIView *bgView;
+@property (nonatomic,copy)alertBlock myBlock;
+-(void)showHNAlertView:(alertBlock)myblock;
 @end
-
-NS_ASSUME_NONNULL_END

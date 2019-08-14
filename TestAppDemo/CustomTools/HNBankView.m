@@ -30,6 +30,7 @@
     _titleLabel.textColor = UIColorHexFromRGB(0x999999);
     _titleLabel.font = Font(15);
     _titleLabel.text = msg;
+    
     [self addSubview:_titleLabel];
     self.agreenBut =[UIButton buttonWithType:UIButtonTypeCustom];
     self.agreenBut.frame = CGRectMake((kScreenWidth - 100*PXSCALE)/2, CGRectGetMaxY(_titleLabel.frame)+10, 100*PXSCALE,35);

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface FactoryManagerController : UIViewController
+#import "BaseViewController.h"
+@interface FactoryManagerController : BaseViewController
 
 
 @end

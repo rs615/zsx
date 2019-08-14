@@ -114,12 +114,6 @@
     return _abankView;
 }
 
-//返回
--(void)backBtnClick{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-
 /*
 #pragma mark - Navigation
 
@@ -162,4 +156,7 @@
     }
    
 }
+
+
+
 @end

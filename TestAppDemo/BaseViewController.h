@@ -15,6 +15,9 @@
 #import "HttpRequestManager.h"
 #import "MJExtension.h"
 #import "DataBaseTool.h"
+#import "ToolsObject.h"
+#import "MJRefresh.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -22,8 +25,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(void)setNavTitle:(NSString *)title withleftImage:(NSString *)leftImage withleftAction:(SEL)leftAction  withRightImage:(NSString *)righImage  rightAction:(SEL)rightaction withVC:(id)VC;
 
--(void)loadCarList:(NSString*)previous_xh;
-
+-(void)backBtnClick;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -94,9 +94,11 @@
 -(void)updateCarInfo:(CarInfoModel*)item{
     if ([_db open]) {
         [_db beginTransaction];
+        NSString* sql = [NSString stringWithFormat:@"update car_info set cjhm='%@',custom5='%@',customer_id='%@',cx='%@',cz='%@',fdjhm='%@',linkman='%@',mobile='%@',ns_date='%@',openid='%@',phone='%@',gzms='%@',gls='%@',memo='%@',keys_no='%@',vipnumber='%@' where mc = '%@'",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber,item.mc];
         BOOL isRollBack = NO;
         @try {
-            BOOL res = [_db executeUpdate:@"update car_info set cjnm=%@,custom5=%@,customer_id=%@,cx=%@,cz=%@,fdjhm=%@,linkman=%@,mobile=%@,ns_date=%@,openid=%@,phone=%@,gzms=%@,gls=%@,memo=%@,keys_no=%@,vipnumber=%@ where mc = %@",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber,item.mc];
+//            BOOL res = [_db executeUpdate:@"update car_info set cjnm='%@',custom5='%@',customer_id='%@',cx='%@',cz='%@',fdjhm='%@',linkman='%@',mobile='%@',ns_date='%@',openid='%@',phone='%@',gzms='%@',gls='%@',memo='%@',keys_no='%@',vipnumber='%@' where mc = '%@'",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber,item.mc];//修改失败
+            BOOL res = [_db executeUpdate:sql];
             if (!res) {
                 NSLog(@"更新失败");
             }
@@ -153,7 +155,7 @@
         FMResultSet *cursor = [_db executeQuery:sql];
         while([cursor next]){
             CarInfoModel* bean = [[CarInfoModel alloc] init];
-            bean.ID = [cursor intForColumn:@"ID"];
+            bean.ID = [cursor intForColumn:@"id"];
             bean.cjhm = [cursor stringForColumn:@"cjhm"];
             bean.custom5 = [cursor stringForColumn:@"custom5"];
             bean.customer_id = [cursor stringForColumn:@"customer_id"];
@@ -208,7 +210,7 @@
         FMResultSet *cursor = [_db executeQuery:sql];
         while([cursor next]){
             CarInfoModel* bean = [[CarInfoModel alloc] init];
-            bean.ID = [cursor intForColumn:@"ID"];
+            bean.ID = [cursor intForColumn:@"id"];
             bean.cjhm = [cursor stringForColumn:@"cjhm"];
             bean.custom5 = [cursor stringForColumn:@"custom5"];
             bean.customer_id = [cursor stringForColumn:@"customer_id"];
@@ -233,4 +235,97 @@
     return array;
 }
 
+#pragma 查询维修工种
+-(NSMutableArray*)queryWxgzList:(NSString*)states{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct wxgz from manager_info where 1=1";
+    if(![states isEqualToString:@""]){
+        sql = [NSString stringWithFormat:@"%@ and states = '%@'",sql,states];
+    }
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            NSString* wxgz = [cursor stringForColumn:@"wxgz"];
+            [array addObject:wxgz];
+        }
+    }
+    return array;
+
+}
+
+-(NSMutableArray*)queryManagerList:(NSString*)cp wxgz:(NSString*)wxgz assgin:(NSString*)assgin orderStr:(NSString*)orderStr states:(NSString*)states{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select * from manager_info where 1=1";
+    if(![assgin isEqualToString:@""]&&assgin!=NULL){
+        sql = [NSString stringWithFormat:@"%@ and (assign like '%%%@%%' or xlg like '%%%@%%')",sql,assgin,assgin];
+    }
+    if(![wxgz isEqualToString:@"全部"]&&![wxgz isEqualToString:@""]&&wxgz!=NULL){
+        sql = [NSString stringWithFormat:@"%@ and wxgz like '%%%@%%'",sql,wxgz];
+    }
+    
+    if(![cp isEqualToString:@""]&&cp!=NULL){
+        sql = [NSString stringWithFormat:@"%@ and cp like '%%%@%%'",sql,cp];
+    }
+    
+    if(![states isEqualToString:@""]&&states!=NULL){
+        sql = [NSString stringWithFormat:@"%@ and states = '%@'",sql,states];
+    }
+    
+    if(![orderStr isEqualToString:@""]&&orderStr!=NULL){
+        sql = [NSString stringWithFormat:@"%@ order by %@",sql,orderStr];
+    }
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            ManageInfoModel* bean = [[ManageInfoModel alloc] init];
+            bean.assign = [cursor stringForColumn:@"assign"];
+            bean.cjhm = [cursor stringForColumn:@"cjhm"];
+            bean.cp = [cursor stringForColumn:@"cp"];
+            bean.cx = [cursor stringForColumn:@"cx"];
+            bean.jc_date = [cursor stringForColumn:@"jc_date"];
+            bean.jsd_id = [cursor stringForColumn:@"jsd_id"];
+            bean.states = [cursor stringForColumn:@"states"];
+            bean.wxgz = [cursor stringForColumn:@"wxgz"];
+            bean.xlg = [cursor stringForColumn:@"xlg"];
+            bean.ywg_date = [cursor stringForColumn:@"ywg_date"];
+            bean.jcr = [cursor stringForColumn:@"jcr"];
+            [array addObject:bean];
+        }
+    }
+    return array;
+
+    
+}
+
+
+#pragma 插入管理信息
+
+-(void)insertManagerListData:(NSArray *)array states:(NSString*)states{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            //删除当前状态的本地数据
+            NSString* sql = [NSString stringWithFormat:@"delete from manager_info where states = '%@'",states];
+            [_db executeUpdate:sql];
+            for(int i=0;i<array.count;i++){
+                ManageInfoModel* item = (ManageInfoModel*)[array objectAtIndex:i];
+                BOOL res = [_db executeUpdate:@"INSERT INTO manager_info(assign,cjhm,cp,cx,jc_date,jsd_id,states,wxgz,xlg,ywg_date,jcr) VALUES (?,?,?,?,?,?,?,?,?,?,?)",item.assign,item.cjhm,item.cp,item.cx,item.jc_date,item.jsd_id,item.states,item.wxgz,item.xlg,item.ywg_date,item.jcr];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
 @end
