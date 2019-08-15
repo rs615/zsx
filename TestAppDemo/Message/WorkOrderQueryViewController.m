@@ -10,6 +10,7 @@
 #import "WorkOrderQueryViewController.h"
 #import "EBDropdownListView.h"
 #import "OrderModel.h"
+#import "BRPickerView.h"
 #import "WorkOrderCell.h"
 @interface WorkOrderQueryViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UILabel *startDateLabel;
@@ -49,10 +50,10 @@
     [formatter setDateFormat:@"yyyy-MM-dd"];
     NSString *dateStr = [formatter stringFromDate:date];
     NSString* startDateStr = [NSString stringWithFormat:@"%@01",[dateStr substringToIndex:dateStr.length-2]];
-    _startDateLabel = [PublicFunction getlabel:CGRectMake(40*PXSCALE, 10*PXSCALEH+NavBarHeight, (MainS_Width-100*PXSCALE)/2, 40) text:startDateStr fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
+    _startDateLabel = [PublicFunction getlabel:CGRectMake(70*PXSCALE, 10*PXSCALEH+NavBarHeight, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:startDateStr fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
     _startDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
     _startDateLabel.tag = 1000;
-    _endDateLabel = [PublicFunction getlabel:CGRectMake(MainS_Width-40*PXSCALEH-_startDateLabel.bounds.size.width, 10*PXSCALEH+NavBarHeight, (MainS_Width-100*PXSCALE)/2, 40) text:dateStr fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
+    _endDateLabel = [PublicFunction getlabel:CGRectMake(MainS_Width-70*PXSCALEH-_startDateLabel.bounds.size.width, _startDateLabel.frame.origin.y, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:dateStr fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
     _endDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
     _endDateLabel.tag = 1001;
 
@@ -277,41 +278,44 @@
     }];
 }
 
-#pragma mark - 属性
 
-- (UIDatePicker *)datePicker {
-    if (!_datePicker) {
-        _datePicker = [[UIDatePicker alloc]init];
-        _datePicker.frame = CGRectMake(0, MAXHEIGHT, MAXWIDTH, 50*3*PXSCALEH);
-        _datePicker.backgroundColor = [UIColor whiteColor];
-        _datePicker.datePickerMode = UIDatePickerModeDate;
-        [_datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
-        //        _datePicker.maximumDate = [NSDate date];
-        //        if (_minDate)
-        //        {
-        //            _datePicker.minimumDate = _minDate;
-        //        }
-        
-    }
-    return _datePicker;
-}
 
-#pragma mark------弹出日期选择器
-- (void) showDatePicker {
-    
-    if (self.datePicker.frame.origin.y<MainS_Height)
-    {
-        return;
-    }
-    if (!self.datePicker.superview)
-    {
-        [self.view addSubview:self.datePicker];
-    }
-    
-    [UIView animateWithDuration:0.25 animations:^{
-        self.datePicker.frame  =CGRectMake(0, MAXHEIGHT-60*3*PXSCALEH, MAXWIDTH, 60*3*PXSCALEH);
-    }];
-}
+
+//#pragma mark - 属性
+//
+//- (UIDatePicker *)datePicker {
+//    if (!_datePicker) {
+//        _datePicker = [[UIDatePicker alloc]init];
+//        _datePicker.frame = CGRectMake(0, MAXHEIGHT, MAXWIDTH, 50*3*PXSCALEH);
+//        _datePicker.backgroundColor = [UIColor whiteColor];
+//        _datePicker.datePickerMode = UIDatePickerModeDate;
+//        [_datePicker addTarget:self action:@selector(dateChanged:) forControlEvents:UIControlEventValueChanged];
+//        //        _datePicker.maximumDate = [NSDate date];
+//        //        if (_minDate)
+//        //        {
+//        //            _datePicker.minimumDate = _minDate;
+//        //        }
+//        
+//    }
+//    return _datePicker;
+//}
+
+//#pragma mark------弹出日期选择器
+//- (void) showDatePicker {
+//
+//    if (self.datePicker.frame.origin.y<MainS_Height)
+//    {
+//        return;
+//    }
+//    if (!self.datePicker.superview)
+//    {
+//        [self.view addSubview:self.datePicker];
+//    }
+//
+//    [UIView animateWithDuration:0.25 animations:^{
+//        self.datePicker.frame  =CGRectMake(0, MAXHEIGHT-60*3*PXSCALEH, MAXWIDTH, 60*3*PXSCALEH);
+//    }];
+//}
 
 #pragma mark - 搜索
 -(void)searchContent:(UITapGestureRecognizer *)tap{
@@ -322,17 +326,26 @@
 
 -(void)selectDate:(UITapGestureRecognizer *)tap{
     NSInteger tag = tap.view.tag;
-    if(tag==1000){
-        [self showDatePicker];
-    }else if(tag==1001){
-        
-    }
-}
+    __weak WorkOrderQueryViewController *safeSelf = self;
 
+    if(tag==1000){
+        [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:_startDateLabel.text minDate:nil maxDate:[ToolsObject stringToDate:_endDateLabel.text] isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            safeSelf.startDateLabel.text = selectValue;
+            [safeSelf queryLocalData];
+        }];
+    
+    }else if(tag==1001){
+        [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:_endDateLabel.text minDate:[ToolsObject stringToDate:_startDateLabel.text] maxDate:nil isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            safeSelf.endDateLabel.text = selectValue;
+            [safeSelf queryLocalData];
+        }];
+    }
+    
+  
+}
 
 #pragma 显示空白view
 -(void)showErrorInfo:(NSString*)error{
-    [self.progress hideAnimated:YES];
     self.abankView.titleLabel.text = error;
     [self.view addSubview:self.abankView];
 }

@@ -54,16 +54,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TestAppDemo/Manager/FactoryManagerController.m"
-            timestampString = "587489690.07161"
+            filePath = "TestAppDemo/Message/WorkOrderQueryViewController.m"
+            timestampString = "587575699.679368"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "-selectOrder:"
+            startingLineNumber = "196"
+            endingLineNumber = "196"
+            landmarkName = "-queryLocalData"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WorkOrderQueryViewController queryLocalData]"
+                  moduleName = "TestAppDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Message/WorkOrderQueryViewController.m"
+                  timestampString = "587575699.834597"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "196"
+                  endingLineNumber = "196"
+                  offsetFromSymbolStart = "93">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[WorkOrderQueryViewController queryLocalData]"
+                  moduleName = "TestAppDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Message/WorkOrderQueryViewController.m"
+                  timestampString = "587575699.836798"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "196"
+                  endingLineNumber = "196"
+                  offsetFromSymbolStart = "98">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestAppDemo/Project/ProjectOrderViewController.m"
+            timestampString = "587575699.679444"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
+            landmarkName = "-getJsdInfo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -73,29 +121,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TestAppDemo/Home/SearchCarViewController.m"
-            timestampString = "587489690.07178"
+            filePath = "TestAppDemo/Project/ProjectOrderViewController.m"
+            timestampString = "587575699.679857"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "160"
-            endingLineNumber = "160"
-            landmarkName = "SearchCarViewController"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TestAppDemo/Introduce/FactoryIntroduceController.m"
-            timestampString = "587475221.432863"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "263"
-            endingLineNumber = "263"
-            landmarkName = "-toDetailPage"
+            startingLineNumber = "129"
+            endingLineNumber = "129"
+            landmarkName = "-getJsdInfo:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

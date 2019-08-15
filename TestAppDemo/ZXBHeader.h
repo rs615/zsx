@@ -44,6 +44,11 @@
 
 #define  radioBGColorf5       SetColor(@"#f5f5f5",1.0)   //电台背景颜色
 
+#define hotPinkColor SetColor(@"#EB7E97",1.0)//红苹果
+#define lightGrayColor SetColor(@"#EEEEEE",1.0)//通用颜色
+#define darkGrayColor SetColor(@"#A9A9A9",1.0)//通用颜色
+
+#define lightPinkColor SetColor(@"#F1A2B4",1.0)//浅苹果
 
 /**
  * RGB 配置颜色

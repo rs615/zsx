@@ -1,5 +1,5 @@
 //
-//  ProjectViewController.h
+//  ProjectOrderViewController.h
 //  TestAppDemo
 //
 //  Created by 黎鹏 on 2019/6/13.
@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "BaseViewController.h"
 
-@interface ProjectViewController : BaseViewController
+@interface ProjectOrderViewController : BaseViewController
+@property (nonatomic, strong) NSString* jsd_id;
 
 @end

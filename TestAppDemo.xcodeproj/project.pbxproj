@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		41364D2D22B89F3400B61E8B /* FarctoryListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41364D2C22B89F3400B61E8B /* FarctoryListController.m */; };
-		41D0851322B23D290003F07D /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D0851222B23D290003F07D /* ProjectViewController.m */; };
+		41D0851322B23D290003F07D /* ProjectOrderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D0851222B23D290003F07D /* ProjectOrderViewController.m */; };
 		41DDD54422A4CE1400D4A317 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DDD54322A4CE1400D4A317 /* AppDelegate.m */; };
 		41DDD54722A4CE1400D4A317 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41DDD54622A4CE1400D4A317 /* ViewController.m */; };
 		41DDD54A22A4CE1400D4A317 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41DDD54822A4CE1400D4A317 /* Main.storyboard */; };
@@ -48,6 +48,14 @@
 		7F453F2F2303EE900063EC0A /* MJRefreshComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F172303EE900063EC0A /* MJRefreshComponent.m */; };
 		7F453F3523043E830063EC0A /* OrderModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F3423043E830063EC0A /* OrderModel.m */; };
 		7F453F3B230440AE0063EC0A /* WorkOrderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F3A230440AE0063EC0A /* WorkOrderCell.m */; };
+		7F453FA0230466940063EC0A /* NSDate+BRPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F9A230466940063EC0A /* NSDate+BRPickerView.m */; };
+		7F453FA1230466940063EC0A /* BRDatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F9B230466940063EC0A /* BRDatePickerView.m */; };
+		7F453FA2230466940063EC0A /* BRBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453F9E230466940063EC0A /* BRBaseView.m */; };
+		7F4B42C62305450D00A0D133 /* IntroduceInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42C52305450D00A0D133 /* IntroduceInfoModel.m */; };
+		7F4B42CB23055A9B00A0D133 /* FactoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42CA23055A9B00A0D133 /* FactoryListCell.m */; };
+		7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42CE2305AB6800A0D133 /* ProjectModel.m */; };
+		7F4B42D22305AFC300A0D133 /* PeijianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D12305AFC300A0D133 /* PeijianModel.m */; };
+		7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */; };
 		7FAADFA922FF89E600790102 /* SearchCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFA722FF89E600790102 /* SearchCarViewController.m */; };
 		7FAADFB222FF93AA00790102 /* SearchCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFB122FF93AA00790102 /* SearchCarCell.m */; };
 		7FAADFB622FF97C800790102 /* PublicFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFB422FF97C700790102 /* PublicFunction.m */; };
@@ -105,8 +113,8 @@
 /* Begin PBXFileReference section */
 		41364D2B22B89F3400B61E8B /* FarctoryListController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FarctoryListController.h; sourceTree = "<group>"; };
 		41364D2C22B89F3400B61E8B /* FarctoryListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FarctoryListController.m; sourceTree = "<group>"; };
-		41D0851122B23D290003F07D /* ProjectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
-		41D0851222B23D290003F07D /* ProjectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
+		41D0851122B23D290003F07D /* ProjectOrderViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectOrderViewController.h; sourceTree = "<group>"; };
+		41D0851222B23D290003F07D /* ProjectOrderViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectOrderViewController.m; sourceTree = "<group>"; };
 		41DDD53F22A4CE1400D4A317 /* TestAppDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAppDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		41DDD54222A4CE1400D4A317 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		41DDD54322A4CE1400D4A317 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -183,6 +191,24 @@
 		7F453F3423043E830063EC0A /* OrderModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderModel.m; sourceTree = "<group>"; };
 		7F453F39230440AE0063EC0A /* WorkOrderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WorkOrderCell.h; sourceTree = "<group>"; };
 		7F453F3A230440AE0063EC0A /* WorkOrderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WorkOrderCell.m; sourceTree = "<group>"; };
+		7F453F96230466940063EC0A /* BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerView.h; sourceTree = "<group>"; };
+		7F453F97230466940063EC0A /* BRPickerViewMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPickerViewMacro.h; sourceTree = "<group>"; };
+		7F453F99230466940063EC0A /* BRDatePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRDatePickerView.h; sourceTree = "<group>"; };
+		7F453F9A230466940063EC0A /* NSDate+BRPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+BRPickerView.m"; sourceTree = "<group>"; };
+		7F453F9B230466940063EC0A /* BRDatePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRDatePickerView.m; sourceTree = "<group>"; };
+		7F453F9C230466940063EC0A /* NSDate+BRPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+BRPickerView.h"; sourceTree = "<group>"; };
+		7F453F9E230466940063EC0A /* BRBaseView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRBaseView.m; sourceTree = "<group>"; };
+		7F453F9F230466940063EC0A /* BRBaseView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRBaseView.h; sourceTree = "<group>"; };
+		7F4B42C42305450D00A0D133 /* IntroduceInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IntroduceInfoModel.h; sourceTree = "<group>"; };
+		7F4B42C52305450D00A0D133 /* IntroduceInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IntroduceInfoModel.m; sourceTree = "<group>"; };
+		7F4B42C923055A9B00A0D133 /* FactoryListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactoryListCell.h; sourceTree = "<group>"; };
+		7F4B42CA23055A9B00A0D133 /* FactoryListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FactoryListCell.m; sourceTree = "<group>"; };
+		7F4B42CD2305AB6800A0D133 /* ProjectModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectModel.h; sourceTree = "<group>"; };
+		7F4B42CE2305AB6800A0D133 /* ProjectModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectModel.m; sourceTree = "<group>"; };
+		7F4B42D02305AFC300A0D133 /* PeijianModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianModel.h; sourceTree = "<group>"; };
+		7F4B42D12305AFC300A0D133 /* PeijianModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianModel.m; sourceTree = "<group>"; };
+		7F4B42D32305B13700A0D133 /* OrderCarInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderCarInfoModel.h; sourceTree = "<group>"; };
+		7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderCarInfoModel.m; sourceTree = "<group>"; };
 		7FAADFA622FF89E600790102 /* SearchCarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCarViewController.h; sourceTree = "<group>"; };
 		7FAADFA722FF89E600790102 /* SearchCarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCarViewController.m; sourceTree = "<group>"; };
 		7FAADFB022FF93AA00790102 /* SearchCarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCarCell.h; sourceTree = "<group>"; };
@@ -308,6 +334,8 @@
 		41364D2A22B89EE800B61E8B /* Factory */ = {
 			isa = PBXGroup;
 			children = (
+				7F4B42C823055A6E00A0D133 /* Cell */,
+				7F4B42C72305525C00A0D133 /* Model */,
 				41364D2B22B89F3400B61E8B /* FarctoryListController.h */,
 				41364D2C22B89F3400B61E8B /* FarctoryListController.m */,
 			);
@@ -317,8 +345,9 @@
 		41D0851022B23D030003F07D /* Project */ = {
 			isa = PBXGroup;
 			children = (
-				41D0851122B23D290003F07D /* ProjectViewController.h */,
-				41D0851222B23D290003F07D /* ProjectViewController.m */,
+				7F4B42CC2305AB5400A0D133 /* Model */,
+				41D0851122B23D290003F07D /* ProjectOrderViewController.h */,
+				41D0851222B23D290003F07D /* ProjectOrderViewController.m */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -430,6 +459,7 @@
 		41E5B20A22A7AB280056C7F2 /* Introduce */ = {
 			isa = PBXGroup;
 			children = (
+				7F4B42C3230544F900A0D133 /* Model */,
 				41E5B20C22A7AB620056C7F2 /* FactoryIntroduceController.h */,
 				41E5B20D22A7AB770056C7F2 /* FactoryIntroduceController.m */,
 			);
@@ -597,6 +627,75 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		7F453F95230466940063EC0A /* BRPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				7F453F96230466940063EC0A /* BRPickerView.h */,
+				7F453F97230466940063EC0A /* BRPickerViewMacro.h */,
+				7F453F98230466940063EC0A /* DatePickerView */,
+				7F453F9D230466940063EC0A /* Base */,
+			);
+			path = BRPickerView;
+			sourceTree = "<group>";
+		};
+		7F453F98230466940063EC0A /* DatePickerView */ = {
+			isa = PBXGroup;
+			children = (
+				7F453F99230466940063EC0A /* BRDatePickerView.h */,
+				7F453F9A230466940063EC0A /* NSDate+BRPickerView.m */,
+				7F453F9B230466940063EC0A /* BRDatePickerView.m */,
+				7F453F9C230466940063EC0A /* NSDate+BRPickerView.h */,
+			);
+			path = DatePickerView;
+			sourceTree = "<group>";
+		};
+		7F453F9D230466940063EC0A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				7F453F9E230466940063EC0A /* BRBaseView.m */,
+				7F453F9F230466940063EC0A /* BRBaseView.h */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		7F4B42C3230544F900A0D133 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F4B42C42305450D00A0D133 /* IntroduceInfoModel.h */,
+				7F4B42C52305450D00A0D133 /* IntroduceInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F4B42C72305525C00A0D133 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F4B42C823055A6E00A0D133 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7F4B42C923055A9B00A0D133 /* FactoryListCell.h */,
+				7F4B42CA23055A9B00A0D133 /* FactoryListCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		7F4B42CC2305AB5400A0D133 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7F4B42CD2305AB6800A0D133 /* ProjectModel.h */,
+				7F4B42CE2305AB6800A0D133 /* ProjectModel.m */,
+				7F4B42D02305AFC300A0D133 /* PeijianModel.h */,
+				7F4B42D12305AFC300A0D133 /* PeijianModel.m */,
+				7F4B42D32305B13700A0D133 /* OrderCarInfoModel.h */,
+				7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		7FAADFAB22FF92CE00790102 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -650,6 +749,7 @@
 		7FAADFBB22FF988200790102 /* Thridpart(第三方库） */ = {
 			isa = PBXGroup;
 			children = (
+				7F453F95230466940063EC0A /* BRPickerView */,
 				7F453EE92303EE900063EC0A /* MJRefresh */,
 				7FAAE0222301B33A00790102 /* MJExtension */,
 				7FAADFDC22FFEBB400790102 /* AFNetworking */,
@@ -905,8 +1005,10 @@
 				7F453EE823031A720063EC0A /* FactoryManagerCell.m in Sources */,
 				7FAAE03D2301B33A00790102 /* MJProperty.m in Sources */,
 				7FAAE0442301B33A00790102 /* MJFoundation.m in Sources */,
+				7F453FA1230466940063EC0A /* BRDatePickerView.m in Sources */,
 				7F453F2D2303EE900063EC0A /* MJRefreshBackFooter.m in Sources */,
 				41DDD54722A4CE1400D4A317 /* ViewController.m in Sources */,
+				7F453FA2230466940063EC0A /* BRBaseView.m in Sources */,
 				7F453F262303EE900063EC0A /* MJRefreshAutoGifFooter.m in Sources */,
 				7FAAE01E230148A400790102 /* EBDropdownListView.m in Sources */,
 				7FAAE01122FFEBB400790102 /* AFNetworkReachabilityManager.m in Sources */,
@@ -935,12 +1037,14 @@
 				41E5B21622A7B6440056C7F2 /* SettingController.m in Sources */,
 				41DDD55222A4CE1800D4A317 /* main.m in Sources */,
 				7FAAE0432301B33A00790102 /* MJPropertyKey.m in Sources */,
+				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
 				7FAAE05D2301B4EB00790102 /* FMResultSet.m in Sources */,
-				41D0851322B23D290003F07D /* ProjectViewController.m in Sources */,
+				41D0851322B23D290003F07D /* ProjectOrderViewController.m in Sources */,
 				7F453F2F2303EE900063EC0A /* MJRefreshComponent.m in Sources */,
 				41E5B21222A7B5A30056C7F2 /* MessageInfoController.m in Sources */,
 				7F453EE4230315260063EC0A /* ManageInfoModel.m in Sources */,
 				7FAADFC122FF989800790102 /* MBProgressHUD.m in Sources */,
+				7F4B42C62305450D00A0D133 /* IntroduceInfoModel.m in Sources */,
 				7FAADFB222FF93AA00790102 /* SearchCarCell.m in Sources */,
 				7F453F2E2303EE900063EC0A /* MJRefreshAutoFooter.m in Sources */,
 				7FBC8DB4230263BC0048ED7E /* ToolsObject.m in Sources */,
@@ -953,11 +1057,14 @@
 				7FAAE00422FFEBB400790102 /* UIProgressView+AFNetworking.m in Sources */,
 				7FAAE05C2301B4EB00790102 /* FMDatabasePool.m in Sources */,
 				41DDD54422A4CE1400D4A317 /* AppDelegate.m in Sources */,
+				7F4B42D22305AFC300A0D133 /* PeijianModel.m in Sources */,
 				7FAAE00D22FFEBB400790102 /* AFURLResponseSerialization.m in Sources */,
 				7FAAE0422301B33A00790102 /* NSString+MJExtension.m in Sources */,
 				7FBC8DB7230296F10048ED7E /* HNAlertView.m in Sources */,
 				7FAAE00522FFEBB400790102 /* UIRefreshControl+AFNetworking.m in Sources */,
 				7FAADFDB22FFE81600790102 /* HNBankView.m in Sources */,
+				7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */,
+				7F453FA0230466940063EC0A /* NSDate+BRPickerView.m in Sources */,
 				7FBC8DB12301B5D60048ED7E /* DataBaseTool.m in Sources */,
 				7F453F212303EE900063EC0A /* UIView+MJExtension.m in Sources */,
 				41E5B20922A7AAB20056C7F2 /* FactoryManagerController.m in Sources */,
@@ -977,6 +1084,7 @@
 				7FAAE00822FFEBB400790102 /* UIButton+AFNetworking.m in Sources */,
 				7FAAE01222FFEBB400790102 /* AFSecurityPolicy.m in Sources */,
 				7FAAE03E2301B33A00790102 /* NSObject+MJCoding.m in Sources */,
+				7F4B42CB23055A9B00A0D133 /* FactoryListCell.m in Sources */,
 				7F453F2B2303EE900063EC0A /* MJRefreshFooter.m in Sources */,
 				7F453F2C2303EE900063EC0A /* MJRefreshHeader.m in Sources */,
 				7FAADFB622FF97C800790102 /* PublicFunction.m in Sources */,

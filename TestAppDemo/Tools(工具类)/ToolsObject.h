@@ -29,6 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 +(MBProgressHUD *)showLoading:(NSString *)title with:(UIViewController *)contoller;
 
++(NSDate *)stringToDate:(NSString *)dateStr;
 @end
 
 NS_ASSUME_NONNULL_END

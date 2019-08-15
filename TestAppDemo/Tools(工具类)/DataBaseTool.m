@@ -246,7 +246,10 @@
         FMResultSet *cursor = [_db executeQuery:sql];
         while([cursor next]){
             NSString* wxgz = [cursor stringForColumn:@"wxgz"];
-            [array addObject:wxgz];
+            if(wxgz!=nil&&![wxgz isEqualToString:@""]){
+                [array addObject:wxgz];
+
+            }
         }
     }
     return array;

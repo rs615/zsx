@@ -323,7 +323,7 @@
         NSRange range = NSRangeFromString([[self.effectDic allKeys] firstObject]);
         
         if (status) {
-            [subAtt addAttribute:NSBackgroundColorAttributeName value:[UIColor lightGrayColor] range:NSMakeRange(0, subAtt.string.length)];
+            [subAtt addAttribute:NSBackgroundColorAttributeName value:[UIColor darkGrayColor] range:NSMakeRange(0, subAtt.string.length)];
             
             [attStr replaceCharactersInRange:range withAttributedString:subAtt];
         }else {

@@ -10,7 +10,7 @@
 #import "SearchCarViewController.h"
 #import "CarInfoModel.h"
 #import "ToolsObject.h"
-#import "ProjectViewController.h"
+#import "ProjectOrderViewController.h"
 #import "HNAlertView.h"
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
@@ -550,7 +550,7 @@
 //            alertView.contentView.backgroundColor = [UIColor redColor];
             [alertView showHNAlertView:^(NSInteger index) {
                 if(index == 0){
-                    [safeSelf enterProject];
+                    [safeSelf enterProject:jsd_id];
                 }else{
                     
                 }
@@ -600,9 +600,11 @@
 }
 
 #pragma mark - 进入工单
--(void)enterProject{
-    ProjectViewController *vc  =[[ProjectViewController alloc] init];
+-(void)enterProject:(NSString*)jsd_id{
+    ProjectOrderViewController *vc  =[[ProjectOrderViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
+    vc.jsd_id = jsd_id;
+    [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
@@ -644,7 +646,7 @@
             }else{
                 //进入工单页面
                 [safeSelf.progress hideAnimated:YES];
-                [safeSelf enterProject];
+                [safeSelf enterProject:jsd_id];
 
             }
             //sp.putString(Constance.JSD_ID,jsd_id);

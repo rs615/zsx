@@ -87,4 +87,11 @@
     return hud;
 }
 
+//字符串转日期
++(NSDate *)stringToDate:(NSString *)dateStr{
+    NSDateFormatter *inputFormatter = [[NSDateFormatter alloc] init];
+    [inputFormatter setDateFormat:@"yyyy-MM-dd"];
+    NSDate* inputDate = [inputFormatter dateFromString:dateStr];
+    return inputDate;
+}
 @end

@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaseViewController.h"
 
-@interface FarctoryListController : UIViewController
+@interface FarctoryListController : BaseViewController
+@property (nonatomic,strong)NSString *type;
 
 @end
