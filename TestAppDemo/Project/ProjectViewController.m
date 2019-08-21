@@ -13,6 +13,8 @@
 #import "HistoryViewController.h"
 #import "ProjectOrderViewController.h"
 #import "HomeViewController.h"
+#import "BRPickerView.h"
+
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 @interface ProjectViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -118,7 +120,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         for(int i=0;i<titleArr.count;i++){
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(20*PXSCALE, i*40*PXSCALEH, MainS_Width-40*PXSCALE, 40*PXSCALEH)];
             CGFloat viewWidth = view.bounds.size.width/3;
-            UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(0,0,viewWidth-10*PXSCALE, 40*PXSCALEH) text:[NSString stringWithFormat:@"%@%@",[titleArr objectAtIndex:i],@"  "] fontSize:14 color:[UIColor blackColor] align:@"right"];
+            UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(0,0,viewWidth-10*PXSCALE, 40*PXSCALEH) text:[NSString stringWithFormat:@"%@",[titleArr objectAtIndex:i]] fontSize:14 color:[UIColor blackColor] align:@"right"];
             titleLabel.tag = 110+i;
             [view addSubview:titleLabel];
 
@@ -175,19 +177,27 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 #pragma 显示dialog
--(void)showDialog:(NSString*)title value:(NSString*)value{
+-(void)showDialog:(NSString*)title value:(NSString*)value data:(NSString*)data tag:(NSInteger)tag{
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,60*PXSCALEH)];
-    UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE,10*PXSCALEH, (contentView.bounds.size.width-20*PXSCALE)/3, 40*PXSCALEH) text:[NSString stringWithFormat:@"%@:",title] size:14 align:@"center"];
+    UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE,10*PXSCALEH, (contentView.bounds.size.width-20*PXSCALE)/4, 40*PXSCALEH) text:[NSString stringWithFormat:@"%@:",title] size:14 align:@"left"];
     [contentView addSubview:titleLabel];
-    UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, 10*PXSCALEH, (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH) tag:200 returnType:@""];
+    UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, 10*PXSCALEH, (contentView.bounds.size.width-20*PXSCALE)/4*3, 40*PXSCALEH) tag:200 returnType:@""];
     valueTextField.text = value;
     valueTextField.placeholder = [NSString stringWithFormat:@"请输入"];
     [contentView addSubview:valueTextField];
-    
+    __weak ProjectViewController* safeSelf = self;
     HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"修改" contentView: contentView];
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
-            
+            [safeSelf updateData:data keyValue:valueTextField.text callback:^(NSString *errorMsg, id result) {
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:@"修改失败" With:safeSelf];
+                }else{
+                    //更新数据
+                    ((UILabel*)[safeSelf.view viewWithTag:tag+20]).text = valueTextField.text;
+                    [ToolsObject show:@"修改成功" With:safeSelf];
+                }
+            }];
         }else{
             
         }
@@ -201,7 +211,28 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     UIView* parentView = [btn superview];
     UILabel* titleLabel = [parentView viewWithTag:btn.tag+10];
     UILabel* valueLabel = [parentView viewWithTag:btn.tag+20];
-    [self showDialog:titleLabel.text value:valueLabel.text];
+    NSArray* dataArr = @[@"jclc",@"cjhm",@"cx",@"ywg_date",@"gzms",@"custom5",@"memo"];
+    if([titleLabel.text isEqualToString:@"预完工日期"]){
+        //显示日期
+        NSString* dateStr = ![valueLabel.text isEqualToString:@""]?valueLabel.text:nil;
+        __weak ProjectViewController* safeSelf = self;
+        [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:dateStr minDate:nil maxDate:nil isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            [safeSelf updateData:@"ywg_date" keyValue:selectValue callback:^(NSString *errorMsg, id result) {
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:@"修改失败" With:safeSelf];
+                }else{
+                    //更新数据
+                    valueLabel.text = selectValue;
+                    [ToolsObject show:@"修改成功" With:safeSelf];
+                }
+            }];
+        }];
+    }else if([titleLabel.text isEqualToString:@"故障描述"]){
+        //跳转
+    }else{
+        NSString* data = [dataArr objectAtIndex:btn.tag-100];
+        [self showDialog:titleLabel.text value:valueLabel.text data:data tag:btn.tag];
+    }
 }
 
 /*
@@ -353,6 +384,32 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         }
     }];
 }
+
+#pragma 更新car info
+-(void)updateData:(NSString*)keyName keyValue:(NSString*)value callback:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_upload_repair_list_main_other";//车间管理
+    dict[@"jsd_id"] = _model.jsd_id;// 传过来
+    dict[@"company_code"] = [ToolsObject getCompCode];
+    dict[@"column_name"] = keyName;
+    dict[@"data"] = value;
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+    __weak ProjectViewController* safeSelf = self;
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        [safeSelf.progress hideAnimated:YES];
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            callback(@"",nil);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+
 #pragma data end
 
 @end

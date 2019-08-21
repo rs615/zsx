@@ -17,7 +17,7 @@
 #import "MJExtension.h"
 #import "AppDelegate.h"
 #import "HnAlertView.h"
-
+#import "RequestIPAddress.h"
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
@@ -153,13 +153,22 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void) logout
 {
     
+    __weak SettingController* safeSelf = self;
     HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:@"您确定要退出登录吗?" withTitle:@"提示" contentView: nil];
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
-            LoginController *vc = [[LoginController alloc] init];
-            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
-            [UIApplication sharedApplication].keyWindow.rootViewController = nvc;
-
+            
+            safeSelf.progress = [ToolsObject showLoading:@"加载中" with:safeSelf];
+            [safeSelf loginOut:^(NSString *errorMsg, id result) {
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:errorMsg With:safeSelf];
+                }else{
+                    [ToolsObject saveHaseLogin:NO];
+                    LoginController *vc = [[LoginController alloc] init];
+                    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+                    [UIApplication sharedApplication].keyWindow.rootViewController = nvc;
+                }
+            }];
         }else{
             
         }
@@ -172,6 +181,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 //        }
 //    }
 }
+
 
 -(void)jumpViewControllerAndCloseSelf:(UIViewController *)vc{
     
@@ -194,6 +204,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [self.navigationController setViewControllers:newviewControlles animated:YES];
     
 }
+
+
 
 //更新数据
 #pragma 更新数据
@@ -267,6 +279,27 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         callback(@"网络错误",nil);
     }];
 }
+
+-(void)loginOut:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_user_logout";//车间管理
+    dict[@"operater_code"] = [ToolsObject getUserName];//车间管理
+    dict[@"operater_ip"]= [RequestIPAddress getIPAddress:YES];
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"true"]){
+            callback(@"",nil);
+            
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
 
 #pragma 更新修理数据
 -(void)getPersonRepairList:(asyncCallback)callback{

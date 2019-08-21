@@ -58,6 +58,9 @@
 		7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */; };
 		7F4B42D923068EB500A0D133 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D823068EB500A0D133 /* ProjectCell.m */; };
 		7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42DB23068FA300A0D133 /* PeijianCell.m */; };
+		7F754958230D7869005A94DA /* JCIPAddressConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754954230D7869005A94DA /* JCIPAddressConfig.m */; };
+		7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754957230D7869005A94DA /* RequestIPAddress.m */; };
+		7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495B230D86D4005A94DA /* GuzhangListViewController.m */; };
 		7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */; };
 		7FAAB33B230981B10096B401 /* PartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33A230981B10096B401 /* PartsModel.m */; };
 		7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33D230982CD0096B401 /* PartsCell.m */; };
@@ -234,6 +237,12 @@
 		7F4B42D823068EB500A0D133 /* ProjectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectCell.m; sourceTree = "<group>"; };
 		7F4B42DA23068FA300A0D133 /* PeijianCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianCell.h; sourceTree = "<group>"; };
 		7F4B42DB23068FA300A0D133 /* PeijianCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianCell.m; sourceTree = "<group>"; };
+		7F754954230D7869005A94DA /* JCIPAddressConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIPAddressConfig.m; sourceTree = "<group>"; };
+		7F754955230D7869005A94DA /* RequestIPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestIPAddress.h; sourceTree = "<group>"; };
+		7F754956230D7869005A94DA /* JCIPAddressConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIPAddressConfig.h; sourceTree = "<group>"; };
+		7F754957230D7869005A94DA /* RequestIPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RequestIPAddress.m; sourceTree = "<group>"; };
+		7F75495A230D86D3005A94DA /* GuzhangListViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuzhangListViewController.h; sourceTree = "<group>"; };
+		7F75495B230D86D4005A94DA /* GuzhangListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuzhangListViewController.m; sourceTree = "<group>"; };
 		7FAAB336230850BD0096B401 /* PeijianSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianSelectViewController.h; sourceTree = "<group>"; };
 		7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianSelectViewController.m; sourceTree = "<group>"; };
 		7FAAB339230981B10096B401 /* PartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PartsModel.h; sourceTree = "<group>"; };
@@ -424,6 +433,8 @@
 				7FAAB36B230CFF3D0096B401 /* HistoryViewController.m */,
 				7FAAB36D230D2B730096B401 /* ProjectJiesuanViewController.h */,
 				7FAAB36E230D2B730096B401 /* ProjectJiesuanViewController.m */,
+				7F75495A230D86D3005A94DA /* GuzhangListViewController.h */,
+				7F75495B230D86D4005A94DA /* GuzhangListViewController.m */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -800,6 +811,17 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		7F754953230D785B005A94DA /* ip */ = {
+			isa = PBXGroup;
+			children = (
+				7F754956230D7869005A94DA /* JCIPAddressConfig.h */,
+				7F754954230D7869005A94DA /* JCIPAddressConfig.m */,
+				7F754955230D7869005A94DA /* RequestIPAddress.h */,
+				7F754957230D7869005A94DA /* RequestIPAddress.m */,
+			);
+			path = ip;
+			sourceTree = "<group>";
+		};
 		7FAAB34B230A3AC40096B401 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -835,6 +857,7 @@
 		7FAADFB322FF97A900790102 /* Tools(工具类) */ = {
 			isa = PBXGroup;
 			children = (
+				7F754953230D785B005A94DA /* ip */,
 				7FAADFB522FF97C800790102 /* PublicFunction.h */,
 				7FAADFB422FF97C700790102 /* PublicFunction.m */,
 				7FAAE01422FFEE1800790102 /* HttpRequestManager.h */,
@@ -1165,6 +1188,8 @@
 				41DDD55222A4CE1800D4A317 /* main.m in Sources */,
 				7FAAE0432301B33A00790102 /* MJPropertyKey.m in Sources */,
 				7FAAB35D230BFBBF0096B401 /* ProjectSelectViewController.m in Sources */,
+				7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */,
+				7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */,
 				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
 				7FAAB33B230981B10096B401 /* PartsModel.m in Sources */,
 				7FAAE05D2301B4EB00790102 /* FMResultSet.m in Sources */,
@@ -1176,6 +1201,7 @@
 				7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */,
 				7FAADFC122FF989800790102 /* MBProgressHUD.m in Sources */,
 				7FAAB354230BA4F60096B401 /* ProjectPaigongViewController.m in Sources */,
+				7F754958230D7869005A94DA /* JCIPAddressConfig.m in Sources */,
 				7F4B42C62305450D00A0D133 /* IntroduceInfoModel.m in Sources */,
 				7FAADFB222FF93AA00790102 /* SearchCarCell.m in Sources */,
 				7FAAB34A23099C4A0096B401 /* SelfPartsModel.m in Sources */,

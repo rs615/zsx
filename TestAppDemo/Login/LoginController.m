@@ -72,15 +72,15 @@
 
     contentView.center = CGPointMake(backgroundImageView.center.x, backgroundImageView.center.y+60*PXSCALEH);
     [self.view addSubview:contentView];
-    _factoryNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 30*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"首佳演示" placeholder:@"修理厂名称/分店名称"];
+    _factoryNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 30*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"修理厂名称/分店名称"];
     _factoryNameField.backgroundColor = SetColor(@"#ffffff", 0.53);
     [contentView addSubview:_factoryNameField];
     
-    _userNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 20*PXSCALEH+_factoryNameField.frame.origin.y+40*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"superuser" placeholder:@"请输入用户名"];
+    _userNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 20*PXSCALEH+_factoryNameField.frame.origin.y+40*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"请输入用户名"];
     _userNameField.backgroundColor = SetColor(@"#ffffff", 0.53);
     [contentView addSubview:_userNameField];
     
-    _passwordField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 20*PXSCALEH+_userNameField.frame.origin.y+40*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"88204776" placeholder:@"请输入密码"];
+    _passwordField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 20*PXSCALEH+_userNameField.frame.origin.y+40*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"请输入密码"];
     _passwordField.backgroundColor = SetColor(@"#ffffff", 0.53);
     _passwordField.secureTextEntry = YES;
     [contentView addSubview:_passwordField];
@@ -104,7 +104,7 @@
         _factoryNameField.text = factoryName;
     }
     BOOL isHasLogin = [ToolsObject isHasLogin];
-    if(!isHasLogin){
+    if(isHasLogin){
         [UIApplication sharedApplication].keyWindow.rootViewController = [[TabViewController alloc] init];
     }
 }
@@ -200,8 +200,8 @@
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_check_user_state_login";
-    dict[@"operater_code"] = _factoryNameField.text;
-    dict[@"operater_ip"] = _userNameField.text;
+    dict[@"operater_code"] = _userNameField.text;
+    dict[@"operater_ip"] = @"121.43.148.193";
     dict[@"password"] = _passwordField.text;
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
         [safeSelf.progress hideAnimated:YES];
