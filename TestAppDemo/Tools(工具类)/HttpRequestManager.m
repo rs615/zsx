@@ -44,6 +44,20 @@ static HttpRequestManager *_instance;
     return _instance;
 }
 
++(void)post:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure{
+    NSString   *urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
+    
+    AFHTTPSessionManager *manager = [HttpRequestManager shareInstance].manager;
+    
+    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    [manager POST:urlStr parameters:dict progress:nil success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        success(responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        failure (error);
+    }];
+}
+
 #pragma mark  ===  post请求
 +(void)HttpPostCallBack:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure
 {

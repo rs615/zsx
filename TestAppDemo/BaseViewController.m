@@ -15,7 +15,9 @@
 @implementation BaseViewController
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewDidLoad];
+
+    [super viewWillAppear:animated];
+    self.errorMsg = @"";
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationController.navigationBar.hidden = YES;

@@ -30,6 +30,42 @@ NS_ASSUME_NONNULL_BEGIN
 +(MBProgressHUD *)showLoading:(NSString *)title with:(UIViewController *)contoller;
 
 +(NSDate *)stringToDate:(NSString *)dateStr;
+
++(void)setBorderWithView:(UIView *)view top:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width;
+
++ (void)saveDataSouceName:(NSString *)dataSourceName;
++ (NSString *)getDataSouceName;
+
+
++ (void)saveUserName:(NSString *)userName;
+
++ (NSString *)getUserName;
+
++ (NSString *)getPasword;
+
+
++ (void)savePassword:(NSString *)password;
+
++ (NSString *)getFactoryName;
+
+
++ (void)saveFactoryName:(NSString *)factory;
+
++ (NSString *)getCompCode;
+
++ (void)saveCompCode:(NSString *)code;
+
+
++ (NSString *)getChineseName;
+
+
++ (void)saveChineseName:(NSString *)chineseName;
+
+
++ (BOOL)isHasLogin;
+
+
++ (void)saveHaseLogin:(BOOL)hasLogin;
 @end
 
 NS_ASSUME_NONNULL_END

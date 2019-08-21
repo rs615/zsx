@@ -7,9 +7,24 @@
 //
 #import "SettingController.h"
 #import "LoginController.h"
+#import "HttpRequestManager.h"
+#import "MBProgressHUD+PX.h"
+#import "ToolsObject.h"
+#import "FirstIconInfoModel.h"
+#import "PartsModel.h"
+#import "RepairInfoModel.h"
+#import "DataBaseTool.h"
+#import "MJExtension.h"
+#import "AppDelegate.h"
+#import "HnAlertView.h"
+
+typedef void (^asyncCallback)(NSString* errorMsg,id result);
+
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 @interface SettingController()
+@property (nonatomic,strong)NSString* errorMsg;
+@property (nonatomic,strong)MBProgressHUD *progress;
 
 @end
 
@@ -41,6 +56,9 @@
     [item1 addSubview:imageView];
     [self.view addSubview:item1];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(updateData:)];
+    item1.userInteractionEnabled = YES;
+    [item1 addGestureRecognizer:tap];
     
     
     UIView* item2 = [[UIView alloc] init];
@@ -134,10 +152,25 @@
 }
 -(void) logout
 {
-    LoginController* loginPage = [[LoginController alloc] init];
     
-    [self jumpViewControllerAndCloseSelf:loginPage];
+    HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:@"您确定要退出登录吗?" withTitle:@"提示" contentView: nil];
+    [alertView showHNAlertView:^(NSInteger index) {
+        if(index == 1){
+            LoginController *vc = [[LoginController alloc] init];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:vc];
+            [UIApplication sharedApplication].keyWindow.rootViewController = nvc;
 
+        }else{
+            
+        }
+    }];
+
+//    [self jumpViewControllerAndCloseSelf:loginPage];
+//    for(UIViewController*temp in self.navigationController.viewControllers) {
+//        if([temp isKindOfClass:[LoginController class]]){
+//            [self.navigationController popToViewController:temp animated:YES];
+//        }
+//    }
 }
 
 -(void)jumpViewControllerAndCloseSelf:(UIViewController *)vc{
@@ -162,9 +195,134 @@
     
 }
 
+//更新数据
+#pragma 更新数据
+-(void)updateData:(UITapGestureRecognizer *)tap{
+    //这里查询了本地数据
+    __weak SettingController *safeSelf = self;
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+
+    dispatch_group_t group = dispatch_group_create();
+    
+    dispatch_group_enter(group);
+    [self getFirstIconList:^(NSString *errorMsg, id result) {
+        if(![errorMsg isEqualToString:@""]){
+            safeSelf.errorMsg = errorMsg;
+        }
+        dispatch_group_leave(group);
+    }];
+    
+   
+    dispatch_group_enter(group);
+    
+    [self getPersonRepairList:^(NSString *errorMsg, id result) {
+        if(![errorMsg isEqualToString:@""]){
+            safeSelf.errorMsg = errorMsg;
+        }
+        dispatch_group_leave(group);
+    }];
+    
+    
+    dispatch_group_enter(group);
+    
+    [self getPartsList:^(NSString *errorMsg, id result) {
+        if(![errorMsg isEqualToString:@""]){
+            safeSelf.errorMsg = errorMsg;
+        }
+        dispatch_group_leave(group);
+    }];
+    
+    
+    //通知更新
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [safeSelf.progress hideAnimated:YES];
+        if(![safeSelf.errorMsg isEqualToString:@""]){
+            [ToolsObject show:safeSelf.errorMsg With:safeSelf];
+        }else{
+            [ToolsObject show:@"更新数据成功！" With:safeSelf];
+
+        }
+        
+    });
+}
+
+#pragma 获取第一页的数据
+-(void)getFirstIconList:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = @"asa_to_sql";
+    dict[@"function"] = @"sp_fun_down_maintenance_category";//车间管理
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [FirstIconInfoModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+            [[DataBaseTool shareInstance] insertFirstIconListData:array];
+            callback(@"",items);
+
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+#pragma 更新修理数据
+-(void)getPersonRepairList:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = @"asa_to_sql";
+    dict[@"function"] = @"sp_fun_down_repairman";//车间管理
+    dict[@"company_code"] = @"A";//车间管理
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [RepairInfoModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+
+            [[DataBaseTool shareInstance] insertRepairListData:array];
+            callback(@"",items);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+#pragma 更新配件数据
+-(void)getPartsList:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = @"asa_to_sql";
+    dict[@"function"] = @"sp_fun_down_stock";//车间管理
+    dict[@"comp_code"] = @"A";//车间管理
+    dict[@"pjbm"] = @"";//车间管理
+    dict[@"cd"] = @"";//车间管理
+    dict[@"ck"] = @"";//车间管理
+
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [PartsModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+
+            [[DataBaseTool shareInstance] insertPartsListData:array];
+            callback(@"",items);
+
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
 
 -(void) viewDidLoad
 {
     [self initView];
 }
+
 @end

@@ -30,8 +30,6 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic,strong)NSMutableArray* yejiGroupListData;
 @property (nonatomic,strong)NSMutableArray* shigongGroupListData;
 
-@property (nonatomic,strong)NSString* errorMsg;
-
 @end
 
 @implementation PerformanceController

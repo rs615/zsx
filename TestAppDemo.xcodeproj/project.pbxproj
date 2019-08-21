@@ -56,6 +56,27 @@
 		7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42CE2305AB6800A0D133 /* ProjectModel.m */; };
 		7F4B42D22305AFC300A0D133 /* PeijianModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D12305AFC300A0D133 /* PeijianModel.m */; };
 		7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */; };
+		7F4B42D923068EB500A0D133 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D823068EB500A0D133 /* ProjectCell.m */; };
+		7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42DB23068FA300A0D133 /* PeijianCell.m */; };
+		7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */; };
+		7FAAB33B230981B10096B401 /* PartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33A230981B10096B401 /* PartsModel.m */; };
+		7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33D230982CD0096B401 /* PartsCell.m */; };
+		7FAAB341230995200096B401 /* TempPartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB340230995200096B401 /* TempPartsCell.m */; };
+		7FAAB3442309955D0096B401 /* SelfPartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB3432309955D0096B401 /* SelfPartsCell.m */; };
+		7FAAB34723099BF10096B401 /* TempPartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB34623099BF10096B401 /* TempPartsModel.m */; };
+		7FAAB34A23099C4A0096B401 /* SelfPartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB34923099C4A0096B401 /* SelfPartsModel.m */; };
+		7FAAB34E230A3AD80096B401 /* FirstIconInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB34D230A3AD80096B401 /* FirstIconInfoModel.m */; };
+		7FAAB351230A55670096B401 /* RepairInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB350230A55670096B401 /* RepairInfoModel.m */; };
+		7FAAB354230BA4F60096B401 /* ProjectPaigongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB353230BA4F60096B401 /* ProjectPaigongViewController.m */; };
+		7FAAB357230BEB630096B401 /* PaigongInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB356230BEB630096B401 /* PaigongInfoModel.m */; };
+		7FAAB35A230BF4BE0096B401 /* HNLinkageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB359230BF4BE0096B401 /* HNLinkageView.m */; };
+		7FAAB35D230BFBBF0096B401 /* ProjectSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB35C230BFBBF0096B401 /* ProjectSelectViewController.m */; };
+		7FAAB360230C03310096B401 /* HnTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB35F230C03310096B401 /* HnTextField.m */; };
+		7FAAB363230C0D3D0096B401 /* SecondIconInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB362230C0D3D0096B401 /* SecondIconInfoModel.m */; };
+		7FAAB366230C48590096B401 /* PaigongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB365230C48590096B401 /* PaigongCell.m */; };
+		7FAAB369230CAC530096B401 /* ProjectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB368230CAC530096B401 /* ProjectViewController.m */; };
+		7FAAB36C230CFF3D0096B401 /* HistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB36B230CFF3D0096B401 /* HistoryViewController.m */; };
+		7FAAB36F230D2B730096B401 /* ProjectJiesuanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB36E230D2B730096B401 /* ProjectJiesuanViewController.m */; };
 		7FAADFA922FF89E600790102 /* SearchCarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFA722FF89E600790102 /* SearchCarViewController.m */; };
 		7FAADFB222FF93AA00790102 /* SearchCarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFB122FF93AA00790102 /* SearchCarCell.m */; };
 		7FAADFB622FF97C800790102 /* PublicFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAADFB422FF97C700790102 /* PublicFunction.m */; };
@@ -209,6 +230,48 @@
 		7F4B42D12305AFC300A0D133 /* PeijianModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianModel.m; sourceTree = "<group>"; };
 		7F4B42D32305B13700A0D133 /* OrderCarInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OrderCarInfoModel.h; sourceTree = "<group>"; };
 		7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OrderCarInfoModel.m; sourceTree = "<group>"; };
+		7F4B42D723068EB500A0D133 /* ProjectCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectCell.h; sourceTree = "<group>"; };
+		7F4B42D823068EB500A0D133 /* ProjectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectCell.m; sourceTree = "<group>"; };
+		7F4B42DA23068FA300A0D133 /* PeijianCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianCell.h; sourceTree = "<group>"; };
+		7F4B42DB23068FA300A0D133 /* PeijianCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianCell.m; sourceTree = "<group>"; };
+		7FAAB336230850BD0096B401 /* PeijianSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianSelectViewController.h; sourceTree = "<group>"; };
+		7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianSelectViewController.m; sourceTree = "<group>"; };
+		7FAAB339230981B10096B401 /* PartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PartsModel.h; sourceTree = "<group>"; };
+		7FAAB33A230981B10096B401 /* PartsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PartsModel.m; sourceTree = "<group>"; };
+		7FAAB33C230982CD0096B401 /* PartsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PartsCell.h; sourceTree = "<group>"; };
+		7FAAB33D230982CD0096B401 /* PartsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PartsCell.m; sourceTree = "<group>"; };
+		7FAAB33F230995200096B401 /* TempPartsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempPartsCell.h; sourceTree = "<group>"; };
+		7FAAB340230995200096B401 /* TempPartsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempPartsCell.m; sourceTree = "<group>"; };
+		7FAAB3422309955D0096B401 /* SelfPartsCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfPartsCell.h; sourceTree = "<group>"; };
+		7FAAB3432309955D0096B401 /* SelfPartsCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelfPartsCell.m; sourceTree = "<group>"; };
+		7FAAB34523099BF10096B401 /* TempPartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TempPartsModel.h; sourceTree = "<group>"; };
+		7FAAB34623099BF10096B401 /* TempPartsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TempPartsModel.m; sourceTree = "<group>"; };
+		7FAAB34823099C4A0096B401 /* SelfPartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SelfPartsModel.h; sourceTree = "<group>"; };
+		7FAAB34923099C4A0096B401 /* SelfPartsModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SelfPartsModel.m; sourceTree = "<group>"; };
+		7FAAB34C230A3AD80096B401 /* FirstIconInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstIconInfoModel.h; sourceTree = "<group>"; };
+		7FAAB34D230A3AD80096B401 /* FirstIconInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstIconInfoModel.m; sourceTree = "<group>"; };
+		7FAAB34F230A55670096B401 /* RepairInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RepairInfoModel.h; sourceTree = "<group>"; };
+		7FAAB350230A55670096B401 /* RepairInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RepairInfoModel.m; sourceTree = "<group>"; };
+		7FAAB352230BA4F60096B401 /* ProjectPaigongViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectPaigongViewController.h; sourceTree = "<group>"; };
+		7FAAB353230BA4F60096B401 /* ProjectPaigongViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectPaigongViewController.m; sourceTree = "<group>"; };
+		7FAAB355230BEB630096B401 /* PaigongInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaigongInfoModel.h; sourceTree = "<group>"; };
+		7FAAB356230BEB630096B401 /* PaigongInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaigongInfoModel.m; sourceTree = "<group>"; };
+		7FAAB358230BF4BE0096B401 /* HNLinkageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HNLinkageView.h; sourceTree = "<group>"; };
+		7FAAB359230BF4BE0096B401 /* HNLinkageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HNLinkageView.m; sourceTree = "<group>"; };
+		7FAAB35B230BFBBF0096B401 /* ProjectSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectSelectViewController.h; sourceTree = "<group>"; };
+		7FAAB35C230BFBBF0096B401 /* ProjectSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectSelectViewController.m; sourceTree = "<group>"; };
+		7FAAB35E230C03310096B401 /* HnTextField.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HnTextField.h; sourceTree = "<group>"; };
+		7FAAB35F230C03310096B401 /* HnTextField.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HnTextField.m; sourceTree = "<group>"; };
+		7FAAB361230C0D3D0096B401 /* SecondIconInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondIconInfoModel.h; sourceTree = "<group>"; };
+		7FAAB362230C0D3D0096B401 /* SecondIconInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondIconInfoModel.m; sourceTree = "<group>"; };
+		7FAAB364230C48590096B401 /* PaigongCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaigongCell.h; sourceTree = "<group>"; };
+		7FAAB365230C48590096B401 /* PaigongCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaigongCell.m; sourceTree = "<group>"; };
+		7FAAB367230CAC530096B401 /* ProjectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectViewController.h; sourceTree = "<group>"; };
+		7FAAB368230CAC530096B401 /* ProjectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectViewController.m; sourceTree = "<group>"; };
+		7FAAB36A230CFF3D0096B401 /* HistoryViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryViewController.h; sourceTree = "<group>"; };
+		7FAAB36B230CFF3D0096B401 /* HistoryViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryViewController.m; sourceTree = "<group>"; };
+		7FAAB36D230D2B730096B401 /* ProjectJiesuanViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectJiesuanViewController.h; sourceTree = "<group>"; };
+		7FAAB36E230D2B730096B401 /* ProjectJiesuanViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectJiesuanViewController.m; sourceTree = "<group>"; };
 		7FAADFA622FF89E600790102 /* SearchCarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCarViewController.h; sourceTree = "<group>"; };
 		7FAADFA722FF89E600790102 /* SearchCarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SearchCarViewController.m; sourceTree = "<group>"; };
 		7FAADFB022FF93AA00790102 /* SearchCarCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SearchCarCell.h; sourceTree = "<group>"; };
@@ -345,9 +408,22 @@
 		41D0851022B23D030003F07D /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				7F4B42D623068E8600A0D133 /* Cell */,
 				7F4B42CC2305AB5400A0D133 /* Model */,
 				41D0851122B23D290003F07D /* ProjectOrderViewController.h */,
 				41D0851222B23D290003F07D /* ProjectOrderViewController.m */,
+				7FAAB336230850BD0096B401 /* PeijianSelectViewController.h */,
+				7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */,
+				7FAAB352230BA4F60096B401 /* ProjectPaigongViewController.h */,
+				7FAAB353230BA4F60096B401 /* ProjectPaigongViewController.m */,
+				7FAAB35B230BFBBF0096B401 /* ProjectSelectViewController.h */,
+				7FAAB35C230BFBBF0096B401 /* ProjectSelectViewController.m */,
+				7FAAB367230CAC530096B401 /* ProjectViewController.h */,
+				7FAAB368230CAC530096B401 /* ProjectViewController.m */,
+				7FAAB36A230CFF3D0096B401 /* HistoryViewController.h */,
+				7FAAB36B230CFF3D0096B401 /* HistoryViewController.m */,
+				7FAAB36D230D2B730096B401 /* ProjectJiesuanViewController.h */,
+				7FAAB36E230D2B730096B401 /* ProjectJiesuanViewController.m */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -482,6 +558,7 @@
 		41E5B21322A7B61D0056C7F2 /* Setting */ = {
 			isa = PBXGroup;
 			children = (
+				7FAAB34B230A3AC40096B401 /* Model */,
 				41E5B21422A7B63B0056C7F2 /* SettingController.h */,
 				41E5B21522A7B6440056C7F2 /* SettingController.m */,
 			);
@@ -692,6 +769,46 @@
 				7F4B42D12305AFC300A0D133 /* PeijianModel.m */,
 				7F4B42D32305B13700A0D133 /* OrderCarInfoModel.h */,
 				7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */,
+				7FAAB339230981B10096B401 /* PartsModel.h */,
+				7FAAB33A230981B10096B401 /* PartsModel.m */,
+				7FAAB34523099BF10096B401 /* TempPartsModel.h */,
+				7FAAB34623099BF10096B401 /* TempPartsModel.m */,
+				7FAAB34823099C4A0096B401 /* SelfPartsModel.h */,
+				7FAAB34923099C4A0096B401 /* SelfPartsModel.m */,
+				7FAAB355230BEB630096B401 /* PaigongInfoModel.h */,
+				7FAAB356230BEB630096B401 /* PaigongInfoModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F4B42D623068E8600A0D133 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				7F4B42D723068EB500A0D133 /* ProjectCell.h */,
+				7F4B42D823068EB500A0D133 /* ProjectCell.m */,
+				7F4B42DA23068FA300A0D133 /* PeijianCell.h */,
+				7F4B42DB23068FA300A0D133 /* PeijianCell.m */,
+				7FAAB33C230982CD0096B401 /* PartsCell.h */,
+				7FAAB33D230982CD0096B401 /* PartsCell.m */,
+				7FAAB33F230995200096B401 /* TempPartsCell.h */,
+				7FAAB340230995200096B401 /* TempPartsCell.m */,
+				7FAAB3422309955D0096B401 /* SelfPartsCell.h */,
+				7FAAB3432309955D0096B401 /* SelfPartsCell.m */,
+				7FAAB364230C48590096B401 /* PaigongCell.h */,
+				7FAAB365230C48590096B401 /* PaigongCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		7FAAB34B230A3AC40096B401 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7FAAB34C230A3AD80096B401 /* FirstIconInfoModel.h */,
+				7FAAB34D230A3AD80096B401 /* FirstIconInfoModel.m */,
+				7FAAB34F230A55670096B401 /* RepairInfoModel.h */,
+				7FAAB350230A55670096B401 /* RepairInfoModel.m */,
+				7FAAB361230C0D3D0096B401 /* SecondIconInfoModel.h */,
+				7FAAB362230C0D3D0096B401 /* SecondIconInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -785,6 +902,10 @@
 				7FAADFDA22FFE81600790102 /* HNBankView.m */,
 				7FBC8DB5230296F10048ED7E /* HNAlertView.h */,
 				7FBC8DB6230296F10048ED7E /* HNAlertView.m */,
+				7FAAB358230BF4BE0096B401 /* HNLinkageView.h */,
+				7FAAB359230BF4BE0096B401 /* HNLinkageView.m */,
+				7FAAB35E230C03310096B401 /* HnTextField.h */,
+				7FAAB35F230C03310096B401 /* HnTextField.m */,
 			);
 			path = CustomTools;
 			sourceTree = "<group>";
@@ -1019,7 +1140,10 @@
 				7FAAE0412301B33A00790102 /* NSObject+MJClass.m in Sources */,
 				7FAADFC722FF9B3600790102 /* BaseViewController.m in Sources */,
 				7FAAE01B230040E200790102 /* WorkOrderQueryViewController.m in Sources */,
+				7FAAB351230A55670096B401 /* RepairInfoModel.m in Sources */,
 				7FAAE00922FFEBB400790102 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				7FAAB366230C48590096B401 /* PaigongCell.m in Sources */,
+				7FAAB341230995200096B401 /* TempPartsCell.m in Sources */,
 				7FAAE03F2301B33A00790102 /* MJExtensionConst.m in Sources */,
 				7F453F282303EE900063EC0A /* MJRefreshNormalHeader.m in Sources */,
 				7FAAE00E22FFEBB400790102 /* AFHTTPSessionManager.m in Sources */,
@@ -1029,37 +1153,53 @@
 				7FAAE00A22FFEBB400790102 /* UIWebView+AFNetworking.m in Sources */,
 				41E5B1FA22A755EB0056C7F2 /* LoginController.m in Sources */,
 				7FAAE00F22FFEBB400790102 /* AFURLSessionManager.m in Sources */,
+				7FAAB34723099BF10096B401 /* TempPartsModel.m in Sources */,
+				7FAAB36F230D2B730096B401 /* ProjectJiesuanViewController.m in Sources */,
 				7FAAE01622FFEE1800790102 /* HttpRequestManager.m in Sources */,
 				7F453F202303EE900063EC0A /* NSBundle+MJRefresh.m in Sources */,
 				7FAADFD422FF9C4D00790102 /* UIView+HNExtension.m in Sources */,
 				7FAADFD622FF9C4D00790102 /* UIControl+ActionBlock.m in Sources */,
 				7FAAE00722FFEBB400790102 /* UIImageView+AFNetworking.m in Sources */,
+				7FAAB35A230BF4BE0096B401 /* HNLinkageView.m in Sources */,
 				41E5B21622A7B6440056C7F2 /* SettingController.m in Sources */,
 				41DDD55222A4CE1800D4A317 /* main.m in Sources */,
 				7FAAE0432301B33A00790102 /* MJPropertyKey.m in Sources */,
+				7FAAB35D230BFBBF0096B401 /* ProjectSelectViewController.m in Sources */,
 				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
+				7FAAB33B230981B10096B401 /* PartsModel.m in Sources */,
 				7FAAE05D2301B4EB00790102 /* FMResultSet.m in Sources */,
 				41D0851322B23D290003F07D /* ProjectOrderViewController.m in Sources */,
 				7F453F2F2303EE900063EC0A /* MJRefreshComponent.m in Sources */,
 				41E5B21222A7B5A30056C7F2 /* MessageInfoController.m in Sources */,
+				7F4B42D923068EB500A0D133 /* ProjectCell.m in Sources */,
 				7F453EE4230315260063EC0A /* ManageInfoModel.m in Sources */,
+				7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */,
 				7FAADFC122FF989800790102 /* MBProgressHUD.m in Sources */,
+				7FAAB354230BA4F60096B401 /* ProjectPaigongViewController.m in Sources */,
 				7F4B42C62305450D00A0D133 /* IntroduceInfoModel.m in Sources */,
 				7FAADFB222FF93AA00790102 /* SearchCarCell.m in Sources */,
+				7FAAB34A23099C4A0096B401 /* SelfPartsModel.m in Sources */,
 				7F453F2E2303EE900063EC0A /* MJRefreshAutoFooter.m in Sources */,
 				7FBC8DB4230263BC0048ED7E /* ToolsObject.m in Sources */,
 				7FAAE03C2301B33A00790102 /* NSObject+MJKeyValue.m in Sources */,
 				7F453F272303EE900063EC0A /* MJRefreshAutoNormalFooter.m in Sources */,
 				7F453F3B230440AE0063EC0A /* WorkOrderCell.m in Sources */,
+				7FAAB34E230A3AD80096B401 /* FirstIconInfoModel.m in Sources */,
 				7FAAE0592301B4EB00790102 /* FMDatabaseQueue.m in Sources */,
 				7F453F292303EE900063EC0A /* MJRefreshStateHeader.m in Sources */,
 				7FAAE00622FFEBB400790102 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7FAAE00422FFEBB400790102 /* UIProgressView+AFNetworking.m in Sources */,
+				7FAAB357230BEB630096B401 /* PaigongInfoModel.m in Sources */,
 				7FAAE05C2301B4EB00790102 /* FMDatabasePool.m in Sources */,
 				41DDD54422A4CE1400D4A317 /* AppDelegate.m in Sources */,
 				7F4B42D22305AFC300A0D133 /* PeijianModel.m in Sources */,
 				7FAAE00D22FFEBB400790102 /* AFURLResponseSerialization.m in Sources */,
 				7FAAE0422301B33A00790102 /* NSString+MJExtension.m in Sources */,
+				7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */,
+				7FAAB360230C03310096B401 /* HnTextField.m in Sources */,
+				7FAAB3442309955D0096B401 /* SelfPartsCell.m in Sources */,
+				7FAAB363230C0D3D0096B401 /* SecondIconInfoModel.m in Sources */,
+				7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */,
 				7FBC8DB7230296F10048ED7E /* HNAlertView.m in Sources */,
 				7FAAE00522FFEBB400790102 /* UIRefreshControl+AFNetworking.m in Sources */,
 				7FAADFDB22FFE81600790102 /* HNBankView.m in Sources */,
@@ -1077,6 +1217,7 @@
 				7FAADFD322FF9C4D00790102 /* UILabel+TapAction.m in Sources */,
 				41E5B20522A772AE0056C7F2 /* HomeViewController.m in Sources */,
 				7FAAE01022FFEBB400790102 /* AFURLRequestSerialization.m in Sources */,
+				7FAAB36C230CFF3D0096B401 /* HistoryViewController.m in Sources */,
 				7FAAE05A2301B4EB00790102 /* FMDatabaseAdditions.m in Sources */,
 				41E5B20E22A7AB770056C7F2 /* FactoryIntroduceController.m in Sources */,
 				7FAADFD722FF9C4D00790102 /* UIColor+Hex.m in Sources */,
@@ -1085,6 +1226,7 @@
 				7FAAE01222FFEBB400790102 /* AFSecurityPolicy.m in Sources */,
 				7FAAE03E2301B33A00790102 /* NSObject+MJCoding.m in Sources */,
 				7F4B42CB23055A9B00A0D133 /* FactoryListCell.m in Sources */,
+				7FAAB369230CAC530096B401 /* ProjectViewController.m in Sources */,
 				7F453F2B2303EE900063EC0A /* MJRefreshFooter.m in Sources */,
 				7F453F2C2303EE900063EC0A /* MJRefreshHeader.m in Sources */,
 				7FAADFB622FF97C800790102 /* PublicFunction.m in Sources */,

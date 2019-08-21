@@ -15,7 +15,7 @@
 #pragma mark -创建白色的背景视图
 -(void)createBgView{
     self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
-    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,270*PXSCALE, 200*PXSCALEH)];
+    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, 0,MainS_Width-40*PXSCALEH, 200*PXSCALEH)];
     self.bgView.backgroundColor = [UIColor whiteColor];
     self.bgView.layer.masksToBounds = YES;
     self.bgView.layer.cornerRadius = 10;
