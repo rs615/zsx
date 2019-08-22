@@ -249,7 +249,7 @@
     __weak WorkOrderQueryViewController *safeSelf = self;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_repair_history";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"dates"] = [NSString stringWithFormat:@"%@ 00:00:00",_startDateLabel.text];

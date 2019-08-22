@@ -165,7 +165,7 @@
     self.progress = [ToolsObject showLoading:@"加载中" with:self];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_jsdmx_xlxm_assign";//车间管理
     dict[@"jsd_id"] = _model.jsd_id;//车间管理
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -182,7 +182,11 @@
         }
     } failure:^(NSError * _Nonnull error) {
         [safeSelf showErrorInfo:@"网络错误"];
-    }];}
+    }];
+    
+}
+
+
 
 #pragma mark - Getters
 - (NSMutableArray *)dataSource

@@ -333,7 +333,7 @@
     __weak FactoryManagerController *safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_repair_project_state";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"pre_row_number"] = pre_row_number;

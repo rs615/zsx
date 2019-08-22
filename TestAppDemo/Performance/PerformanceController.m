@@ -317,7 +317,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)getCardListData:(asyncCallback)callback{
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_achievement";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"employee"] = @"superuser";
@@ -341,7 +341,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 获取接车数据
 -(void)getJieDaiData:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_achievement_sale";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"employee"] = @"superuser";
@@ -365,7 +365,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 获取施工数据
 -(void)getShigongData:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_achievement_repair";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"employee"] = @"superuser";
@@ -390,7 +390,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)getYejiFenzuData:(asyncCallback)callback{
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_achievement_collect";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"employee"] = @"superuser";
@@ -415,7 +415,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 获取施工分组数据
 -(void)getShigongFenzuData:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_query_achievement_collect_repair";//车间管理
     dict[@"company_code"] = @"A";
     dict[@"employee"] = @"superuser";

@@ -12,6 +12,7 @@
 #import "TempPartsCell.h"
 #import "SelfPartsModel.h"
 #import "TempPartsModel.h"
+#import "ProjectOrderViewController.h"
 @interface PeijianSelectViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIView* kcPeiJianView;
 @property (nonatomic, strong) UIView* tmpPeiJianView;
@@ -387,7 +388,7 @@
     for(int i=0;i<array.count;i++){
         PartsModel* model = [array objectAtIndex:i];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"db"] = @"asa_to_sql";
+        dict[@"db"] = [ToolsObject getDataSouceName];
         dict[@"function"] = @"sp_fun_upload_parts_project_detail";//车间管理
         dict[@"pjbm"] = model.pjbm;
         dict[@"pjmc"] = model.pjmc;
@@ -416,7 +417,15 @@
                 NSLog(@"提交成功");
                 [safeSelf.progress hideAnimated:YES];
                 [ToolsObject show:@"提交成功" With:safeSelf];
-                [safeSelf.navigationController popViewControllerAnimated:YES];
+//                [safeSelf.navigationController popViewControllerAnimated:YES];
+                UIViewController *ctl = safeSelf.navigationController.viewControllers[safeSelf.navigationController.viewControllers.count - 2];
+                if ([ctl isKindOfClass:[ProjectOrderViewController class]]) {
+                    ProjectOrderViewController * ctl2 = (ProjectOrderViewController*)ctl;
+                    ctl2.isNeedRefresh = YES;
+                    [safeSelf.navigationController popToViewController:ctl2 animated:YES];
+                }else{
+                    [safeSelf backBtnClick];
+                }
             }else if(safeSelf.postNum==array.count){
                 [ToolsObject show:[NSString stringWithFormat:@"提交成功%d个,失败%lu个",safeSelf.successNum,(array.count-safeSelf.successNum)] With:safeSelf];
             }
@@ -443,7 +452,7 @@
     for(int i=0;i<array.count;i++){
         PartsModel* model = [array objectAtIndex:i];
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"db"] = @"asa_to_sql";
+        dict[@"db"] = [ToolsObject getDataSouceName];
         dict[@"function"] = @"sp_fun_upload_parts_project_detail";//车间管理
         dict[@"pjbm"] = model.pjbm;
         dict[@"pjmc"] = model.pjmc;
@@ -474,7 +483,16 @@
                 NSLog(@"提交成功");
                 [safeSelf.progress hideAnimated:YES];
                 [ToolsObject show:@"提交成功" With:safeSelf];
-                [safeSelf.navigationController popViewControllerAnimated:YES];
+//                [safeSelf.navigationController popViewControllerAnimated:YES];
+                UIViewController *ctl = safeSelf.navigationController.viewControllers[safeSelf.navigationController.viewControllers.count - 2];
+
+                if ([ctl isKindOfClass:[ProjectOrderViewController class]]) {
+                    ProjectOrderViewController * ctl2 = (ProjectOrderViewController*)ctl;
+                    ctl2.isNeedRefresh = YES;
+                    [safeSelf.navigationController popToViewController:ctl2 animated:YES];
+                }else{
+                    [safeSelf backBtnClick];
+                }
             }else if(safeSelf.postNum==array.count){
                 [ToolsObject show:[NSString stringWithFormat:@"提交成功%d个,失败%lu个",safeSelf.successNum,(array.count-safeSelf.successNum)] With:safeSelf];
             }

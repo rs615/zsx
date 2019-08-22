@@ -84,6 +84,25 @@
     self.myBlock = myblock;
 }
 
+
+//-(void)showHNAlertView:(alertBlock)myblock isAudoClose:(BOOL)close{
+//
+//    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+//
+//    for (UIView *vi in window.subviews)
+//    {
+//        if([vi isKindOfClass:[HNAlertView class]]){
+//
+//            [vi removeFromSuperview];
+//        }
+//    }
+//
+//    [window addSubview:self];
+//    self.myBlock = myblock;
+//    self.isAutoClose = close;
+//}
+
+
 #pragma mark -取消和确认按钮触发方法
 -(void)btnClick:(UIButton *)btn{
     if (self.myBlock)

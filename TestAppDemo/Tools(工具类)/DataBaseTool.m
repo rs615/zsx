@@ -7,6 +7,7 @@
 //
 
 #import "DataBaseTool.h"
+
 @implementation DataBaseTool
 
 
@@ -478,6 +479,7 @@
     [_db close];
 }
 
+
 #pragma 插入配件数据
 -(void)insertPartsListData:(NSArray *)array{
     if ([_db open]) {
@@ -538,5 +540,111 @@
     }
     [_db close];
     return array;
+}
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairListStringData{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlz from repair_info where 1=1";
+    
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            NSString* xlz = [cursor stringForColumn:@"xlz"];
+            [array addObject:xlz];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairZuListData{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlz from repair_info where 1=1";
+    
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            RepairInfoModel* model = [[RepairInfoModel alloc] init];
+            NSString* xlz = [cursor stringForColumn:@"xlz"];
+            model.xlz = xlz;
+            [array addObject:model];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+-(NSMutableArray*)queryRepairPersonListData:(NSString*)xlzStr{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlg from repair_info where 1=1";
+    if([xlzStr isEqualToString:@""]||[xlzStr isEqualToString:@"全部"]){
+        
+    }else{
+        sql = [NSString stringWithFormat:@"%@ where xlz = '%@'",sql,xlzStr];
+    }
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            RepairInfoModel* model = [[RepairInfoModel alloc] init];
+            NSString* xlg = [cursor stringForColumn:@"xlg"];
+            model.xlz = [cursor stringForColumn:@"xlz"];
+            model.xlg = xlg;
+            [array addObject:model];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 插入二级页面数据列表
+
+-(void)updateSecondIconData:(SecondIconInfoModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        NSString* sql = [NSString stringWithFormat:@"update second_icon set xlf='%@' where mc = '%@'",item.xlf,item.mc];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:sql];
+            if (!res) {
+                NSLog(@"更新失败");
+            }
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+#pragma 更新配件数据
+-(void)updatePartsInfo:(PartsModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        NSString* sql = [NSString stringWithFormat:@"update parts_info set xsj='%@' where pjmc = '%@'",item.xsj,item.pjmc];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:sql];
+            if (!res) {
+                NSLog(@"更新失败");
+            }
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
 }
 @end

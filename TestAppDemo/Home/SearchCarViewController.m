@@ -66,7 +66,7 @@
     __weak SearchCarViewController *safeSelf = self;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_plate_number";
     dict[@"company_code"] = @"A";
     dict[@"previous_xh"] = previous_xh;

@@ -357,7 +357,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         callback(@"",array);
     }else{
         NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        dict[@"db"] = @"asa_to_sql";
+        dict[@"db"] = [ToolsObject getDataSouceName];
         dict[@"function"] = @"sp_fun_down_maintenance_category";//车间管理
         [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
             
@@ -383,7 +383,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak ProjectSelectViewController* safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_maintenance_project";//车间管理
     dict[@"previous_xh"] = previous_xh;
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -412,7 +412,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)confirmGd:(asyncCallback)callback{
    
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"jsd_id"] = _model.jsd_id;
 
     dict[@"function"] = @"sp_fun_upload_maintenance_project_detail";//车间管理

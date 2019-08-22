@@ -50,6 +50,19 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSMutableArray*)querySecondIconListData:(NSString* )wxgz;
 -(NSMutableArray*)queryFirstIconListData;
 -(void)insertSecondIconListData:(NSArray *)array;
+
+-(NSMutableArray*)queryRepairListStringData;
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairZuListData;
+
+-(NSMutableArray*)queryRepairPersonListData:(NSString*)xlzStr;
+
+-(void)updateSecondIconData:(SecondIconInfoModel*)item;
+
+#pragma 更新配件数据
+-(void)updatePartsInfo:(PartsModel*)item;
+
 @end
 
 NS_ASSUME_NONNULL_END

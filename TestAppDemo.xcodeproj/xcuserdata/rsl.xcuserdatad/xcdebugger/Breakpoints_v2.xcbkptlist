@@ -58,7 +58,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TestAppDemo/Message/WorkOrderQueryViewController.m"
-            timestampString = "588035968.990551"
+            timestampString = "588137921.690378"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "196"
@@ -74,7 +74,7 @@
                   moduleName = "TestAppDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Message/WorkOrderQueryViewController.m"
-                  timestampString = "588088789.530139"
+                  timestampString = "588150334.631394"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "196"
@@ -89,7 +89,7 @@
                   moduleName = "TestAppDemo"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Message/WorkOrderQueryViewController.m"
-                  timestampString = "588088789.531929"
+                  timestampString = "588150334.633374"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "196"
@@ -97,6 +97,117 @@
                   offsetFromSymbolStart = "98">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestAppDemo/Project/PeijianSelectViewController.m"
+            timestampString = "588137921.6906151"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "482"
+            endingLineNumber = "482"
+            landmarkName = "-submitTempPartsData:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestAppDemo/Project/PeijianSelectViewController.m"
+            timestampString = "588137921.690673"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "474"
+            endingLineNumber = "474"
+            landmarkName = "-submitTempPartsData:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestAppDemo/Project/ProjectOrderViewController.m"
+            timestampString = "588150334.54238"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1184"
+            endingLineNumber = "1184"
+            landmarkName = "-addTempProject:callback:"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[ProjectOrderViewController addTempProject:callback:]"
+                  moduleName = "TestAppDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Project/ProjectOrderViewController.m"
+                  timestampString = "588150334.648397"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1184"
+                  endingLineNumber = "1184"
+                  offsetFromSymbolStart = "759">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__54-[ProjectOrderViewController addTempProject:callback:]_block_invoke"
+                  moduleName = "TestAppDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Project/ProjectOrderViewController.m"
+                  timestampString = "588150334.650345"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1186"
+                  endingLineNumber = "1186"
+                  offsetFromSymbolStart = "51">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__destroy_helper_block_.734"
+                  moduleName = "TestAppDemo"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rsl/%E5%88%9B%E4%B8%9A/ios/TestAppDemo/TestAppDemo/Project/ProjectOrderViewController.m"
+                  timestampString = "588150334.652494"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1184"
+                  endingLineNumber = "1184"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TestAppDemo/Project/ProjectOrderViewController.m"
+            timestampString = "588150334.542528"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1186"
+            endingLineNumber = "1186"
+            landmarkName = "-addTempProject:callback:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

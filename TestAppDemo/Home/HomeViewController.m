@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "SearchCarViewController.h"
 #import "CarInfoModel.h"
+#import "ProjectViewController.h"
 #import "ProjectOrderViewController.h"
 #import "HNAlertView.h"
 #import "BRPickerView.h"
@@ -421,7 +422,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 更新修理数据
 -(void)getPersonRepairList:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_repairman";//车间管理
     dict[@"company_code"] = @"A";//车间管理
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -450,7 +451,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak HomeViewController *safeSelf = self;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_plate_number";
     dict[@"company_code"] = @"A";
     dict[@"previous_xh"] = previous_xh;
@@ -557,7 +558,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)attention:(UIButton *)sender{
     __weak HomeViewController *safeSelf = self;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_get_wxgzh_account";//上传
     dict[@"company_code"] = @"A";
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -578,7 +579,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak HomeViewController *safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_upload_customer_info";//上传
     dict[@"plate_number"] = model.mc;
     dict[@"cz"]=model.cz;
@@ -615,7 +616,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak HomeViewController *safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_check_repair_list_cp";//检测
     dict[@"customer_id"] = model.customer_id;
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -638,7 +639,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 //            alertView.contentView.backgroundColor = [UIColor redColor];
             [alertView showHNAlertView:^(NSInteger index) {
                 if(index == 0){
-                    [safeSelf enterProject:model];
+                    [safeSelf enterProjectOrder:model];
                 }else{
                     
                 }
@@ -663,7 +664,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     _progress = [ToolsObject showLoading:@"加载中" with:self];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_update_customer_info";//更新
     dict[@"cz"]=model.cz;
     dict[@"phone"]=model.phone;
@@ -688,14 +689,20 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 #pragma mark - 进入工单
--(void)enterProject:(CarInfoModel*)model{
+-(void)enterProjectOrder:(CarInfoModel*)model{
     ProjectOrderViewController *vc  =[[ProjectOrderViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
     vc.model = model;
-    [self.navigationController setNavigationBarHidden:YES];
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 进入工单
+-(void)enterProject:(CarInfoModel*)model{
+    ProjectViewController *vc  =[[ProjectViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 #pragma mark - 生成接车单
 -(void)createPickUpOrder:(CarInfoModel*) model {
     __weak HomeViewController *safeSelf = self;
@@ -704,7 +711,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *dateStr = [formatter stringFromDate:date];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_upload_repair_list_main";//接车单
     dict[@"company_code"] = @"A";
     dict[@"cz"]=model.cz;
@@ -760,7 +767,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     NSString *dateStr = [formatter stringFromDate:date];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_update_fault_info";//故障信息
     dict[@"customer_id"] = model.customer_id;
     dict[@"car_fault"] = model.gzms;

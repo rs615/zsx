@@ -12,6 +12,7 @@
 #import "ProjectSelectViewController.h"
 #import "ProjectViewController.h"
 #import "ProjectJiesuanViewController.h"
+#import "GuzhangListViewController.h"
 #import "ProjectModel.h"
 #import "PeijianModel.h"
 #import "OrderCarInfoModel.h"
@@ -19,6 +20,7 @@
 #import "ProjectCell.h"
 #import "HNAlertView.h"
 #import "TempPartsModel.h"
+#import "EBDropdownListView.h"
 
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
@@ -35,8 +37,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic, strong) NSMutableArray *peijianArray;
 @property (nonatomic, strong) NSMutableArray *orderCarArray;
 @property (nonatomic,strong)HNBankView *abankView;//缺省页
+@property (nonatomic,strong)NSString *category;//缺省页
+//@property (nonatomic,strong)NSString *xlxm;//缺省页
+//@property (nonatomic,strong)NSString *cb;
+//@property (nonatomic,strong)NSString *xlf;
+//@property (nonatomic,strong)NSString *zk;//
+@property (nonatomic,strong) ProjectModel* tmpProject;
 
-
+@property (nonatomic,strong) PeijianModel* tmpPeijian;
 @end
 
 @implementation ProjectOrderViewController
@@ -314,7 +322,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 结算单
 -(void)getJsdInfo:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_repair_list_main";//车间管理
     dict[@"jsd_id"] = _jsd_id;// 传过来
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -335,7 +343,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 配件列表
 -(void)getPjListData:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_jsdmx_pjclmx";//车间管理
     dict[@"jsd_id"] = _jsd_id;// 传过来
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -353,26 +361,6 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     }];
 }
 
-#pragma 项目列表
--(void)getProjectListData:(asyncCallback)callback{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
-    dict[@"function"] = @"sp_fun_down_jsdmx_xlxm";//车间管理
-    dict[@"jsd_id"] = _jsd_id;// 传过来
-    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
-        
-        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
-            NSMutableArray *items = [responseObject objectForKey:@"data"];
-            NSMutableArray* array = [ProjectModel mj_objectArrayWithKeyValuesArray:items] ;
-            callback(@"",array);
-        }else{
-            NSString* msg = [responseObject objectForKey:@"msg"];
-            callback(msg,nil);
-        }
-    } failure:^(NSError * _Nonnull error) {
-        callback(@"网络错误",nil);
-    }];
-}
 
 #pragma segment选择
 -(void)selected:(id)sender{
@@ -524,27 +512,30 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell"];
         }
         UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 110*PXSCALEH)];
-        UILabel* label = [PublicFunction getlabel:CGRectMake(10*PXSCALE, 10*PXSCALEH, MainS_Width/2-25*PXSCALE, 30*PXSCALEH) text:@"公里数:" size:13 align:@"left"];
+        UILabel* label = [PublicFunction getlabel:CGRectMake(10*PXSCALE, 10*PXSCALEH, MainS_Width/2-10*PXSCALE-30, 30*PXSCALEH) text:@"公里数:" size:13 align:@"left"];
         label.text = [NSString stringWithFormat:@"公里数:%@",model.jclc!=nil?model.jclc:@""];
 
-        UIImageView* editImgView = [PublicFunction getImageView:CGRectMake( label.bounds.size.width+10*PXSCALE, 15*PXSCALEH, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
-        
-        UILabel* ywgLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/2, 10*PXSCALEH, MainS_Width/2-15*PXSCALE, 30*PXSCALEH) text:@"预完工日期:" size:13 align:@"left"];
+//        UIImageView* editImgView = [PublicFunction getImageView:CGRectMake( label.bounds.size.width+10*PXSCALE, 15*PXSCALEH, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
+        UIButton* editGlsBtn  = [PublicFunction getButtonInControl:self frame:CGRectMake( label.bounds.size.width+10*PXSCALE,  label.frame.origin.y, 20, 20) imageName:@"edit" title:nil clickAction:@selector(btnSelect:)];
+        editGlsBtn.tag = 300;
+        UILabel* ywgLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/2, 10*PXSCALEH, MainS_Width/2-20, 30*PXSCALEH) text:@"预完工日期:" size:13 align:@"left"];
         ywgLabel.text = [NSString stringWithFormat:@"预完工日期:%@",model.ywg_date!=nil?model.ywg_date:@""];
 
-        UIImageView* ywgEditImgView = [PublicFunction getImageView:CGRectMake( ywgLabel.bounds.size.width+MainS_Width/2, 15*PXSCALEH, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
-        
-        UILabel* gzmsLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE, label.bounds.size.height+label.frame.origin.y, MainS_Width-25*PXSCALE, 30*PXSCALEH) text:@"故障描述:" size:13 align:@"left"];
+//        UIImageView* ywgEditImgView = [PublicFunction getImageView:CGRectMake( ywgLabel.bounds.size.width+MainS_Width/2, 15*PXSCALEH, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
+        UIButton* editYwgBtn  = [PublicFunction getButtonInControl:self frame:CGRectMake( ywgLabel.bounds.size.width+MainS_Width/2, ywgLabel.frame.origin.y, 20, 20)  imageName:@"edit" title:nil clickAction:@selector(btnSelect:)];
+        editYwgBtn.tag = 301;
+        UILabel* gzmsLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE, label.bounds.size.height+label.frame.origin.y, MainS_Width-20*PXSCALE-20, 30*PXSCALEH) text:@"故障描述:" size:13 align:@"left"];
         gzmsLabel.text = [NSString stringWithFormat:@"故障描述:%@",model.car_fault!=nil?model.car_fault:@""];
 
-        UIImageView* gzmsEditImgView = [PublicFunction getImageView:CGRectMake( gzmsLabel.bounds.size.width+10*PXSCALE, 15*PXSCALEH, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
-
-        [contentView addSubview:gzmsEditImgView];
+//        UIImageView* gzmsEditImgView = [PublicFunction getImageView:CGRectMake(gzmsLabel.frame.origin.x+ gzmsLabel.bounds.size.width+10*PXSCALE, gzmsLabel.frame.origin.y, 15*PXSCALE, 15*PXSCALEH) imageName:@"edit"];
+        UIButton* gzmsEditBtn = [PublicFunction getButtonInControl:self frame:CGRectMake(gzmsLabel.frame.origin.x+ gzmsLabel.bounds.size.width, gzmsLabel.frame.origin.y, 20, 20) imageName:@"edit" title:nil clickAction:@selector(btnSelect:)];
+        gzmsEditBtn.tag = 302;
+        [contentView addSubview:gzmsEditBtn];
         [contentView addSubview:gzmsLabel];
 
-        [contentView addSubview:ywgEditImgView];
+        [contentView addSubview:editYwgBtn];
         [contentView addSubview:ywgLabel];
-        [contentView addSubview:editImgView];
+        [contentView addSubview:editGlsBtn];
         [contentView addSubview:label];
        
         NSArray* titleArr = @[@"项目名称",@"性质",@"修理费",@"优惠",@"操作"];
@@ -682,9 +673,22 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 删除项目数据
 -(void)showDeleteDialog:(ProjectModel*)model indexPath:(NSIndexPath*)indexPath{
+    __weak ProjectOrderViewController* safeSelf = self;
     HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:[NSString stringWithFormat:@"确定删除: %@",model.xlxm] withTitle:@"提示" contentView: nil];
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
+            [safeSelf deleteProjectData:model callback:^(NSString *errorMsg, id result) {
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:errorMsg With:safeSelf];
+                }else{
+//                    [safeSelf.projectArray removeObjectAtIndex:indexPath.row];
+//                    [safeSelf.dataSource removeObjectAtIndex:indexPath.row];
+                    [safeSelf.projectArray removeObject:model];
+                    [safeSelf.dataSource removeObject:model];
+                    [safeSelf.tableView reloadData];
+//                    [safeSelf.tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+                }
+            }];
         }else{
             
         }
@@ -708,6 +712,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 修改项目
 -(void)showUpdateDialog:(ProjectModel*)model indexPath:(NSIndexPath *)indexPath{
+//    _xlf = model.xlf;
+//    _xlxm = model.xlxm;
+//    _cb = model.cb;
+//    _zk = model.zk;
+//    _category = model.wxgz;
+    _tmpProject = model;
+    _tmpPeijian = nil;
+    __weak ProjectOrderViewController* safeSelf = self;
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"项目名称:",@"性质:",@"项目价格:",@"项目优惠:",@"保存新价格:"];
     NSString* pname =model.xlxm!=nil?model.xlxm:@"";
@@ -715,6 +727,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     NSString* xlf = model.xlf!=nil?model.xlf:@"";
     NSString* zk = model.zk!=nil?model.zk:@"";
     NSArray* valueArr = @[pname,wxgz,xlf,zk];
+    NSMutableArray* array = [[DataBaseTool shareInstance] queryRepairListStringData];
+//    _category =array.count>0?[array objectAtIndex:0]:@"";
+    
+    NSMutableArray* dataSource = [NSMutableArray array];
+    for (int i=0; i<array.count; i++) {
+        EBDropdownListItem *item = [[EBDropdownListItem alloc] initWithItem:[NSString stringWithFormat:@"%d",i] itemName:[array objectAtIndex:i]];
+        [dataSource addObject:item];
+    }
     for(int i=0;i<titleArr.count;i++){
         UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3, 40*PXSCALEH) text:[titleArr objectAtIndex:i] size:14 align:@"center"];
         [contentView addSubview:titleLabel];
@@ -725,10 +745,31 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             [checkBtn setImage:[UIImage imageNamed:@"right_now_no"] forState:UIControlStateNormal];
             checkBtn.tag = 510;
             [contentView addSubview:checkBtn];
+        }else if(i==1){
+            EBDropdownListView* dropdownListView = [[EBDropdownListView alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH)];
+            dropdownListView.layer.cornerRadius = 6;
+            dropdownListView.layer.borderWidth = 1;
+            dropdownListView.layer.masksToBounds = YES;
+            if(![_tmpProject.wxgz isEqualToString:@""]){
+                NSInteger index = [array indexOfObject:_tmpProject.wxgz];
+                [dropdownListView setSelectedIndex:index];
+            }else{
+                _tmpProject.wxgz = [array objectAtIndex:0];
+                [dropdownListView setSelectedIndex:0];
+            }
+            
+            [dropdownListView setViewBorder:1 borderColor:lightGrayColor cornerRadius:2];
+            [dropdownListView setDataSource:dataSource];
+            [dropdownListView setDropdownListViewSelectedBlock:^(EBDropdownListView *dropdownListView) {
+                safeSelf.tmpProject.wxgz = dropdownListView.selectedItem.itemName;
+            }];
+            [contentView addSubview:dropdownListView];
         }else{
             UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH) tag:200+i returnType:@""];
             valueTextField.text = [valueArr objectAtIndex:i];
-            valueTextField.tag = 500+i;
+            [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+
+            valueTextField.tag = 800+i;
             [contentView addSubview:valueTextField];
         }
         
@@ -738,7 +779,30 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"修改" contentView: contentView];
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
-            
+//            model.xlxm = safeSelf.xlxm;
+//            model.cb = safeSelf.cb;
+//            model.wxgz = safeSelf.category;
+//            model.zk = safeSelf.zk;
+//            model.xlf = safeSelf.xlf;
+            BOOL isSave = ((UIButton*)[contentView viewWithTag:501]).selected;
+            if(isSave){
+                //保存本地
+                SecondIconInfoModel* item = [[SecondIconInfoModel alloc] init];
+                item.xlf = safeSelf.tmpProject.xlf;
+                item.mc = safeSelf.tmpProject.xlxm;//此处项目是否可以修改
+                [[DataBaseTool shareInstance] updateSecondIconData:item];
+            }
+            safeSelf.progress = [ToolsObject showLoading:@"加载中" with:safeSelf];
+            [safeSelf saveNewPrice:model callback:^(NSString *errorMsg, id result) {
+                [safeSelf.progress hideAnimated:YES];
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:errorMsg With:safeSelf];
+                }else{
+                    [safeSelf.projectArray replaceObjectAtIndex:indexPath.row withObject:safeSelf.tmpProject];
+                    [safeSelf.dataSource replaceObjectAtIndex:indexPath.row withObject:safeSelf.tmpProject];
+                    [safeSelf.tableView reloadData];
+                }
+            }];
         }else{
             
         }
@@ -748,6 +812,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 修改配件
 
 -(void)showUpdatePeijianDialog:(PeijianModel*)model indexPath:(NSIndexPath *)indexPath{
+    _tmpPeijian = model;
+    _tmpProject = nil;
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"配件名称:",@"规格:",@"数量:",@"单价:",@"保存新价格:"];
     NSString* peijianname =model.pjmc!=nil?model.pjmc:@"";
@@ -769,16 +835,19 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH) tag:200+i returnType:@""];
             valueTextField.text = [valueArr objectAtIndex:i];
             valueTextField.tag = 500+i;
+            [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
             [contentView addSubview:valueTextField];
         }
-       
-        
+    
     }
     
+    __weak ProjectOrderViewController* safeSelf = self;
     HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"修改配件" contentView: contentView];
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
-            
+            [safeSelf.peijianArray replaceObjectAtIndex:indexPath.row withObject:safeSelf.tmpPeijian];
+            [safeSelf.dataSource replaceObjectAtIndex:indexPath.row withObject:safeSelf.tmpPeijian];
+            [self.tableView reloadData];
         }else{
             
         }
@@ -791,6 +860,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     switch (btn.tag) {
         case 510:
             btn.selected = !btn.selected;
+            break;
+        case 300://修改公里数
+            break;
+        case 301://修改y日期
+            break;
+        case 302://故障列表
+            [self enterGuzhangList];
+            break;
         default:
             break;
     }
@@ -803,6 +880,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"db"] = @"sjsoft_SQL";
+//    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_delete_maintenance_project_detail";//车间管理
     dict[@"jsd_id"] = _jsd_id;// 传过来
     dict[@"xh"] = model.xh;// 传过来
@@ -819,6 +897,31 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         }
     } failure:^(NSError * _Nonnull error) {
         [safeSelf showErrorInfo:@"网络错误"];
+
+    }];
+}
+
+#pragma 删除项目数据
+-(void)deleteProjectData:(ProjectModel*)model callback:(asyncCallback)callback{
+    __weak ProjectOrderViewController *safeSelf = self;
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_delete_maintenance_project_detail";//车间管理
+    dict[@"jsd_id"] = _jsd_id;// 传过来
+    dict[@"xh"] = model.xh;// 传过来
+    //api有问题
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        [safeSelf.progress hideAnimated:YES];
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            callback(@"",nil);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网路错误",nil);
 
     }];
 }
@@ -848,17 +951,45 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 增加临时项目
 -(void)showAddTempProDialog{
+    _tmpProject = [[ProjectModel alloc] init];
+    _tmpProject.xlf = @"";
+    _tmpProject.xlxm = @"";
+    _tmpProject.cb = @"";
+    _tmpProject.zk = @"";
+    
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"项目名称",@"维修成本",@"项目价格",@"项目类别"];
-    
+    __weak ProjectOrderViewController* safeSelf = self;
+    NSMutableArray* array = [[DataBaseTool shareInstance] queryRepairListStringData];
+    _tmpProject.wxgz =array.count>0?[array objectAtIndex:0]:@"";
+
+    NSMutableArray* dataSource = [NSMutableArray array];
+    for (int i=0; i<array.count; i++) {
+        EBDropdownListItem *item = [[EBDropdownListItem alloc] initWithItem:[NSString stringWithFormat:@"%d",i] itemName:[array objectAtIndex:i]];
+        [dataSource addObject:item];
+    }
     for(int i=0;i<titleArr.count;i++){
         UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(10*PXSCALE, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3, 40*PXSCALEH) text:[NSString stringWithFormat:@"%@:",[titleArr objectAtIndex:i]] size:14 align:@"center"];
         [contentView addSubview:titleLabel];
         
         if(i==titleArr.count-1){
+            EBDropdownListView* dropdownListView = [[EBDropdownListView alloc] initWithFrame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH)];
+            
+            dropdownListView.layer.cornerRadius = 6;
+            dropdownListView.layer.borderWidth = 1;
+            dropdownListView.layer.masksToBounds = YES;
+            [dropdownListView setSelectedIndex:0];
+            
+            [dropdownListView setViewBorder:1 borderColor:lightGrayColor cornerRadius:2];
+            [dropdownListView setDataSource:dataSource];
+            [dropdownListView setDropdownListViewSelectedBlock:^(EBDropdownListView *dropdownListView) {
+                safeSelf.tmpProject.wxgz = dropdownListView.selectedItem.itemName;
+            }];
+            [contentView addSubview:dropdownListView];
         }else{
             UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*40*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/3*2, 40*PXSCALEH) tag:200+i returnType:@""];
             valueTextField.tag = 900+i;
+            [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
             valueTextField.placeholder = [NSString stringWithFormat:@"请输入%@",[titleArr objectAtIndex:i]];
             [contentView addSubview:valueTextField];
         }
@@ -866,18 +997,49 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
     }
     
-    HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"修改配件" contentView: contentView];
+    HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"增加临时项目" contentView: contentView];
+    UIButton* button = [alertView viewWithTag:1];
+    button.userInteractionEnabled = NO;
+    button.alpha = 0.4;
     [alertView showHNAlertView:^(NSInteger index) {
         if(index == 1){
-            
+            //获取所有value值
+//            ProjectModel* model = [[ProjectModel alloc] init];
+//            model.xlxm = safeSelf.xlxm;
+//            model.xlf = safeSelf.xlf;
+//            model.cb = safeSelf.cb;
+//            model.wxgz = safeSelf.category;
+            safeSelf.progress = [ToolsObject showLoading:@"加载中" with:safeSelf];
+            [safeSelf addTempProject:safeSelf.tmpProject callback:^(NSString *errorMsg, id result) {
+                [safeSelf.progress hideAnimated:YES];
+                if(![errorMsg isEqualToString:@""]){
+                    [ToolsObject show:errorMsg With:safeSelf];
+                }else{
+                    //刷新
+                    [safeSelf.projectArray addObject:result];
+                    safeSelf.dataSource = safeSelf.projectArray;
+                    [safeSelf.tableView reloadData];
+                }
+            }];
         }else{
-            
+            [alertView removeFromSuperview];
         }
     }];
+  
 }
+
+#pragma 故障
+-(void)enterGuzhangList{
+    _isNeedRefresh = NO;
+    GuzhangListViewController* vc = [[GuzhangListViewController alloc] init];
+    vc.model = _model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma 配件选择
 -(void)enterPeijianSelect{
+    _isNeedRefresh = NO;
     PeijianSelectViewController* vc = [[PeijianSelectViewController alloc] init];
     vc.jsd_id = _jsd_id;
     [self.navigationController pushViewController:vc animated:YES];
@@ -885,6 +1047,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 项目选择
 -(void)enterProjectSelect{
+    _isNeedRefresh = NO;
     ProjectSelectViewController* vc = [[ProjectSelectViewController alloc] init];
     vc.model = _model;
     [self.navigationController pushViewController:vc animated:YES];
@@ -892,6 +1055,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 项目首页
 -(void)enterProject{
+    _isNeedRefresh = NO;
     ProjectViewController* vc = [[ProjectViewController alloc] init];
     vc.model = _model;
     [self.navigationController pushViewController:vc animated:YES];
@@ -899,11 +1063,68 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 结算
 -(void)enterProjectJiesuan{
+    _isNeedRefresh = NO;
     ProjectJiesuanViewController* vc = [[ProjectJiesuanViewController alloc] init];
     vc.model = _model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma 监听值变化
+-(void)textFieldValueChanged:(UITextField *)textField{
+    switch (textField.tag) {
+        case 900:
+        case 800:
+            _tmpProject.xlxm = textField.text;
+            break;
+        case 901:
+            _tmpProject.cb = textField.text;
+            break;
+        case 902:
+        case 802:
+            _tmpProject.xlf  = textField.text;
+            break;
+        case 803:
+            _tmpProject.zk = textField.text;
+            break;
+            
+        case 500:
+            _tmpPeijian.pjmc = textField.text;
+            break;
+        case 501:
+            _tmpPeijian.pjbm = textField.text;
+            break;
+
+        case 502:
+            _tmpPeijian.sl = textField.text;
+            break;
+        case 503:
+            _tmpPeijian.ssj = textField.text;
+            break;
+        default:
+            break;
+    }
+    HNAlertView* alertView = (HNAlertView*)[[textField superview] superview];
+    UIButton* btn = [alertView viewWithTag:1];
+    if(_tmpProject!=nil){
+        if([self.tmpProject.xlf isEqualToString:@""]||[self.tmpProject.xlxm isEqualToString:@""]||[self.tmpProject.cb isEqualToString:@""]){
+            btn.userInteractionEnabled = NO;
+            btn.alpha = 0.4;
+        }else{
+            btn.userInteractionEnabled = YES;
+            btn.alpha = 1;
+        }
+    }
+    if(_tmpPeijian!=nil){
+        if([_tmpPeijian.pjmc isEqualToString:@""]){
+            btn.userInteractionEnabled = NO;
+            btn.alpha = 0.4;
+        }else{
+            btn.userInteractionEnabled = YES;
+            btn.alpha = 1;
+        }
+    }
+    
+}
 
 #pragma 派工
 -(void)judgeToStatus{
@@ -913,6 +1134,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     if([@"派工" isEqualToString:paigongStatus]){
         //调入派工
         ProjectPaigongViewController *vc  =[[ProjectPaigongViewController alloc] init];
+        _isNeedRefresh = NO;
         vc.model = _model;
         [self.navigationController pushViewController:vc animated:YES];
     }else if([@"全部完工" isEqualToString:paigongStatus]){
@@ -921,4 +1143,78 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
     }
 }
+
+
+#pragma 保存新价格
+-(void)saveNewPrice:(ProjectModel*)model callback:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_upload_maintenance_project_library";//车间管理
+    dict[@"xlxm"] = model.xlxm;
+    dict[@"xlf"] = model.xlf;
+    dict[@"wxgz"] = model.wxgz;
+ 
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            callback(@"",model);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+
+#pragma 增加临时项目
+-(void)addTempProject:(ProjectModel*)model callback:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_upload_maintenance_project_detail";//车间管理
+    dict[@"jsd_id"] = _jsd_id;// 传过来
+    dict[@"xlxm"] = model.xlxm;
+    dict[@"xlf"] = model.xlf;
+    dict[@"zk"] = @"0.0";
+    dict[@"wxgz"] = model.wxgz;
+    dict[@"pgzje"] = @"0";
+    dict[@"pgzgs"] = @"1";
+    dict[@"xh"] = @"0";
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSString* xh = [responseObject objectForKey:@"xh"];
+            model.xh = xh;
+            callback(@"",model);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+#pragma 项目列表
+-(void)getProjectListData:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_down_jsdmx_xlxm";//车间管理
+    dict[@"jsd_id"] = _jsd_id;// 传过来
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [ProjectModel mj_objectArrayWithKeyValuesArray:items] ;
+            callback(@"",array);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
 @end

@@ -22,6 +22,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic,strong)MBProgressHUD *progress;
 @property (nonatomic,strong)OrderCarInfoModel *orderCarInfoModel;
+@property (nonatomic,assign)BOOL isNeedRefresh;
 
 @end
 
@@ -194,6 +195,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
                     [ToolsObject show:@"修改失败" With:safeSelf];
                 }else{
                     //更新数据
+                    safeSelf.isNeedRefresh = YES;
                     ((UILabel*)[safeSelf.view viewWithTag:tag+20]).text = valueTextField.text;
                     [ToolsObject show:@"修改成功" With:safeSelf];
                 }
@@ -289,7 +291,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 结算单
 -(void)getJsdInfo:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_repair_list_main";//车间管理
     dict[@"jsd_id"] = _model.jsd_id;// 传过来
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -310,7 +312,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 取消接车
 -(void)cancleReciver:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_delete_repair_list_main";//车间管理
     dict[@"jsd_id"] = _model.jsd_id;// 传过来
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -341,13 +343,20 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 
 -(void)enterWorkOrder{
-//    ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
-//    vc.model = _model;
-//    [self.navigationController pushViewController:vc animated:YES];
+
+    BOOL isHave = NO;
     for(UIViewController*temp in self.navigationController.viewControllers) {
         if([temp isKindOfClass:[ProjectOrderViewController class]]){
+            isHave = YES;
+            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
+            vc.isNeedRefresh = self.isNeedRefresh;
             [self.navigationController popToViewController:temp animated:YES];
         }
+    }
+    if(!isHave){
+        ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
+            vc.model = _model;
+            [self.navigationController pushViewController:vc animated:YES];
     }
 
 }

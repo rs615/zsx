@@ -261,7 +261,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 获取第一页的数据
 -(void)getFirstIconList:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_maintenance_category";//车间管理
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
         
@@ -304,7 +304,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 更新修理数据
 -(void)getPersonRepairList:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_repairman";//车间管理
     dict[@"company_code"] = @"A";//车间管理
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -327,7 +327,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 更新配件数据
 -(void)getPartsList:(asyncCallback)callback{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_stock";//车间管理
     dict[@"comp_code"] = @"A";//车间管理
     dict[@"pjbm"] = @"";//车间管理
