@@ -28,7 +28,7 @@
     label.font = font;
     label.textColor = [UIColor blueColor];
     [self.view addSubview:label];
-    [self performSelector:@selector(toNextPage) withObject:nil afterDelay:3.0];
+    [self performSelector:@selector(toNextPage) withObject:nil afterDelay:0.0];
     
     
     

@@ -154,7 +154,7 @@
             
                 }
         
-        }
+        }//首佳演示
     
     [newviewControlles addObject:vc];
     

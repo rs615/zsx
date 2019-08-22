@@ -16,6 +16,9 @@
 @implementation LoginController
 -(void) createUI
 {
+    UIImageView *backImageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    backImageView.image=[UIImage imageNamed:@"zsx_back_login"];
+    [self.view insertSubview:backImageView atIndex:0];
     
     UITextField * textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 100, 280, 30)];
     // 设置输入框界面风格,枚举如下:
@@ -26,6 +29,7 @@
     textField.borderStyle = UITextBorderStyleRoundedRect;
     // 设置提示文字
     textField.placeholder = @"厂家/分店名称";
+     textField.text=@"首佳演示";
     // 将控件添加到当前视图上
     [self.view addSubview:textField];
     
@@ -33,12 +37,14 @@
     textField2.borderStyle = UITextBorderStyleRoundedRect;
     // 设置提示文字
     textField2.placeholder = @"请输入用户名";
+    textField2.text=@"superuser";
     // 将控件添加到当前视图上
     [self.view addSubview:textField2];
     UITextField * textField3 = [[UITextField alloc]initWithFrame:CGRectMake(80, 200, 280, 30)];
     textField3.borderStyle = UITextBorderStyleRoundedRect;
     // 设置提示文字
     textField3.placeholder = @"请输入密码";
+    textField3.text = @"88204776";
     // 将控件添加到当前视图上
     [self.view addSubview:textField3];
     //类方法创建button

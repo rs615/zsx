@@ -1,0 +1,15 @@
+
+App Thinning Size Report for All Variants of UniversalApp
+
+Variant: UniversalApp-AE7DE146-CDA5-4084-90D7-5AA3DBD7DF7B.ipa
+Supported variant descriptors: [device: iPhone10,3, os-version: 12], [device: iPhone9,2, os-version: 12], [device: iPhone9,4, os-version: 12], [device: iPhone10,2, os-version: 12], [device: iPhone11,4, os-version: 12], [device: iPhone11,6, os-version: 12], [device: iPhone10,6, os-version: 12], [device: iPhone10,5, os-version: 12], [device: iPhone8,2, os-version: 12], and [device: iPhone11,2, os-version: 12]
+App + On Demand Resources size: 62.8 MB compressed, 155.5 MB uncompressed
+App size: 62.8 MB compressed, 155.5 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: UniversalApp-AEE2FD6C-ABBB-4FD9-8455-52CC1A0123A3.ipa
+Supported variant descriptors: [device: iPhone10,2, os-version: 11], [device: iPhone8,2, os-version: 9], [device: iPhone9,2, os-version: 10], [device: iPhone10,3, os-version: 11], [device: iPhone9,4, os-version: 11], [device: iPhone10,5, os-version: 11], [device: iPhone9,2, os-version: 11], [device: iPhone7,1, os-version: 9], [device: iPhone10,6, os-version: 11], and [device: iPhone9,4, os-version: 10]
+App + On Demand Resources size: 68.2 MB compressed, 155.5 MB uncompressed
+App size: 68.2 MB compressed, 155.5 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
