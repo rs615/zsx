@@ -15,6 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic , copy)  NSString* xlz;
 @property (nonatomic , copy)  NSString* xlg;
 @property (nonatomic , assign) BOOL isSelected;
+
+@property (nonatomic, strong) NSMutableArray *children;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -45,6 +45,10 @@
 - (void)setModel:(PaigongInfoModel *)model
 {
     _model = model;
+    NSString* checkedImgName = model.checked?@"right_now":@"right_now_no";
+    
+    [_checkBtn setImage:[UIImage imageNamed:checkedImgName] forState:(UIControlStateNormal)];
+
     NSArray* titleArr = @[@"项目名称: ",@"指派给: ",@"维修人员: ",@"派工金额: ",@"派工状态: "];
     NSArray* valueArr = @[model.xlxm,model.assign,model.xlg,model.pgje,model.states];
     for (int i=0; i<titleArr.count; i++) {

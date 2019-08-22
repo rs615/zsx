@@ -827,6 +827,15 @@
 			path = ip;
 			sourceTree = "<group>";
 		};
+		7F754960230EA04A005A94DA /* Linkage */ = {
+			isa = PBXGroup;
+			children = (
+				7FAAB358230BF4BE0096B401 /* HNLinkageView.h */,
+				7FAAB359230BF4BE0096B401 /* HNLinkageView.m */,
+			);
+			path = Linkage;
+			sourceTree = "<group>";
+		};
 		7FAAB34B230A3AC40096B401 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -924,14 +933,13 @@
 		7FAADFD822FFE7FD00790102 /* CustomTools */ = {
 			isa = PBXGroup;
 			children = (
+				7F754960230EA04A005A94DA /* Linkage */,
 				7FAAE01D230148A400790102 /* EBDropdownListView.h */,
 				7FAAE01C230148A400790102 /* EBDropdownListView.m */,
 				7FAADFD922FFE81600790102 /* HNBankView.h */,
 				7FAADFDA22FFE81600790102 /* HNBankView.m */,
 				7FBC8DB5230296F10048ED7E /* HNAlertView.h */,
 				7FBC8DB6230296F10048ED7E /* HNAlertView.m */,
-				7FAAB358230BF4BE0096B401 /* HNLinkageView.h */,
-				7FAAB359230BF4BE0096B401 /* HNLinkageView.m */,
 				7FAAB35E230C03310096B401 /* HnTextField.h */,
 				7FAAB35F230C03310096B401 /* HnTextField.m */,
 			);

@@ -10,11 +10,17 @@
 #import "PaigongInfoModel.h"
 #import "HNLinkageView.h"
 #import "PaigongCell.h"
+#import "HNAlertView.h"
+#import "RepairInfoModel.h"
+typedef void (^asyncCallback)(NSString* errorMsg,id result);
+
 @interface ProjectPaigongViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic,strong)HNBankView *abankView;//缺省页
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic,strong)MBProgressHUD *progress;
+@property (nonatomic,assign)int postNum;//缺省页
+@property (nonatomic,assign)int allNum;//缺省页
 
 @end
 @implementation ProjectPaigongViewController
@@ -122,8 +128,10 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     PaigongCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.checkBtn.selected = !cell.checkBtn.selected;
-
+    PaigongInfoModel* model = cell.model;
+    model.checked = !model.checked;
+    cell.model = model;
+    [self.dataSource replaceObjectAtIndex:indexPath.row withObject:model];
 }
 
 #pragma mark - 属性
@@ -141,6 +149,7 @@
 -(void)selectItemBtnClick:(UIButton*)btn{
     switch (btn.tag) {
         case 110:
+            [self showDialog];
             break;
         case 111:
             break;
@@ -149,10 +158,102 @@
     }
 }
 
+#pragma 显示对话框   
+-(void)showDialog{
+    NSMutableArray* dataArr = [NSMutableArray array];
+    RepairInfoModel* initModel = [[RepairInfoModel alloc] init];
+    initModel.xlz = @"全部";
+    NSMutableArray* allData = [[DataBaseTool shareInstance] queryRepairPersonListData:@"全部"];
+    initModel.children = allData;
+    [dataArr addObject:initModel];
+
+    NSMutableArray* childData = [[DataBaseTool shareInstance] queryRepairZuListData];
+
+    for (int i=0;i<childData.count; i++) {
+        RepairInfoModel* model = [childData objectAtIndex:i];
+        NSMutableArray* data = [[DataBaseTool shareInstance] queryRepairPersonListData:model.xlz];
+        if(data.count>0){
+            model.children = data;
+            [dataArr addObject:model];
+        }
+    }
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,200*PXSCALEH)];
+    HNLinkageView* linkageView = [[HNLinkageView alloc] initWithFrame:CGRectMake(0, 0, contentView.bounds.size.width, 200*PXSCALEH) dataArr:dataArr block:^(NSMutableArray * _Nonnull dataArray) {
+        
+    }];
+    [contentView addSubview:linkageView];
+    HNAlertView *alertView =  [[HNAlertView alloc] initWithCancleTitle:@"取消" withSurceBtnTitle:@"确定" WithMsg:nil withTitle:@"派工" contentView: contentView];
+    [alertView showHNAlertView:^(NSInteger index) {
+        if(index == 1){
+            NSMutableArray* dataArr = linkageView.rightDataArray;
+            NSString* choosePersonStr = @"";
+            for (RepairInfoModel* model in dataArr) {
+                if(model.isSelected){
+                    if([choosePersonStr isEqualToString:@""]){
+                        choosePersonStr = [NSString stringWithFormat:@"%@",model.xlg];
+                    }else{
+                        choosePersonStr=[NSString stringWithFormat:@"%@,%@",choosePersonStr,model.xlg];
+                    }
+
+                }
+            }
+            
+            if(![choosePersonStr isEqualToString:@""]){
+                self.progress = [ToolsObject showLoading:@"加载中" with:self];
+                [self updatePaigongData:^(NSString *errorMsg, id result) {
+                    [self.progress hideAnimated:YES];
+                    if([result isEqualToString:@"true"]){
+                        [self.tableView reloadData];
+                    }
+                } persons:choosePersonStr];
+            }
+          
+          
+           
+        }else{
+            
+        }
+    }];
+}
+
+
 #pragma --------------------end view
 
 
+#pragma 更新数据
+-(void)updatePaigongData:(asyncCallback)newCallback persons:(NSString*)choosePersons{
+    self.postNum = 0;
+    self.allNum = 0;
+    __weak ProjectPaigongViewController* safeSelf = self;
+    NSString* isUpdate = @"false";
+    BOOL isFinish = NO;
+    for (int i=0;i<self.dataSource.count;i++) {
+        PaigongInfoModel* model = [self.dataSource objectAtIndex:i];
+        if(model.checked){
+            self.allNum++;
+        }
+    }
+    for (int i=0;i<_allNum;i++) {
+        PaigongInfoModel* model = [self.dataSource objectAtIndex:i];
+        [self toPGDataToServer:model choosePerson:choosePersons callback:^(NSString *errorMsg, id result) {
+            safeSelf.postNum++;
+            if([errorMsg isEqualToString:@""]){
+                model.assign = choosePersons;
+                model.checked = NO;
+                [safeSelf.dataSource replaceObjectAtIndex:i withObject:model];
+            }
+            if(safeSelf.postNum>=safeSelf.allNum){
+                newCallback(@"",@"true");
+            }
+           
+        }];
+    }
+    if(_allNum==0){
+        newCallback(@"",@"false");
 
+    }
+   
+}
 
 
 #pragma --------------------data
@@ -182,6 +283,29 @@
         }
     } failure:^(NSError * _Nonnull error) {
         [safeSelf showErrorInfo:@"网络错误"];
+    }];
+    
+}
+
+-(void)toPGDataToServer:(PaigongInfoModel*)model choosePerson:(NSString*)persons callback:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_update_jsdmx_xlxm_assign";//车间管理
+    dict[@"jsd_id"] = _model.jsd_id;//车间管理
+    dict[@"xh"] = model.xh;//
+    dict[@"assign"] = persons;//车间管理
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            callback(@"",nil);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+
     }];
     
 }

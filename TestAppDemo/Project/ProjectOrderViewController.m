@@ -45,6 +45,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic,strong) ProjectModel* tmpProject;
 
 @property (nonatomic,strong) PeijianModel* tmpPeijian;
+@property (nonatomic,assign) BOOL allBtnUnable;
 @end
 
 @implementation ProjectOrderViewController
@@ -54,14 +55,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 {
     [super viewDidLoad];
     [self initView];
-    [self initData];
+//    [self initData];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if(_isNeedRefresh){
+//    if(_isNeedRefresh){
         [self initData];
-    }
+//    }
 }
 
 
@@ -199,7 +200,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
             break;
         case 122://临时项目
-            [self showAddTempProDialog];
+            if(!_allBtnUnable){
+                [self showAddTempProDialog];
+            }
             break;
         case 123://本车首页
             [self enterProject];
@@ -487,10 +490,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         cell.block = ^(NSInteger index) {
             if(index==110){
                 //删除
-                [self showDeletePeijianDialog:model indexPath:indexPath];
+                if(!self.allBtnUnable){
+                    [self showDeletePeijianDialog:model indexPath:indexPath];
+                }
             }else if(index==111){
                 //编辑
-                [self showUpdatePeijianDialog:model indexPath:indexPath];
+                if(!self.allBtnUnable){
+                    [self showUpdatePeijianDialog:model indexPath:indexPath];
+                }
             }
         };
         return cell;
@@ -592,9 +599,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         cell.block = ^(NSInteger index) {
             if(index==110){
                 //删除
-                [self showDeleteDialog:model indexPath:indexPath];
+                if(!self.allBtnUnable){
+                    [self showDeleteDialog:model indexPath:indexPath];
+                }
             }else if(index == 111){
-                [self showUpdateDialog:model indexPath:indexPath];
+                if(!self.allBtnUnable){
+                    [self showUpdateDialog:model indexPath:indexPath];
+                }
             }
         };
         return cell;
@@ -1128,7 +1139,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 派工
 -(void)judgeToStatus{
-    
+    __weak ProjectOrderViewController* safeSelf = self;
     UIButton* paigongBtn = (UIButton*)[self.baseView viewWithTag:124];
     NSString* paigongStatus = paigongBtn.currentTitle;
     if([@"派工" isEqualToString:paigongStatus]){
@@ -1138,10 +1149,51 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         vc.model = _model;
         [self.navigationController pushViewController:vc animated:YES];
     }else if([@"全部完工" isEqualToString:paigongStatus]){
-        
+        self.allBtnUnable = YES;
+        self.progress = [ToolsObject showLoading:@"加载中" with:self];
+        [self allFinishGong:^(NSString *errorMsg, id result) {
+            [safeSelf.progress hideAnimated:YES];
+            if(![errorMsg isEqualToString:@""]){
+                [ToolsObject show:errorMsg With:safeSelf];
+            }else{
+                UIButton* peijiankuBtn = ((UIButton*)[self.view viewWithTag:110]);
+                peijiankuBtn.userInteractionEnabled = NO;
+                peijiankuBtn.alpha = 0.4;
+                UIButton* projectKuBtn = ((UIButton*)[self.view viewWithTag:121]);
+                projectKuBtn.userInteractionEnabled = NO;
+                projectKuBtn.alpha = 0.4;
+                UIButton* tmpProjectBtn = ((UIButton*)[self.view viewWithTag:122]);
+                tmpProjectBtn.userInteractionEnabled = NO;
+                tmpProjectBtn.alpha = 0.4;
+                
+            }
+        }];
     }else if([@"取消完工" isEqualToString:paigongStatus]){
         
     }
+}
+
+
+#pragma 全部完工
+-(void)allFinishGong:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_update_repair_list_state";//车间管理
+    dict[@"jsd_id"] = _model.jsd_id;
+    dict[@"states"] = @"审核未结算";
+    dict[@"xm_state"] = @"已完工";
+    
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            callback(@"",nil);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
 }
 
 

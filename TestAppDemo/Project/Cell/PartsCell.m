@@ -17,9 +17,9 @@
 @implementation PartsCell
 
 +(instancetype)cellWithTableView:(UITableView *)tableView{
-    id cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_PartsCell];
+    PartsCell* cell = [tableView dequeueReusableCellWithIdentifier:kCellIdentifier_PartsCell];
     if(cell==nil){
-        cell = [[PartsCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:kCellIdentifier_PartsCell];
+        cell = [[PartsCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellIdentifier_PartsCell];
     }
     return cell;
 }
@@ -37,9 +37,11 @@
             titleLabel.tag = 100+i;
             [contentView addSubview:titleLabel];
         }
-        _checkBtn = [PublicFunction getButtonInControl:self frame:CGRectMake((30*PXSCALE-20*PXSCALE)/2, (100*PXSCALEH-20*PXSCALE)/2,  20*PXSCALEH, 20*PXSCALEH) imageName:@"right_now_no" title:@"" clickAction:@selector(btnSelect:)];
-        [_checkBtn setImage:[UIImage imageNamed:@"right_now"] forState:UIControlStateSelected];
-        [_checkBtn setImage:[UIImage imageNamed:@"right_now_no"] forState:UIControlStateNormal];
+        NSString* checkedImgName = _model.isSelected?@"right_now":@"right_now_no";
+        _checkBtn = [PublicFunction getButtonInControl:self frame:CGRectMake((30*PXSCALE-20*PXSCALE)/2, (100*PXSCALEH-20*PXSCALE)/2,  20*PXSCALEH, 20*PXSCALEH) imageName:checkedImgName title:@"" clickAction:@selector(btnSelect:)];
+        _checkBtn.tag = 200;
+//        [_checkBtn setImage:[UIImage imageNamed:@"right_now"] forState:UIControlStateSelected];
+//        [_checkBtn setImage:[UIImage imageNamed:@"right_now_no"] forState:UIControlStateNormal];
         [contentView addSubview:_checkBtn];
         [self.contentView addSubview:contentView];
     }
@@ -49,6 +51,11 @@
 - (void)setModel:(PartsModel *)model
 {
     _model = model;
+  
+    NSString* checkedImgName = _model.isSelected?@"right_now":@"right_now_no";
+    [_checkBtn setImage:[UIImage imageNamed:checkedImgName] forState:UIControlStateNormal];
+
+
     ((UILabel*)[self.contentView viewWithTag:100]).text = [NSString stringWithFormat:@"名称:%@",model.pjmc];
     ((UILabel*)[self.contentView viewWithTag:102]).text =  [NSString stringWithFormat:@"仓库:%@号仓",model.cd];
     ((UILabel*)[self.contentView viewWithTag:101]).text = [NSString stringWithFormat:@"规格:%@",model.cd];
@@ -60,6 +67,9 @@
 
 -(void)btnSelect:(UIButton*)btn{
     btn.selected = !btn.selected;
+    _model.isSelected = btn.selected;
+    NSString* checkedImgName = _model.isSelected?@"right_now":@"right_now_no";
+    [_checkBtn setImage:[UIImage imageNamed:checkedImgName] forState:UIControlStateNormal];
 }
 
 @end

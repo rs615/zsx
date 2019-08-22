@@ -11,8 +11,13 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HNLinkageView : UIView
+typedef void(^resultBlock)(NSMutableArray* dataArray);
 
+@interface HNLinkageView : UIView
+@property (nonatomic,copy)resultBlock myBlock;
+@property (nonatomic, strong) NSMutableArray *rightDataArray;
+
+-(instancetype)initWithFrame:(CGRect)frame dataArr:(NSMutableArray*)data block:(resultBlock)block;
 @end
 
 NS_ASSUME_NONNULL_END

@@ -200,6 +200,8 @@
     
     if(!self.kcPeiJianView.hidden){
         PartsCell* cell = [PartsCell cellWithTableView:tableView];
+        cell.tag = indexPath.row;
+
         cell.model = self.dataSource[indexPath.row];
         return cell;
     }else if(!self.tmpPeiJianView.hidden){
@@ -253,7 +255,15 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if(!self.kcPeiJianView.hidden){
         PartsCell* cell = [tableView cellForRowAtIndexPath:indexPath];
-        cell.checkBtn.selected = !cell.checkBtn.selected;
+//        cell.checkBtn.selected = !cell.checkBtn.selected;
+//        PartsModel* model = [self.dataSource objectAtIndex:indexPath.row];
+        PartsModel* model = cell.model;
+        model.isSelected = !model.isSelected;
+        cell.model = model;
+//        NSString* checkedImgName = model.isSelected?@"right_now":@"right_now_no";
+//        [cell.checkBtn setImage:[UIImage imageNamed:checkedImgName] forState:(UIControlStateNormal)];
+        [self.dataSource replaceObjectAtIndex:indexPath.row withObject:model];
+//        [self.tableView reloadData];
     }
 }
 
@@ -334,39 +344,52 @@
 
 #pragma 确定数据
 -(void)makeSureData{
-    NSInteger rows = [self.tableView numberOfRowsInSection:0];
     NSMutableArray* array = [NSMutableArray array];
+  
+    NSInteger rows = [self.tableView numberOfRowsInSection:0];
 
-    for(int row=0;row<rows;row++){
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        //获取cell
-        if(!self.kcPeiJianView.hidden){
-            PartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
-            PartsModel* model = cell.model;
-            if(cell.checkBtn.selected){
-                [array addObject:model];
-            }
-        }else if(!self.tmpPeiJianView.hidden){
-            TempPartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
-            TempPartsModel* model = cell.model;
-            if(model.name!=nil&&model.jinjia!=nil&&model.xiaojia!=nil&&model.shuliang!=nil){
-                PartsModel* partsModel = [[PartsModel alloc] init];
-                partsModel.pjmc = model.name;
-                partsModel.xsj = model.xiaojia;
-                partsModel.pjjj = model.jinjia;
-                partsModel.sl = model.shuliang;
-                [array addObject:partsModel];
-            }
-        }else if(!self.zdPeiJianView.hidden){
-            SelfPartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
-            SelfPartsModel* model = cell.model;
-            if(model.name!=nil&&model.shuliang!=nil){
-                PartsModel* partsModel = [[PartsModel alloc] init];
-                partsModel.pjmc = model.name;
-                partsModel.sl = model.shuliang;
-                [array addObject:partsModel];
+    if(!self.kcPeiJianView.hidden){
+        //            PartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
+        //            PartsModel* model = cell.model;
+        //            if(cell.checkBtn.selected){
+        //                [array addObject:model];
+        //            }
+        
+        for (int i=0; i<self.dataSource.count; i++) {
+            if(!self.kcPeiJianView.hidden){
+                PartsModel* model = [self.dataSource objectAtIndex:i];
+                if(model.isSelected==YES){
+                    [array addObject:model];
+                }
             }
         }
+    }else{
+        for(int row=0;row<rows;row++){
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            //获取cell
+            if(!self.tmpPeiJianView.hidden){
+                TempPartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
+                TempPartsModel* model = cell.model;
+                if(model.name!=nil&&model.jinjia!=nil&&model.xiaojia!=nil&&model.shuliang!=nil){
+                    PartsModel* partsModel = [[PartsModel alloc] init];
+                    partsModel.pjmc = model.name;
+                    partsModel.xsj = model.xiaojia;
+                    partsModel.pjjj = model.jinjia;
+                    partsModel.sl = model.shuliang;
+                    [array addObject:partsModel];
+                }
+            }else if(!self.zdPeiJianView.hidden){
+                SelfPartsCell* cell = [_tableView cellForRowAtIndexPath:indexPath];
+                SelfPartsModel* model = cell.model;
+                if(model.name!=nil&&model.shuliang!=nil){
+                    PartsModel* partsModel = [[PartsModel alloc] init];
+                    partsModel.pjmc = model.name;
+                    partsModel.sl = model.shuliang;
+                    [array addObject:partsModel];
+                }
+            }
+        }
+
     }
     
     if(!self.kcPeiJianView.hidden){

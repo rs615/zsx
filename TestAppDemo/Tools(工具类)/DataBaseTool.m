@@ -584,7 +584,7 @@
     if([xlzStr isEqualToString:@""]||[xlzStr isEqualToString:@"全部"]){
         
     }else{
-        sql = [NSString stringWithFormat:@"%@ where xlz = '%@'",sql,xlzStr];
+        sql = [NSString stringWithFormat:@"%@ and xlz = '%@'",sql,xlzStr];
     }
     
     if ([_db open]) {
@@ -592,7 +592,7 @@
         while([cursor next]){
             RepairInfoModel* model = [[RepairInfoModel alloc] init];
             NSString* xlg = [cursor stringForColumn:@"xlg"];
-            model.xlz = [cursor stringForColumn:@"xlz"];
+//            model.xlz = [cursor stringForColumn:@"xlz"];
             model.xlg = xlg;
             [array addObject:model];
         }
