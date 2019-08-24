@@ -66,6 +66,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 + (void)saveHaseLogin:(BOOL)hasLogin;
++(CGRect)getStringFrame:(NSString *)str withFont:(NSInteger)fontSize withMaxSize:(CGSize)size;
+
 @end
 
 NS_ASSUME_NONNULL_END

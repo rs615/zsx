@@ -42,6 +42,10 @@
 		7F1234FE230F939E007BDB6E /* IQUIView+Hierarchy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1234EC230F939D007BDB6E /* IQUIView+Hierarchy.m */; };
 		7F1234FF230F939E007BDB6E /* IQUIViewController+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1234F0230F939D007BDB6E /* IQUIViewController+Additions.m */; };
 		7F123500230F939E007BDB6E /* IQKeyboardReturnKeyHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F1234F2230F939D007BDB6E /* IQKeyboardReturnKeyHandler.m */; };
+		7F123503230FB93D007BDB6E /* ProjectShouYinViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F123502230FB93D007BDB6E /* ProjectShouYinViewController.m */; };
+		7F123506231021D2007BDB6E /* RateModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F123505231021D2007BDB6E /* RateModel.m */; };
+		7F123509231022A6007BDB6E /* ShouyinModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F123508231022A6007BDB6E /* ShouyinModel.m */; };
+		7F12350C2310C5D1007BDB6E /* MoneyModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F12350B2310C5D1007BDB6E /* MoneyModel.m */; };
 		7F453EE4230315260063EC0A /* ManageInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453EE3230315260063EC0A /* ManageInfoModel.m */; };
 		7F453EE823031A720063EC0A /* FactoryManagerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453EE723031A720063EC0A /* FactoryManagerCell.m */; };
 		7F453F1C2303EE900063EC0A /* UIScrollView+MJRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F453EEC2303EE900063EC0A /* UIScrollView+MJRefresh.m */; };
@@ -223,6 +227,14 @@
 		7F1234F0230F939D007BDB6E /* IQUIViewController+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "IQUIViewController+Additions.m"; sourceTree = "<group>"; };
 		7F1234F1230F939D007BDB6E /* IQUIView+Hierarchy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IQUIView+Hierarchy.h"; sourceTree = "<group>"; };
 		7F1234F2230F939D007BDB6E /* IQKeyboardReturnKeyHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IQKeyboardReturnKeyHandler.m; sourceTree = "<group>"; };
+		7F123501230FB93D007BDB6E /* ProjectShouYinViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProjectShouYinViewController.h; sourceTree = "<group>"; };
+		7F123502230FB93D007BDB6E /* ProjectShouYinViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectShouYinViewController.m; sourceTree = "<group>"; };
+		7F123504231021D2007BDB6E /* RateModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RateModel.h; sourceTree = "<group>"; };
+		7F123505231021D2007BDB6E /* RateModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RateModel.m; sourceTree = "<group>"; };
+		7F123507231022A6007BDB6E /* ShouyinModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShouyinModel.h; sourceTree = "<group>"; };
+		7F123508231022A6007BDB6E /* ShouyinModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShouyinModel.m; sourceTree = "<group>"; };
+		7F12350A2310C5D1007BDB6E /* MoneyModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MoneyModel.h; sourceTree = "<group>"; };
+		7F12350B2310C5D1007BDB6E /* MoneyModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MoneyModel.m; sourceTree = "<group>"; };
 		7F453EE2230315260063EC0A /* ManageInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManageInfoModel.h; sourceTree = "<group>"; };
 		7F453EE3230315260063EC0A /* ManageInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManageInfoModel.m; sourceTree = "<group>"; };
 		7F453EE623031A720063EC0A /* FactoryManagerCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FactoryManagerCell.h; sourceTree = "<group>"; };
@@ -493,6 +505,8 @@
 				7FAAB36E230D2B730096B401 /* ProjectJiesuanViewController.m */,
 				7F75495A230D86D3005A94DA /* GuzhangListViewController.h */,
 				7F75495B230D86D4005A94DA /* GuzhangListViewController.m */,
+				7F123501230FB93D007BDB6E /* ProjectShouYinViewController.h */,
+				7F123502230FB93D007BDB6E /* ProjectShouYinViewController.m */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -932,6 +946,12 @@
 				7F1234CB230F7905007BDB6E /* JsXmModel.m */,
 				7F1234CD230F79AB007BDB6E /* JsCompModel.h */,
 				7F1234CE230F79AB007BDB6E /* JsCompModel.m */,
+				7F123504231021D2007BDB6E /* RateModel.h */,
+				7F123505231021D2007BDB6E /* RateModel.m */,
+				7F123507231022A6007BDB6E /* ShouyinModel.h */,
+				7F123508231022A6007BDB6E /* ShouyinModel.m */,
+				7F12350A2310C5D1007BDB6E /* MoneyModel.h */,
+				7F12350B2310C5D1007BDB6E /* MoneyModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1350,6 +1370,7 @@
 				7FAAE0432301B33A00790102 /* MJPropertyKey.m in Sources */,
 				7FAAB35D230BFBBF0096B401 /* ProjectSelectViewController.m in Sources */,
 				7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */,
+				7F123506231021D2007BDB6E /* RateModel.m in Sources */,
 				7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */,
 				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
 				7FAAB33B230981B10096B401 /* PartsModel.m in Sources */,
@@ -1383,12 +1404,14 @@
 				41DDD54422A4CE1400D4A317 /* AppDelegate.m in Sources */,
 				7F4B42D22305AFC300A0D133 /* PeijianModel.m in Sources */,
 				7FAAE00D22FFEBB400790102 /* AFURLResponseSerialization.m in Sources */,
+				7F123503230FB93D007BDB6E /* ProjectShouYinViewController.m in Sources */,
 				7FAAE0422301B33A00790102 /* NSString+MJExtension.m in Sources */,
 				7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */,
 				7FAAB360230C03310096B401 /* HnTextField.m in Sources */,
 				7FAAB3442309955D0096B401 /* SelfPartsCell.m in Sources */,
 				7FAAB363230C0D3D0096B401 /* SecondIconInfoModel.m in Sources */,
 				7F1234FA230F939E007BDB6E /* IQKeyboardManager.m in Sources */,
+				7F12350C2310C5D1007BDB6E /* MoneyModel.m in Sources */,
 				7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */,
 				7FBC8DB7230296F10048ED7E /* HNAlertView.m in Sources */,
 				7FAAE00522FFEBB400790102 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -1396,6 +1419,7 @@
 				7FAADFDB22FFE81600790102 /* HNBankView.m in Sources */,
 				7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */,
 				7F453FA0230466940063EC0A /* NSDate+BRPickerView.m in Sources */,
+				7F123509231022A6007BDB6E /* ShouyinModel.m in Sources */,
 				7F1234FB230F939E007BDB6E /* IQNSArray+Sort.m in Sources */,
 				7FBC8DB12301B5D60048ED7E /* DataBaseTool.m in Sources */,
 				7F453F212303EE900063EC0A /* UIView+MJExtension.m in Sources */,

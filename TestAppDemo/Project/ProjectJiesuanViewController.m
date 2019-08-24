@@ -7,6 +7,7 @@
 //
 
 #import "ProjectJiesuanViewController.h"
+#import "ProjectShouYinViewController.h"
 #import "JsBaseModel.h"
 #import "JsPartModel.h"
 #import "JsXmModel.h"
@@ -23,6 +24,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic, strong) NSMutableArray *xmsData;
 @property (nonatomic, assign) double totalXlf;
 @property (nonatomic, assign) double totalZkMoney;
+@property (nonatomic, assign) double totalPartSl;
+@property (nonatomic, assign) double totalPartMoney;
+@property (nonatomic, assign) double totalCb;
 
 @end
 
@@ -110,25 +114,36 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
 }
 
+-(void)selectItemBtnClick:(UIButton*)btn{
+    
+    switch (btn.tag) {
+        case 110:
+            break;
+        case 123:
+            [self enterShouYin];
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 #pragma tableview
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if(section==0){
-        if(_jsBaseModel!=nil){
-            return 1;
-        }
-    }else if(section==1){
-        return 1;
-    }else if(section==2){
+    if(section==1){
         return self.xmsData.count;
+    }else if(section==2){
+        return self.partsData.count;
+    }else{
+        return 1;
     }
     
-    return 0;
 }
 
 -(NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 3;
+    return 4;
 }
 
 #pragma 获取结算单cell
@@ -147,7 +162,12 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [cell.contentView addSubview:yu_dateLabel];
     
     NSArray* titleArr = @[@"修理厂名称:",@"客户名称:",@"车牌:",@"车架号:",@"车型:",@"进厂历程:",@"故障描述:"];
-    NSArray* valueArr = @[[ToolsObject getFactoryName],_jsBaseModel.cz,_jsBaseModel.cp,_jsBaseModel.cjhm,_jsBaseModel.cx,_jsBaseModel.jclc,_jsBaseModel.car_fault];
+    NSArray* valueArr;
+    if(_jsBaseModel==nil){
+        valueArr = @[@"",@"",@"",@"",@"",@"",@""];
+    }else{
+        valueArr = @[[ToolsObject getFactoryName],_jsBaseModel.cz,_jsBaseModel.cp,_jsBaseModel.cjhm,_jsBaseModel.cx,_jsBaseModel.jclc,_jsBaseModel.car_fault];
+    }
     for (int i=0;i<titleArr.count; i++) {
         UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(0, i*30*PXSCALEH+40*PXSCALEH, MainS_Width/2-20*PXSCALE, 30*PXSCALEH) text:titleArr[i] fontSize:14 color:SetColor(@"#999999", 1) align:@"right"];
         UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width+10*PXSCALE, i*30*PXSCALEH+40*PXSCALEH, MainS_Width-(titleLabel.frame.origin.x+titleLabel.bounds.size.width+10*PXSCALE), 30*PXSCALEH) text:valueArr[i] fontSize:14 color:SetColor(@"#999999", 1) align:@"left"];
@@ -157,43 +177,43 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     return cell;
 }
 
-#pragma 获取项目title cell
--(UITableViewCell *)createProjectTitleCell:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath{
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    if(cell==nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell1"];
-    }
-    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, 0, MainS_Width-20*PXSCALE, 1)];
-    lineView.backgroundColor = SetColor(@"#999999", 1);
-    [cell.contentView addSubview:lineView];
-    NSArray* titleArr = @[@"项目名称",@"修理费",@"优惠"];
-    for (int i=0; i<titleArr.count; i++) {
-        UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE, 0, (MainS_Width-20*PXSCALE)/3, 40*PXSCALEH) text:titleArr[i] align:@"center"];
-        [cell.contentView addSubview:titleLabel];
-    }
-    return cell;
-}
 
 #pragma 获取项目cell
 -(UITableViewCell *)createProjectCell:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
     if(cell==nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell2"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell1"];
     }
-    
+   
+    if(indexPath.row==0){
+        NSArray* titleArr = @[@"项目名称",@"修理费",@"优惠"];
+        UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, 0, MainS_Width-20*PXSCALE, 1)];
+        lineView.backgroundColor = SetColor(@"#999999", 1);
+        [cell.contentView addSubview:lineView];
+        for (int i=0; i<titleArr.count; i++) {
+            UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE, 10*PXSCALEH, (MainS_Width-20*PXSCALE)/3, 30*PXSCALEH) text:titleArr[i] align:@"center"];
+            [cell.contentView addSubview:titleLabel];
+        }
+    }
     JsXmModel* model = [self.xmsData objectAtIndex:indexPath.row];
-    NSArray* titleArr = @[@"项目名称",@"修理费",@"优惠"];
+    
     NSArray* valueArr = @[model.xlxm,model.xlf,model.zk];
-    for (int i=0; i<titleArr.count; i++) {
-        UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE, 0, (MainS_Width-20*PXSCALE)/3, 30*PXSCALEH) text:valueArr[i] align:@"center"];
+    for (int i=0; i<valueArr.count; i++) {
+        UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE, 0, (MainS_Width-20*PXSCALE)/3, 40*PXSCALEH) text:valueArr[i] align:@"center"];
+        if(indexPath.row==0){
+            valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE, 40*PXSCALEH, (MainS_Width-20*PXSCALE)/3, 30*PXSCALEH);
+        }
         [valueLabel setTextColor:SetColor(@"#999999", 1)];
         [cell.contentView addSubview:valueLabel];
-    
     }
+    
     if(indexPath.row==self.xmsData.count-1){
         NSArray* xjArr = @[@"小计",[NSString stringWithFormat:@"%.2f",_totalXlf],[NSString stringWithFormat:@"%.2f",_totalZkMoney]];
         for (int i=0; i<xjArr.count; i++) {
-            UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE,30*PXSCALEH , (MainS_Width-20*PXSCALE)/3, 30*PXSCALEH) text:xjArr[i] align:@"center"];
+            UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/3, 40*PXSCALEH) text:xjArr[i] align:@"center"];
+            if(indexPath.row==0){
+                valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/3, 80*PXSCALEH);
+            }
             [valueLabel setTextColor:SetColor(@"#999999", 1)];
             [cell.contentView addSubview:valueLabel];
         }
@@ -203,30 +223,129 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 
+#pragma 获取配件cell
+-(UITableViewCell *)createPeijianCell:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell==nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell2"];
+    }
+    
+    JsPartModel* model = [self.partsData objectAtIndex:indexPath.row];
+    if(indexPath.row==0){
+        NSArray* titleArr = @[@"配件名称",@"数量",@"单价",@"金额"];
+        UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, 0, MainS_Width-20*PXSCALE, 1)];
+        lineView.backgroundColor = SetColor(@"#999999", 1);
+        [cell.contentView addSubview:lineView];
+        for (int i=0; i<titleArr.count; i++) {
+            UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE, 10*PXSCALEH, (MainS_Width-20*PXSCALE)/4, 30*PXSCALEH) text:titleArr[i] align:@"center"];
+            [cell.contentView addSubview:titleLabel];
+        }
+    }
+    NSArray* valueArr = @[model.pjmc,[NSString stringWithFormat:@"%.2f",[model.sl floatValue]],@"0.00",[NSString stringWithFormat:@"%.2f",[model.ssj floatValue]]];
+    for (int i=0; i<valueArr.count; i++) {
+        UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE, 0, (MainS_Width-20*PXSCALE)/4, 30*PXSCALEH) text:valueArr[i] align:@"center"];
+        if(indexPath.row==0){
+            valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE, 40*PXSCALEH, (MainS_Width-20*PXSCALE)/4, 30*PXSCALEH);
+        }
+        [valueLabel setTextColor:SetColor(@"#999999", 1)];
+        [cell.contentView addSubview:valueLabel];
+        
+    }
+ 
+    if(indexPath.row==self.xmsData.count-1){
+        NSArray* xjArr = @[@"小计",[NSString stringWithFormat:@"%.2f",_totalXlf],[NSString stringWithFormat:@"%.2f",_totalZkMoney]];
+        for (int i=0; i<xjArr.count; i++) {
+            UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/4, 30*PXSCALEH) text:xjArr[i] align:@"center"];
+            [valueLabel setTextColor:SetColor(@"#999999", 1)];
+            if(indexPath.row==0){
+                valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/3, 70*PXSCALEH);
+            }
+            [cell.contentView addSubview:valueLabel];
+        }
+    }
+    
+    return cell;
+}
+
+#pragma 其他信息
+-(UITableViewCell *)createOtherCell:(UITableView *)tableView withIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell==nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell3"];
+    }
+    UIView* lineView1 = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, 1, MainS_Width-20*PXSCALE, 1)];
+    lineView1.backgroundColor = SetColor(@"#999999", 1);
+    [cell.contentView addSubview:lineView1];
+
+    UILabel* yszjLabel = [PublicFunction getlabel:CGRectMake(20*PXSCALE, 0, MainS_Width-40*PXSCALE, 40*PXSCALEH) text:[NSString stringWithFormat:@"应收总计:"] align:@"left"];
+    [ToolsObject setBorderWithView:yszjLabel top:YES left:NO bottom:YES right:NO borderColor:SetColor(@"#99999", 1) borderWidth:1];
+    [cell.contentView addSubview:yszjLabel];
+    UILabel* addressLabel = [PublicFunction getlabel:CGRectMake(20*PXSCALE, 40*PXSCALEH, MainS_Width-40*PXSCALE, 40*PXSCALEH) text:[NSString stringWithFormat:@"地址:%@",self.jsCompModel.address] align:@"left"];
+    UILabel* phoneLabel = [PublicFunction getlabel:CGRectMake(20*PXSCALE, 40*PXSCALEH*2, (MainS_Width-40*PXSCALE)/2, 40*PXSCALEH) text:[NSString stringWithFormat:@"电话:%@",self.jsCompModel.telphone] align:@"left"];
+
+//    UILabel* czLabel = [PublicFunction getlabel:CGRectMake(phoneLabel.frame.origin.x+phoneLabel.bounds.size.width, 40*PXSCALEH*2, (MainS_Width-40*PXSCALE)/2, 40*PXSCALEH) text:[NSString stringWithFormat:@"传真:"] align:@"left"];
+    [cell.contentView addSubview:addressLabel];
+    [cell.contentView addSubview:phoneLabel];
+//    [cell.contentView addSubview:czLabel];
+    UIView* lineView = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, phoneLabel.frame.origin.y+phoneLabel.bounds.size.height, MainS_Width-20*PXSCALE, 1)];
+    lineView.backgroundColor = SetColor(@"#999999", 1);
+    [cell.contentView addSubview:lineView];
+
+    NSArray* titleArr = @[@"客户签字:",@"接待签字:",@"日期:",@"备注:",@"打印时间"];
+    for (int i=0; i<titleArr.count; i++) {
+        UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(20*PXSCALE, i*40*PXSCALEH+phoneLabel.frame.origin.y+phoneLabel.bounds.size.height, (MainS_Width-40*PXSCALEH)/4, 40*PXSCALEH) text:titleArr[i] align:@"left"];
+        if(i==titleArr.count-1){
+            titleLabel.frame =CGRectMake(20*PXSCALE, i*40*PXSCALEH+phoneLabel.frame.origin.y+phoneLabel.bounds.size.height, MainS_Width-40*PXSCALEH, 40*PXSCALEH);
+//            titleLabel.textAlignment=NSTextAlignmentLeft;
+            NSDate* curDate = [NSDate date];
+            NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+            [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *dateStr = [formatter stringFromDate:curDate];
+            titleLabel.text = [NSString stringWithFormat:@"打印时间: %@",dateStr];
+        }
+        [cell.contentView addSubview:titleLabel];
+    }
+    return cell;
+}
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%ld",indexPath.section);
     if(indexPath.section==0){
         return [self createJsdCell:tableView withIndexPath:indexPath];
     }else if(indexPath.section==1){
-       
-        return [self createProjectTitleCell:tableView withIndexPath:indexPath];
-    }else if(indexPath.section==2){
         return [self createProjectCell:tableView withIndexPath:indexPath];
+    }else if(indexPath.section==2){
+        return [self createPeijianCell:tableView withIndexPath:indexPath];
+    }else if(indexPath.section==3){
+        return [self createOtherCell:tableView withIndexPath:indexPath];
 
     }
     return nil;
-    
 }
 
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0){
         return 260*PXSCALEH;
-        
     }else if(indexPath.section==1){
-        return 40*PXSCALEH;
+        if(indexPath.row==0||indexPath.row==self.xmsData.count-1){
+            if(self.xmsData.count==1){
+                return 100*PXSCALEH;
+
+            }
+            
+            return 80*PXSCALEH;
+        }
     }else if(indexPath.section==2){
-        return 40*PXSCALEH;
+        if(indexPath.row==0||indexPath.row==self.partsData.count-1){
+            if(self.partsData.count==1){
+                return 100*PXSCALEH;
+                
+            }
+            return 80*PXSCALEH;
+        }
+    }else if(indexPath.section==3){
+        return 320*PXSCALEH;
     }
     return 40*PXSCALEH;
 }
@@ -257,6 +376,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         }else{
             safeSelf.partsData = result;
         }
+        for(JsPartModel* model in safeSelf.partsData){
+            double tmpDob = [model.ssj doubleValue];
+            double tmpSl = [model.sl doubleValue];
+            safeSelf.totalPartSl+=tmpSl;
+            safeSelf.totalPartMoney+=tmpDob;
+            safeSelf.totalCb += model.cb==nil?0:[model.cb doubleValue];
+        }
         dispatch_group_leave(group);
     }];
     
@@ -268,7 +394,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             safeSelf.xmsData = result;
         }
         for (JsXmModel* model in safeSelf.xmsData) {
-            float tmpSl = [model.xlf floatValue];
+            double tmpSl = [model.xlf doubleValue];
             safeSelf.totalXlf += tmpSl;
         }
         dispatch_group_leave(group);
@@ -398,5 +524,12 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         _xmsData = [NSMutableArray array];
     }
     return _xmsData;
+}
+
+-(void)enterShouYin{
+    ProjectShouYinViewController* vc = [[ProjectShouYinViewController alloc] init];
+    vc.model = _model;
+    vc.totalZkMoney = [NSString stringWithFormat:@"%.2f",_totalZkMoney];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 @end
