@@ -157,6 +157,7 @@
 		7FBC8DB7230296F10048ED7E /* HNAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FBC8DB6230296F10048ED7E /* HNAlertView.m */; };
 		C11E42A4230D9BEE008DDFAC /* HistoryDataListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C11E42A3230D9BEE008DDFAC /* HistoryDataListController.m */; };
 		C11E42A8230D9C2E008DDFAC /* HistoryListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C11E42A7230D9C2E008DDFAC /* HistoryListCell.m */; };
+		C1BAC444231348530017DD27 /* ManageModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C1BAC443231348530017DD27 /* ManageModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -464,6 +465,8 @@
 		C11E42A3230D9BEE008DDFAC /* HistoryDataListController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryDataListController.m; sourceTree = "<group>"; };
 		C11E42A6230D9C2E008DDFAC /* HistoryListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HistoryListCell.h; sourceTree = "<group>"; };
 		C11E42A7230D9C2E008DDFAC /* HistoryListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HistoryListCell.m; sourceTree = "<group>"; };
+		C1BAC442231348530017DD27 /* ManageModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManageModel.h; sourceTree = "<group>"; };
+		C1BAC443231348530017DD27 /* ManageModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManageModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1253,6 +1256,7 @@
 		C11E42A1230D9B29008DDFAC /* History */ = {
 			isa = PBXGroup;
 			children = (
+				C1BAC441231348350017DD27 /* Model */,
 				C11E42A5230D9C0B008DDFAC /* Celll */,
 				C11E42A2230D9BEE008DDFAC /* HistoryDataListController.h */,
 				C11E42A3230D9BEE008DDFAC /* HistoryDataListController.m */,
@@ -1267,6 +1271,15 @@
 				C11E42A7230D9C2E008DDFAC /* HistoryListCell.m */,
 			);
 			path = Celll;
+			sourceTree = "<group>";
+		};
+		C1BAC441231348350017DD27 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C1BAC442231348530017DD27 /* ManageModel.h */,
+				C1BAC443231348530017DD27 /* ManageModel.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1344,11 +1357,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FAAE03B2301B33A00790102 /* MJPropertyType.m in Sources */,
-
 				C11E42A8230D9C2E008DDFAC /* HistoryListCell.m in Sources */,
-
 				7F1234FD230F939E007BDB6E /* IQUIScrollView+Additions.m in Sources */,
-
 				7F453F252303EE900063EC0A /* MJRefreshAutoStateFooter.m in Sources */,
 				7FAAE0212301AF2200790102 /* CarInfoModel.m in Sources */,
 				7F453EE823031A720063EC0A /* FactoryManagerCell.m in Sources */,
@@ -1404,6 +1414,7 @@
 				7F123506231021D2007BDB6E /* RateModel.m in Sources */,
 				7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */,
 				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
+				C1BAC444231348530017DD27 /* ManageModel.m in Sources */,
 				7FAAB33B230981B10096B401 /* PartsModel.m in Sources */,
 				7FAAE05D2301B4EB00790102 /* FMResultSet.m in Sources */,
 				41D0851322B23D290003F07D /* ProjectOrderViewController.m in Sources */,

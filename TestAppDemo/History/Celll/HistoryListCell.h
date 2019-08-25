@@ -7,11 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "ManageModel.h"
+#define kCellIdentifier_WorkOrderCell @"HistoryListCell"
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface HistoryListCell : NSObject
+@interface HistoryListCell : UITableViewCell
+
++(instancetype)cellWithTableView:(UITableView *)tableView;
+@property (nonatomic, strong) ManageModel *model;
+
 
 @end
-
 NS_ASSUME_NONNULL_END

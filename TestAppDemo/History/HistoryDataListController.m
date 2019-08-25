@@ -10,7 +10,8 @@
 #import "EBDropdownListView.h"
 #import "OrderModel.h"
 #import "BRPickerView.h"
-#import "WorkOrderCell.h"
+#import "HistoryListCell.h"
+#import "ManageModel.h"
 
 @interface HistoryDataListController()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UILabel *startDateLabel;
@@ -35,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"工单查询" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"历史记录" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
     [self initView];
     [self initData];
 }
@@ -44,32 +45,7 @@
 
 -(void)initView {
     __weak HistoryDataListController *safeSelf = self;
-    
-    NSDate* date = [NSDate date];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    [formatter setDateFormat:@"yyyy-MM-dd"];
-    NSString *dateStr = [formatter stringFromDate:date];
-    NSString* startDateStr = [NSString stringWithFormat:@"%@01",[dateStr substringToIndex:dateStr.length-2]];
-    _startDateLabel = [PublicFunction getlabel:CGRectMake(70*PXSCALE, 10*PXSCALEH+NavBarHeight, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:startDateStr fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
-    _startDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
-    _startDateLabel.tag = 1000;
-    _endDateLabel = [PublicFunction getlabel:CGRectMake(MainS_Width-70*PXSCALEH-_startDateLabel.bounds.size.width, _startDateLabel.frame.origin.y, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:dateStr fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
-    _endDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
-    _endDateLabel.tag = 1001;
-    
-    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
-    _startDateLabel.userInteractionEnabled = YES;
-    [_startDateLabel addGestureRecognizer:tap1];
-    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
-    _endDateLabel.userInteractionEnabled = YES;
-    [_endDateLabel addGestureRecognizer:tap2];
-    UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(_startDateLabel.frame.origin.x+_startDateLabel.bounds.size.width, 10*PXSCALEH+NavBarHeight, 20*PXSCALE, 40) text:@"至" fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
-    
-    [self.view addSubview:_endDateLabel];
-    [self.view addSubview:_startDateLabel];
-    [self.view addSubview:titleLabel];
-    
-    _dropdownListView = [[EBDropdownListView alloc] initWithFrame:CGRectMake(20, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10, 80, 30)];
+    _dropdownListView = [[EBDropdownListView alloc] initWithFrame:CGRectMake(20, 10*PXSCALEH+NavBarHeight+8, 80, 30)];
     EBDropdownListItem *item = [[EBDropdownListItem alloc] initWithItem:@"-1" itemName:@"全部"];
     [self.dropDownListArr addObject:item];
     
@@ -85,57 +61,100 @@
     [self.view addSubview:_dropdownListView];
     
     
+    NSDate* date = [NSDate date];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateStr = [formatter stringFromDate:date];
+    NSString* startDateStr = [NSString stringWithFormat:@"%@01",[dateStr substringToIndex:dateStr.length-2]];
+    _startDateLabel = [PublicFunction getlabel:CGRectMake(_dropdownListView.frame.origin.x+_dropdownListView.frame.size.width+5, 10*PXSCALEH+NavBarHeight, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:@"2017-01-01" fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
+    _startDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
+    _startDateLabel.tag = 1000;
+    _endDateLabel = [PublicFunction getlabel:CGRectMake(MainS_Width-70*PXSCALEH-_startDateLabel.bounds.size.width+5, _startDateLabel.frame.origin.y, (MainS_Width-160*PXSCALE)/2, 40*PXSCALEH) text:dateStr fontSize:15 color:SetColor(@"#111111", 1.0) align:@"center"];
+    _endDateLabel.backgroundColor = SetColor(@"#E6E4E7", 1);
+    _endDateLabel.tag = 1001;
+    
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
+    _startDateLabel.userInteractionEnabled = YES;
+    [_startDateLabel addGestureRecognizer:tap1];
+    UITapGestureRecognizer *tap2 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
+    _endDateLabel.userInteractionEnabled = YES;
+    [_endDateLabel addGestureRecognizer:tap2];
+    UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(_startDateLabel.frame.origin.x+_startDateLabel.bounds.size.width-10, _startDateLabel.frame.origin.y, 20*PXSCALE, 40*PXSCALEH) text:@"至" fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
+    titleLabel.backgroundColor = SetColor(@"#FFFFFF", 1);
+    [self.view addSubview:_endDateLabel];
+    [self.view addSubview:_startDateLabel];
+    [self.view addSubview:titleLabel];
+    
     UIImage* image2 = [UIImage imageNamed:@"red_white_search"];
-    UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
-    imageView2.frame = CGRectMake(MainS_Width-20-50, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10, 50, 30);
-    imageView2.layer.cornerRadius = 6;
-    imageView2.layer.masksToBounds = YES;
-    //添加搜索事件
-    UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(searchContent:)];
-    imageView2.userInteractionEnabled = YES;
-    [imageView2 addGestureRecognizer:tap0];
-    //自适应图片宽高比例
-    //    imageView2.contentMode = UIViewContentModeScaleAspectFit;
-    [self.view addSubview:imageView2];
+        UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
+        imageView2.frame = CGRectMake(MainS_Width-20-50, _startDateLabel.frame.origin.y,40, 40);
+        imageView2.layer.cornerRadius = 6;
+        imageView2.layer.masksToBounds = YES;
+        //添加搜索事件
+        UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(searchContent:)];
+        imageView2.userInteractionEnabled = YES;
+        [imageView2 addGestureRecognizer:tap0];
+        //自适应图片宽高比例
+        //    imageView2.contentMode = UIViewContentModeScaleAspectFit;
+        [self.view addSubview:imageView2];
     
-    //添加搜索框
-    UITextField * textFieldSearch = [[UITextField alloc]initWithFrame:CGRectMake(_dropdownListView.frame.origin.x+_dropdownListView.frame.size.width+10, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10,imageView2.frame.origin.x-20-100, 30)];
-    textFieldSearch.placeholder = @" 输入";
-    textFieldSearch.layer.borderWidth = 1;
-    textFieldSearch.layer.masksToBounds = YES;
-    textFieldSearch.layer.cornerRadius = 6;
-    [textFieldSearch addTarget:self action:@selector(changedTextField:) forControlEvents:UIControlEventEditingChanged];
     
-    textFieldSearch.tag = 1100;
-    textFieldSearch.layer.borderColor = SetColor(@"#F1A2B4", 1).CGColor;
-    [self.view addSubview:textFieldSearch];
     
-    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, textFieldSearch.frame.origin.y+textFieldSearch.bounds.size.height+10*PXSCALEH , MainS_Width, 40*PXSCALEH)];
-    UILabel* gdhLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
-    UILabel* enterDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
-    UILabel* cpLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*2,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
-    UILabel* wxgzLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*3,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
-    UILabel* moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*4,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
-    gdhLabel.textAlignment = NSTextAlignmentCenter;
-    enterDateLabel.textAlignment = NSTextAlignmentCenter;
-    cpLabel.textAlignment = NSTextAlignmentCenter;
-    wxgzLabel.textAlignment = NSTextAlignmentCenter;
-    moneyLabel.textAlignment = NSTextAlignmentCenter;
-    gdhLabel.text = @"工单号";
-    enterDateLabel.text = @"进厂日期";
-    cpLabel.text = @"车牌";
-    wxgzLabel.text = @"工种";
-    moneyLabel.text = @"金额";
-    [view addSubview:gdhLabel];
-    [view addSubview:enterDateLabel];
-    [view addSubview:cpLabel];
-    [view addSubview:wxgzLabel];
-    [view addSubview:moneyLabel];
-    [self.view addSubview:view];
+    
+    
+    
+//
+//    UIImage* image2 = [UIImage imageNamed:@"red_white_search"];
+//    UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
+//    imageView2.frame = CGRectMake(MainS_Width-20-50, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10, 50, 30);
+//    imageView2.layer.cornerRadius = 6;
+//    imageView2.layer.masksToBounds = YES;
+//    //添加搜索事件
+//    UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(searchContent:)];
+//    imageView2.userInteractionEnabled = YES;
+//    [imageView2 addGestureRecognizer:tap0];
+//    //自适应图片宽高比例
+//    //    imageView2.contentMode = UIViewContentModeScaleAspectFit;
+//    [self.view addSubview:imageView2];
+//
+//    //添加搜索框
+//    UITextField * textFieldSearch = [[UITextField alloc]initWithFrame:CGRectMake(_dropdownListView.frame.origin.x+_dropdownListView.frame.size.width+10, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10,imageView2.frame.origin.x-20-100, 30)];
+//    textFieldSearch.placeholder = @" 输入";
+//    textFieldSearch.layer.borderWidth = 1;
+//    textFieldSearch.layer.masksToBounds = YES;
+//    textFieldSearch.layer.cornerRadius = 6;
+//    [textFieldSearch addTarget:self action:@selector(changedTextField:) forControlEvents:UIControlEventEditingChanged];
+//
+//    textFieldSearch.tag = 1100;
+//    textFieldSearch.layer.borderColor = SetColor(@"#F1A2B4", 1).CGColor;
+//    [self.view addSubview:textFieldSearch];
+    
+//    UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, _dropdownListView.frame.origin.y+_dropdownListView.bounds.size.height+10*PXSCALEH , MainS_Width, 40*PXSCALEH)];
+//    UILabel* gdhLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
+//    UILabel* enterDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
+//    UILabel* cpLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*2,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
+//    UILabel* wxgzLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*3,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
+//    UILabel* moneyLabel = [[UILabel alloc] initWithFrame:CGRectMake(MainS_Width/5*4,5*PXSCALEH, MainS_Width/5, 40*PXSCALEH)];
+//    gdhLabel.textAlignment = NSTextAlignmentCenter;
+//    enterDateLabel.textAlignment = NSTextAlignmentCenter;
+//    cpLabel.textAlignment = NSTextAlignmentCenter;
+//    wxgzLabel.textAlignment = NSTextAlignmentCenter;
+//    moneyLabel.textAlignment = NSTextAlignmentCenter;
+//    gdhLabel.text = @"工单号";
+//    enterDateLabel.text = @"进厂日期";
+//    cpLabel.text = @"车牌";
+//    wxgzLabel.text = @"工种";
+//    moneyLabel.text = @"金额";
+//    [view addSubview:gdhLabel];
+//    [view addSubview:enterDateLabel];
+//    [view addSubview:cpLabel];
+//    [view addSubview:wxgzLabel];
+//    [view addSubview:moneyLabel];
+//    [self.view addSubview:view];
     
     
     //添加tableview
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , view.frame.origin.y+view.bounds.size.height+10*PXSCALEH , MainS_Width, MainS_Height-(textFieldSearch.frame.origin.y+textFieldSearch.bounds.size.height+10+50*PXSCALEH))];
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , _dropdownListView.frame.origin.y+_dropdownListView.bounds.size.height+10*PXSCALEH  , MainS_Width, MainS_Height-(_dropdownListView.frame.origin.y+_dropdownListView.bounds.size.height+10+50*PXSCALEH))];
     if (@available(iOS 11.0, *)) {
         self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
     } else {
@@ -172,13 +191,13 @@
 
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    WorkOrderCell* cell = [WorkOrderCell cellWithTableView:tableView];
+    HistoryListCell* cell = [HistoryListCell cellWithTableView:tableView];
     cell.model = self.dataSource[indexPath.row];
     return cell;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60*PXSCALEH;
+    return 60*PXSCALEH*2;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -193,11 +212,11 @@
 #pragma 查询本地数据
 -(void)queryLocalData{
     NSMutableArray* tmpArr = [NSMutableArray array];
-    for(OrderModel* model in self.allDataSource){
+    for(ManageModel* model in self.allDataSource){
         BOOL isSave = false;
         
         if([_content isEqualToString:@""]){
-            if([_wxgz isEqualToString:@"全部"]||([model.wxgz_collect rangeOfString:_wxgz options:NSCaseInsensitiveSearch].length>0&&model.wxgz_collect!=NULL)){
+            if([_wxgz isEqualToString:@"全部"]||([model.wxgz rangeOfString:_wxgz options:NSCaseInsensitiveSearch].length>0&&model.wxgz!=NULL)){
                 isSave = YES;
             }
         }else{
@@ -206,7 +225,7 @@
                     isSave = YES;
                 }
             }else{
-                if([model.cp rangeOfString:_content options:NSCaseInsensitiveSearch].length>0&&model.cp!=NULL&&[model.wxgz_collect rangeOfString:_wxgz options:NSCaseInsensitiveSearch].length>0&&model.wxgz_collect!=NULL){
+                if([model.cp rangeOfString:_content options:NSCaseInsensitiveSearch].length>0&&model.cp!=NULL&&[model.wxgz rangeOfString:_wxgz options:NSCaseInsensitiveSearch].length>0&&model.wxgz!=NULL){
                     isSave = YES;
                     
                 }
@@ -244,35 +263,48 @@
     [_dropdownListView setDataSource:self.dropDownListArr];
 }
 
+
+/**
+ dataMap.put("db", sp.getString(Constance.Data_Source_name));
+ dataMap.put("function", "sp_fun_down_repair_history");
+ dataMap.put("customer_id", sp.getString(Constance.CUSTOMER_ID));
+ dataMap.put("dates", startDateStr);
+ dataMap.put("datee", endDateStr);
+ 
+ 
+ */
+
 #pragma 加载数据
 -(void)loadData{
     __weak HistoryDataListController *safeSelf = self;
-    
+     NSMutableArray* tmpArr = [NSMutableArray array];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     dict[@"db"] = [ToolsObject getDataSouceName];
-    dict[@"function"] = @"sp_fun_query_repair_history";//车间管理
-    dict[@"company_code"] = @"A";
+    dict[@"function"] = @"sp_fun_down_repair_history";//车间管理
+    dict[@"customer_id"] =  _model.customer_id;;
     dict[@"dates"] = [NSString stringWithFormat:@"%@ 00:00:00",_startDateLabel.text];
     dict[@"datee"] = [NSString stringWithFormat:@"%@ 23:59:59",_endDateLabel.text];
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
         [safeSelf.tableView.mj_header endRefreshing];
-        
+         NSMutableArray *dataArr = [NSMutableArray array];
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
             NSArray *items = [responseObject objectForKey:@"data"];
-            NSMutableArray *dataArr = [NSMutableArray array];
-            
+           
             for (NSDictionary *dic in items) {
-                OrderModel *model = [OrderModel mj_objectWithKeyValues:dic];
+                ManageModel *model = [ManageModel mj_objectWithKeyValues:dic];
                 [dataArr addObject:model];
             }
-            safeSelf.allDataSource = dataArr;
-            safeSelf.dataSource = dataArr;
-            [safeSelf updateView];
+            
             
         }else{
             NSString* msg = [responseObject objectForKey:@"msg"];
             [safeSelf showErrorInfo:msg];
         }
+        
+        safeSelf.allDataSource = dataArr;
+        safeSelf.dataSource = dataArr;
+        [safeSelf updateView];
+        
     } failure:^(NSError * _Nonnull error) {
         [self showErrorInfo:@"网络错误"];
     }];
@@ -321,7 +353,7 @@
 -(void)searchContent:(UITapGestureRecognizer *)tap{
     UITextField* textField = [self.view viewWithTag:1100];
     _content = textField.text;
-    [self queryLocalData];
+    [self loadData];
 }
 
 -(void)selectDate:(UITapGestureRecognizer *)tap{
@@ -331,13 +363,13 @@
     if(tag==1000){
         [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:_startDateLabel.text minDate:nil maxDate:[ToolsObject stringToDate:_endDateLabel.text] isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
             safeSelf.startDateLabel.text = selectValue;
-            [safeSelf queryLocalData];
+            //[safeSelf queryLocalData];
         }];
         
     }else if(tag==1001){
         [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:_endDateLabel.text minDate:[ToolsObject stringToDate:_startDateLabel.text] maxDate:nil isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
             safeSelf.endDateLabel.text = selectValue;
-            [safeSelf queryLocalData];
+            //[safeSelf queryLocalData];
         }];
     }
     
