@@ -66,13 +66,13 @@
 - (void)setModel:(ManageInfoModel *)model
 {
     _model = model;
-    _cpNameLabel.text = [NSString stringWithFormat:@"车牌: %@",model.cp];
+    _cpNameLabel.text = [NSString stringWithFormat:@"车牌: %@",model.cp!=nil?model.cp:@""];
     _statesLabel.text = [NSString stringWithFormat:@"状态: %@",model.states];
-    _cjhLabel.text = [NSString stringWithFormat:@"车架号码: %@",model.cjhm];
-    _cxLabel.text = [NSString stringWithFormat:@"车型: %@",model.cx];
-    _jdryLabel.text = [NSString stringWithFormat:@"接待人员: %@",model.jcr];
+    _cjhLabel.text = [NSString stringWithFormat:@"车架号码: %@",model.cjhm!=nil?model.cjhm:@""];
+    _cxLabel.text = [NSString stringWithFormat:@"车型: %@",model.cx!=nil?model.cx:@""];
+    _jdryLabel.text = [NSString stringWithFormat:@"接待人员: %@",model.jcr!=nil?model.jcr:@""];
   
-    _enterDateLabel.text = [NSString stringWithFormat:@"进厂时间: %@",model.jc_date];
+    _enterDateLabel.text = [NSString stringWithFormat:@"进厂时间: %@",model.jc_date!=nil?model.jc_date:@""];
 }
 
 

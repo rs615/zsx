@@ -80,6 +80,8 @@
 		7F4B42D52305B13700A0D133 /* OrderCarInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D42305B13700A0D133 /* OrderCarInfoModel.m */; };
 		7F4B42D923068EB500A0D133 /* ProjectCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42D823068EB500A0D133 /* ProjectCell.m */; };
 		7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42DB23068FA300A0D133 /* PeijianCell.m */; };
+		7F59C0C623126F47005FB0D7 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C523126F47005FB0D7 /* SecondViewController.m */; };
+		7F59C0C9231271EB005FB0D7 /* CareInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */; };
 		7F754958230D7869005A94DA /* JCIPAddressConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754954230D7869005A94DA /* JCIPAddressConfig.m */; };
 		7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754957230D7869005A94DA /* RequestIPAddress.m */; };
 		7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495B230D86D4005A94DA /* GuzhangListViewController.m */; };
@@ -305,6 +307,10 @@
 		7F4B42D823068EB500A0D133 /* ProjectCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ProjectCell.m; sourceTree = "<group>"; };
 		7F4B42DA23068FA300A0D133 /* PeijianCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianCell.h; sourceTree = "<group>"; };
 		7F4B42DB23068FA300A0D133 /* PeijianCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianCell.m; sourceTree = "<group>"; };
+		7F59C0C423126F47005FB0D7 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		7F59C0C523126F47005FB0D7 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		7F59C0C7231271EB005FB0D7 /* CareInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CareInfoModel.h; sourceTree = "<group>"; };
+		7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CareInfoModel.m; sourceTree = "<group>"; };
 		7F754954230D7869005A94DA /* JCIPAddressConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIPAddressConfig.m; sourceTree = "<group>"; };
 		7F754955230D7869005A94DA /* RequestIPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestIPAddress.h; sourceTree = "<group>"; };
 		7F754956230D7869005A94DA /* JCIPAddressConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIPAddressConfig.h; sourceTree = "<group>"; };
@@ -589,6 +595,8 @@
 				41E5B20422A772AE0056C7F2 /* HomeViewController.m */,
 				7FAADFA622FF89E600790102 /* SearchCarViewController.h */,
 				7FAADFA722FF89E600790102 /* SearchCarViewController.m */,
+				7F59C0C423126F47005FB0D7 /* SecondViewController.h */,
+				7F59C0C523126F47005FB0D7 /* SecondViewController.m */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1023,6 +1031,8 @@
 			children = (
 				7FAAE01F2301AF2200790102 /* CarInfoModel.h */,
 				7FAAE0202301AF2200790102 /* CarInfoModel.m */,
+				7F59C0C7231271EB005FB0D7 /* CareInfoModel.h */,
+				7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1397,6 +1407,7 @@
 				7FAAB34E230A3AD80096B401 /* FirstIconInfoModel.m in Sources */,
 				7FAAE0592301B4EB00790102 /* FMDatabaseQueue.m in Sources */,
 				7F453F292303EE900063EC0A /* MJRefreshStateHeader.m in Sources */,
+				7F59C0C623126F47005FB0D7 /* SecondViewController.m in Sources */,
 				7FAAE00622FFEBB400790102 /* AFNetworkActivityIndicatorManager.m in Sources */,
 				7FAAE00422FFEBB400790102 /* UIProgressView+AFNetworking.m in Sources */,
 				7FAAB357230BEB630096B401 /* PaigongInfoModel.m in Sources */,
@@ -1442,6 +1453,7 @@
 				7FAADFD722FF9C4D00790102 /* UIColor+Hex.m in Sources */,
 				7F453F222303EE900063EC0A /* MJRefreshBackGifFooter.m in Sources */,
 				7F1234F3230F939D007BDB6E /* IQTextView.m in Sources */,
+				7F59C0C9231271EB005FB0D7 /* CareInfoModel.m in Sources */,
 				7FAAE00822FFEBB400790102 /* UIButton+AFNetworking.m in Sources */,
 				7FAAE01222FFEBB400790102 /* AFSecurityPolicy.m in Sources */,
 				7FAAE03E2301B33A00790102 /* NSObject+MJCoding.m in Sources */,

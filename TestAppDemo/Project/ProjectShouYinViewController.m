@@ -83,12 +83,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [self.view addSubview:self.tableView];
 }
 
--(UIButton*)createBottomView{
+-(UIView*)createBottomView{
+    UIView* bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 80)];
     UIButton* btn = [PublicFunction getButtonInControl:self frame:CGRectMake(0, 0, MainS_Width, 40*PXSCALEH) imageName:nil title:@"收银" clickAction:@selector(btnSelected:)];
     btn.tag = 400;
     [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     btn.backgroundColor = lightGreenColor;
-    return btn;
+    [bottomView addSubview:btn];
+    return bottomView;
 }
 
 -(UIView*)createTopView{

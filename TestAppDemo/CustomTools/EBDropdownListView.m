@@ -184,6 +184,7 @@ static CGFloat const kItemCellHeight = 40;
         }
         [self selectedItemAtIndex:_selectedIndex];
     }
+    [_tbView reloadData];
 }
 
 - (void)setSelectedIndex:(NSUInteger)selectedIndex {

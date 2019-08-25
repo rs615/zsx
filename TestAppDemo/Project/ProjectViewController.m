@@ -14,7 +14,7 @@
 #import "ProjectOrderViewController.h"
 #import "HomeViewController.h"
 #import "BRPickerView.h"
-
+#import "GuzhangListViewController.h"
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 @interface ProjectViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -231,11 +231,17 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         }];
     }else if([titleLabel.text isEqualToString:@"故障描述"]){
         //跳转
+        GuzhangListViewController* vc = [[GuzhangListViewController alloc] init];
+        vc.model = _model;
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }else{
         NSString* data = [dataArr objectAtIndex:btn.tag-100];
         [self showDialog:titleLabel.text value:valueLabel.text data:data tag:btn.tag];
     }
 }
+
+
 
 /*
  编辑

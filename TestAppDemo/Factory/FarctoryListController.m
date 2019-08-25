@@ -12,6 +12,8 @@
 #import "EBDropdownListView.h"
 #import "ManageInfoModel.h"
 #import "FactoryListCell.h"
+#import "ProjectOrderViewController.h"
+#import "CarInfoModel.h"
 @interface FarctoryListController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong)EBDropdownListView *dropdownListView;//下拉列表
 @property (nonatomic,strong)NSArray *contentArr;
@@ -269,7 +271,46 @@
     //    if(self.block){
     //        self.block(model);
     //        [self.navigationController popViewControllerAnimated:YES];
+    
     //    }
+    ManageInfoModel* model = self.dataSource[indexPath.row];
+//    ManageInfo info = mInfoList.get(i);
+//    sp.putString(Constance.JSD_ID,info.getJsd_id());
+//    sp.putString(Constance.CHEJIAHAO,info.getCjhm());
+//    sp.putString(Constance.CURRENTCP,info.getCp());
+//    sp.putString(Constance.CHEXING,info.getCx());
+//    sp.putString(Constance.JIECHEDATE,info.getJc_date());
+//    sp.putString(Constance.YUWANGONG,info.getYwg_date());
+    NSMutableArray* items =  [[DataBaseTool shareInstance] queryCarListData:model.cp isLike:NO];
+    CarInfoModel* item = [items objectAtIndex:0];
+    if(item==nil){
+        item = [[CarInfoModel alloc] init];
+        item.cjhm = model.cjhm;
+        item.mc = model.cp;
+        item.cx  = model.cx;
+    }
+    item.jsd_id = model.jsd_id;
+
+    [self enterWorkOrder:item];
+    
+}
+
+-(void)enterWorkOrder:(CarInfoModel*)model{
+    
+    BOOL isHave = NO;
+    for(UIViewController*temp in self.navigationController.viewControllers) {
+        if([temp isKindOfClass:[ProjectOrderViewController class]]){
+            isHave = YES;
+            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
+            vc.model = model;
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
+    if(!isHave){
+        ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
     
 }
 

@@ -70,7 +70,7 @@
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(10*PXSCALE, 0, MainS_Width-20*PXSCALE, 270*PXSCALEH)];
     contentView.backgroundColor = SetColor(@"#ffffff", 0.33);
 
-    contentView.center = CGPointMake(backgroundImageView.center.x, backgroundImageView.center.y+60*PXSCALEH);
+    contentView.center = CGPointMake(backgroundImageView.center.x, backgroundImageView.center.y);//登录局中
     [self.view addSubview:contentView];
     _factoryNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 30*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"修理厂名称/分店名称"];
     _factoryNameField.backgroundColor = SetColor(@"#ffffff", 0.53);

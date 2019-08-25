@@ -13,6 +13,8 @@
 #import "SelfPartsModel.h"
 #import "TempPartsModel.h"
 #import "ProjectOrderViewController.h"
+typedef void (^asyncCallback)(NSString* errorMsg,id result);
+
 @interface PeijianSelectViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UIView* kcPeiJianView;
 @property (nonatomic, strong) UIView* tmpPeiJianView;
@@ -53,6 +55,7 @@
     [self initSegment];
     [self initContentView];
     [self initBottomView];
+    
 }
 
 #pragma _segment
@@ -575,7 +578,22 @@
 -(void)initData{
     self.kcPeijianArray = [[DataBaseTool shareInstance] queryPartsListData:@""];
     self.dataSource = self.kcPeijianArray;
-    [self.tableView reloadData];
+    __weak PeijianSelectViewController* safeSelf = self;
+    if(self.kcPeijianArray.count==0){
+        [self getPartsList:^(NSString *errorMsg, id result) {
+            if(![errorMsg isEqualToString:@""]){
+                [ToolsObject show:errorMsg With:safeSelf];
+            }else{
+                safeSelf.kcPeijianArray = result;
+                safeSelf.dataSource = result;
+                [safeSelf.tableView reloadData];
+
+            }
+        }];
+    }else{
+        [self.tableView reloadData];
+
+    }
 }
 
 #pragma mark - Getters
@@ -626,9 +644,33 @@
 
 
 #pragma 获取配件数据 这里有问题 没有数据会崩溃
--(void)getPeijianDataList{
+-(void)getPartsList:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_down_stock";//车间管理
+    dict[@"comp_code"] = @"A";//车间管理
+    dict[@"pjbm"] = @"";//车间管理
+    dict[@"cd"] = @"";//车间管理
+    dict[@"ck"] = @"";//车间管理
     
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [PartsModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+            
+            [[DataBaseTool shareInstance] insertPartsListData:array];
+            callback(@"",array);
+            
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
 }
+
 
 #pragma --------------------data
 @end
