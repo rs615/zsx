@@ -7,6 +7,7 @@
 //
 
 #import "DataBaseTool.h"
+
 @implementation DataBaseTool
 
 
@@ -120,6 +121,10 @@
         [_db beginTransaction];
         BOOL isRollBack = NO;
         @try {
+//            if(refresh){
+//                NSString* sql = [NSString stringWithFormat:@"delete from car_info"];
+//                [_db executeUpdate:sql];
+//            }
             for(int i=0;i<array.count;i++){
                 CarInfoModel* item = (CarInfoModel*)[array objectAtIndex:i];
                 BOOL res = [_db executeUpdate:@"INSERT INTO car_info(cjhm, custom5,customer_id,cx,cz,fdjhm,linkman,mc,mobile,ns_date,openid,phone,gzms,gls,memo,keys_no,vipnumber) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",item.cjhm,item.custom5,item.customer_id,item.cx,item.cz,item.fdjhm,item.linkman,item.mc,item.mobile,item.ns_date,item.openid,item.phone,item.gzms,item.gls,item.memo,item.keys_no,item.vipnumber];
@@ -252,6 +257,8 @@
             }
         }
     }
+    [_db close];
+
     return array;
 
 }
@@ -296,6 +303,8 @@
             [array addObject:bean];
         }
     }
+    [_db close];
+
     return array;
 
     
@@ -320,6 +329,313 @@
                 }
             }
             
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+#pragma 插入一级页面数据列表
+-(void)insertFirstIconListData:(NSArray *)array{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            //删除当前状态的本地数据
+            NSString* sql = [NSString stringWithFormat:@"delete from first_icon"];
+            [_db executeUpdate:sql];
+            for(int i=0;i<array.count;i++){
+                FirstIconInfoModel* item = (FirstIconInfoModel*)[array objectAtIndex:i];
+                sql = [NSString stringWithFormat:@"INSERT INTO first_icon(imageurl,wxgz) VALUES ('%@','%@')",item.imageurl,item.wxgz];
+                BOOL res = [_db executeUpdate:sql];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+#pragma 插入一级页面数据列表
+-(void)insertSecondIconListData:(NSArray *)array{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            //删除当前状态的本地数据
+            NSString* sql = [NSString stringWithFormat:@"delete from second_icon"];
+            [_db executeUpdate:sql];
+            for(int i=0;i<array.count;i++){
+                SecondIconInfoModel* item = (SecondIconInfoModel*)[array objectAtIndex:i];
+                sql = [NSString stringWithFormat:@"INSERT INTO second_icon(cx,wxgz,is_quick_project,mc,pgzgs,pycode,spj,tybz,xlf,lb) VALUES ('%@','%@','%@','%@','%@','%@','%@','%@','%@','%@')",item.cx,item.wxgz,item.is_quick_project,item.mc,item.pgzgs,item.pycode,item.spj,item.tybz,item.xlf,item.lb];
+                BOOL res = [_db executeUpdate:sql];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+#pragma 获取一级页面图标
+-(NSMutableArray*)queryFirstIconListData{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select * from first_icon where 1=1";
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            FirstIconInfoModel* bean = [[FirstIconInfoModel alloc] init];
+            bean.ID = [cursor intForColumn:@"id"];
+            bean.imageurl = [cursor stringForColumn:@"imageurl"];
+            bean.wxgz = [cursor stringForColumn:@"wxgz"];
+            [array addObject:bean];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 获取二级页面图标
+-(NSMutableArray*)querySecondIconListData:(NSString* )wxgz{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select * from second_icon where 1=1";
+    if(![wxgz isEqualToString:@""]){
+        sql = [NSString stringWithFormat:@"%@ and wxgz = '%@'",sql,wxgz];
+    }
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            SecondIconInfoModel* bean = [[SecondIconInfoModel alloc] init];
+            bean.ID = [cursor intForColumn:@"id"];
+            bean.cx = [cursor stringForColumn:@"cx"];
+            bean.is_quick_project = [cursor stringForColumn:@"is_quick_project"];
+            bean.mc = [cursor stringForColumn:@"mc"];
+            bean.pgzgs = [cursor stringForColumn:@"pgzgs"];
+            bean.pycode = [cursor stringForColumn:@"pycode"];
+            bean.spj = [cursor stringForColumn:@"spj"];
+            bean.tybz = [cursor stringForColumn:@"tybz"];
+            bean.wxgz = [cursor stringForColumn:@"wxgz"];
+            bean.xlf = [cursor stringForColumn:@"xlf"];
+            [array addObject:bean];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+
+
+#pragma 插入修理数据
+-(void)insertRepairListData:(NSArray *)array{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            //删除当前状态的本地数据
+            NSString* sql = [NSString stringWithFormat:@"delete from repair_info"];
+            [_db executeUpdate:sql];
+            for(int i=0;i<array.count;i++){
+                RepairInfoModel* item = (RepairInfoModel*)[array objectAtIndex:i];
+                BOOL res = [_db executeUpdate:@"INSERT INTO repair_info(xlg,xlz) VALUES (?,?)",item.xlg,item.xlz];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+
+#pragma 插入配件数据
+-(void)insertPartsListData:(NSArray *)array{
+    if ([_db open]) {
+        [_db beginTransaction];
+        BOOL isRollBack = NO;
+        @try {
+            //删除当前状态的本地数据
+            NSString* sql = [NSString stringWithFormat:@"delete from parts_info"];
+            [_db executeUpdate:sql];
+            for(int i=0;i<array.count;i++){
+                PartsModel* item = (PartsModel*)[array objectAtIndex:i];
+                BOOL res = [_db executeUpdate:@"INSERT INTO parts_info(pjbm,pjmc,ck,cd,cx,dw,cangwei,bz,type,kcl,xsj,pjjj) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",item.pjbm,item.pjmc,item.ck,item.cd,item.cx,item.dw,item.cangwei,item.bz,item.type,item.kcl,item.xsj,item.pjjj];
+                if (!res) {
+                    NSLog(@"录入失败");
+                }
+            }
+            
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+
+#pragma 查询配件列表
+-(NSMutableArray*)queryPartsListData:(NSString*)pjmc{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select * from parts_info where 1=1";
+    
+    if(![pjmc isEqualToString:@""]&&pjmc!=NULL){
+        sql = [NSString stringWithFormat:@"%@ and pjmc like '%%%@%%'",sql,pjmc];
+    }
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            PartsModel* bean = [[PartsModel alloc] init];
+            bean.pjbm = [cursor stringForColumn:@"pjbm"];
+            bean.pjmc = [cursor stringForColumn:@"pjmc"];
+            bean.ck = [cursor stringForColumn:@"ck"];
+            bean.cd = [cursor stringForColumn:@"cd"];
+            bean.cx = [cursor stringForColumn:@"cx"];
+            bean.dw = [cursor stringForColumn:@"dw"];
+            bean.cangwei = [cursor stringForColumn:@"cangwei"];
+            bean.bz = [cursor stringForColumn:@"bz"];
+            bean.type = [cursor stringForColumn:@"type"];
+            bean.kcl = [cursor stringForColumn:@"kcl"];
+            bean.xsj = [cursor stringForColumn:@"xsj"];
+            bean.pjjj = [cursor stringForColumn:@"pjjj"];
+            [array addObject:bean];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairListStringData{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlz from repair_info where 1=1";
+    
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            NSString* xlz = [cursor stringForColumn:@"xlz"];
+            [array addObject:xlz];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairZuListData{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlz from repair_info where 1=1";
+    
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            RepairInfoModel* model = [[RepairInfoModel alloc] init];
+            NSString* xlz = [cursor stringForColumn:@"xlz"];
+            model.xlz = xlz;
+            [array addObject:model];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+-(NSMutableArray*)queryRepairPersonListData:(NSString*)xlzStr{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct xlg from repair_info where 1=1";
+    if([xlzStr isEqualToString:@""]||[xlzStr isEqualToString:@"全部"]){
+        
+    }else{
+        sql = [NSString stringWithFormat:@"%@ and xlz = '%@'",sql,xlzStr];
+    }
+    
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            RepairInfoModel* model = [[RepairInfoModel alloc] init];
+            NSString* xlg = [cursor stringForColumn:@"xlg"];
+//            model.xlz = [cursor stringForColumn:@"xlz"];
+            model.xlg = xlg;
+            [array addObject:model];
+        }
+    }
+    [_db close];
+    return array;
+}
+
+#pragma 插入二级页面数据列表
+
+-(void)updateSecondIconData:(SecondIconInfoModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        NSString* sql = [NSString stringWithFormat:@"update second_icon set xlf='%@' where mc = '%@'",item.xlf,item.mc];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:sql];
+            if (!res) {
+                NSLog(@"更新失败");
+            }
+        } @catch (NSException *exception) {
+            isRollBack = YES;
+            [_db rollback];
+        } @finally {
+            if (!isRollBack) {
+                [_db commit];
+            }
+        }
+    }
+    [_db close];
+}
+
+#pragma 更新配件数据
+-(void)updatePartsInfo:(PartsModel*)item{
+    if ([_db open]) {
+        [_db beginTransaction];
+        NSString* sql = [NSString stringWithFormat:@"update parts_info set xsj='%@' where pjmc = '%@'",item.xsj,item.pjmc];
+        BOOL isRollBack = NO;
+        @try {
+            BOOL res = [_db executeUpdate:sql];
+            if (!res) {
+                NSLog(@"更新失败");
+            }
         } @catch (NSException *exception) {
             isRollBack = YES;
             [_db rollback];

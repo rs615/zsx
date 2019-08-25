@@ -23,7 +23,7 @@ typedef void (^httpFailure)(NSError *error);
 // get  请求
 + (void)HttpGetCallBack:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure;
 
-
++(void)post:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure;
 
 @end
 

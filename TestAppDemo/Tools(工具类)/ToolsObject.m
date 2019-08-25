@@ -7,6 +7,7 @@
 //
 
 #import "ToolsObject.h"
+#import "ZXBHeader.h"
 @implementation ToolsObject
 
 
@@ -93,5 +94,113 @@
     [inputFormatter setDateFormat:@"yyyy-MM-dd"];
     NSDate* inputDate = [inputFormatter dateFromString:dateStr];
     return inputDate;
+}
+
+//设置border
++(void)setBorderWithView:(UIView *)view top:(BOOL)top left:(BOOL)left bottom:(BOOL)bottom right:(BOOL)right borderColor:(UIColor *)color borderWidth:(CGFloat)width
+{
+    if (top) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, view.frame.size.width, width);
+        layer.backgroundColor = color.CGColor;
+        [view.layer addSublayer:layer];
+    }
+    if (left) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, 0, width, view.frame.size.height);
+        layer.backgroundColor = color.CGColor;
+        [view.layer addSublayer:layer];
+    }
+    if (bottom) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(0, view.frame.size.height - width, view.frame.size.width, width);
+        layer.backgroundColor = color.CGColor;
+        [view.layer addSublayer:layer];
+    }
+    if (right) {
+        CALayer *layer = [CALayer layer];
+        layer.frame = CGRectMake(view.frame.size.width - width, 0, width, view.frame.size.height);
+        layer.backgroundColor = color.CGColor;
+        [view.layer addSublayer:layer];
+    }
+}
+
+#pragma mark  保存uid到本地
++ (void)saveDataSouceName:(NSString *)dataSourceName
+{
+    [[NSUserDefaults standardUserDefaults] setObject:dataSourceName forKey:DATA_SOURCE_NAME];
+}
+
+
++ (NSString *)getDataSouceName
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:DATA_SOURCE_NAME];
+}
+
++ (void)saveUserName:(NSString *)userName
+{
+    [[NSUserDefaults standardUserDefaults] setObject:userName forKey:USERNAME];
+}
+
++ (NSString *)getUserName
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:USERNAME];
+}
+
++ (NSString *)getPasword
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:PASSWORD];
+}
+
+
++ (void)savePassword:(NSString *)password
+{
+    [[NSUserDefaults standardUserDefaults] setObject:password forKey:PASSWORD];
+}
+
++ (NSString *)getFactoryName
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:FACTORYNAME];
+}
+
+
++ (void)saveFactoryName:(NSString *)factory
+{
+    [[NSUserDefaults standardUserDefaults] setObject:factory forKey:FACTORYNAME];
+}
+
++ (NSString *)getCompCode
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:COMP_CODE];
+}
+
+
++ (void)saveCompCode:(NSString *)code
+{
+    [[NSUserDefaults standardUserDefaults] setObject:code forKey:COMP_CODE];
+}
+
+
++ (NSString *)getChineseName
+{
+    return [[NSUserDefaults standardUserDefaults]objectForKey:CHINESE_NAME];
+}
+
+
++ (void)saveChineseName:(NSString *)chineseName
+{
+    [[NSUserDefaults standardUserDefaults] setObject:chineseName forKey:CHINESE_NAME];
+}
+
+
++ (BOOL)isHasLogin
+{
+    return [[[NSUserDefaults standardUserDefaults]objectForKey:HASLOGIN] boolValue];
+}
+
+
++ (void)saveHaseLogin:(BOOL)hasLogin
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:hasLogin] forKey:HASLOGIN];
 }
 @end

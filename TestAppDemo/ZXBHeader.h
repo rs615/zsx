@@ -45,10 +45,15 @@
 #define  radioBGColorf5       SetColor(@"#f5f5f5",1.0)   //电台背景颜色
 
 #define hotPinkColor SetColor(@"#EB7E97",1.0)//红苹果
-#define lightGrayColor SetColor(@"#EEEEEE",1.0)//通用颜色
+#define lightGrayColor SetColor(@"#F7F7F7",1.0)//通用颜色
 #define darkGrayColor SetColor(@"#A9A9A9",1.0)//通用颜色
 
 #define lightPinkColor SetColor(@"#F1A2B4",1.0)//浅苹果
+
+#define lightGreenColor SetColor(@"#97C79B",1.0)//浅苹果
+#define lightBlueColor SetColor(@"#9DF4F9",1.0)//浅蓝色
+
+
 
 /**
  * RGB 配置颜色
@@ -59,3 +64,13 @@
  * 16进制配置颜色
  */
 #define UIColorHexFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+
+#define FACTORYNAME @"factoryName"
+#define USERNAME @"userName"
+#define COMP_CODE @"comp_code"
+#define PASSWORD @"password"
+#define DATA_SOURCE_NAME @"Data_Source_name"
+#define CHINESE_NAME @"chinese_name"
+#define HASLOGIN @"hasLogin"
+
+

@@ -17,5 +17,8 @@ typedef void(^alertBlock)(NSInteger index);
 -(id)initWithCancleTitle:(NSString *)cancel withSurceBtnTitle:(NSString *)sureTitle WithMsg:(NSString *)msg withTitle:(NSString *)title contentView:(UIView*)content;
 @property (nonatomic,strong)UIView *bgView;
 @property (nonatomic,copy)alertBlock myBlock;
+//@property (nonatomic,assign)BOOL isAutoClose;
+//-(void)showHNAlertView:(alertBlock)myblock isAudoClose:(BOOL)close;
+
 -(void)showHNAlertView:(alertBlock)myblock;
 @end

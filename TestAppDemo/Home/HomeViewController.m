@@ -9,11 +9,15 @@
 #import "HomeViewController.h"
 #import "SearchCarViewController.h"
 #import "CarInfoModel.h"
-#import "ToolsObject.h"
+#import "ProjectViewController.h"
 #import "ProjectOrderViewController.h"
 #import "HNAlertView.h"
+#import "BRPickerView.h"
+#import "ToolsObject.h"
+
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
+typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 @interface HomeViewController ()
 @property (nonatomic, weak) UIView* baseView;
@@ -30,8 +34,9 @@
 @property (nonatomic,strong)UITextField *textFieldKeysNo;
 @property (nonatomic,strong)UITextField *textFieldTjr;
 @property (nonatomic,strong)UITextField *textFieldMemo;
-@property (nonatomic,strong)UITextField *textFieldNSDate;
+@property (nonatomic,strong)UILabel *textLabelNSDate;
 @property (nonatomic,strong)MBProgressHUD *progress;
+@property (nonatomic,strong)NSString* errorMsg;
 
 @end
 
@@ -275,13 +280,16 @@
     labelSxr.text = @"预交车时间";
     [self.moreView addSubview:labelSxr];
     
-    _textFieldNSDate= [[UITextField alloc]initWithFrame:CGRectMake(160, 120, 200, 30)];
-    _textFieldNSDate.borderStyle = UITextBorderStyleNone;
-    // 设置提示文字
-    _textFieldNSDate.placeholder = @"选择日期";
+    _textLabelNSDate= [[UILabel alloc]initWithFrame:CGRectMake(160, 120, 200, 30)];
+    _textLabelNSDate.tag = 1000;
+//    _textLabelNSDate.borderStyle = UITextBorderStyleNone;
+//    // 设置提示文字
+    _textLabelNSDate.text = @"选择日期";
     // 将控件添加到当前视图上
-    [self.moreView addSubview:_textFieldNSDate];
-    
+    [self.moreView addSubview:_textLabelNSDate];
+    UITapGestureRecognizer *tap1 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectDate:)];
+    _textLabelNSDate.userInteractionEnabled = YES;
+    [_textLabelNSDate addGestureRecognizer:tap1];
     
     
     UILabel* labelSjh = [[UILabel alloc] init];
@@ -322,6 +330,24 @@
     }
 }
 
+-(void)selectDate:(UITapGestureRecognizer *)tap{
+    NSInteger tag = tap.view.tag;
+    __weak HomeViewController *safeSelf = self;
+    NSString* dateStr = @"";
+    if([_textLabelNSDate.text isEqualToString:@"选择日期"]){
+        dateStr = nil;
+    }else{
+        dateStr = _textLabelNSDate.text;
+    }
+    if(tag==1000){
+        [BRDatePickerView showDatePickerWithTitle:@"选择日期" dateType:BRDatePickerModeYMD defaultSelValue:dateStr minDate:nil maxDate:nil isAutoSelect:NO themeColor:[UIColor orangeColor] resultBlock:^(NSString *selectValue) {
+            safeSelf.textLabelNSDate.text = selectValue;
+        }];
+        
+    }
+    
+}
+
 
 #pragma mark - 搜索车辆
 -(void)searchCar:(UITapGestureRecognizer *)tap{
@@ -343,7 +369,7 @@
         safeSelf.textFieldTjr.text = model.custom5;
         safeSelf.textFieldGzms.text = model.gzms;
         safeSelf.textFieldKeysNo.text = model.keys_no;
-        safeSelf.textFieldNSDate.text = model.ns_date;
+        safeSelf.textLabelNSDate.text = [model.ns_date isEqualToString:@""]?@"选择日期":model.ns_date;
         safeSelf.textFieldMemo.text = model.memo;
 
     };
@@ -355,20 +381,77 @@
 -(void) viewDidLoad
 {
     [self initView];
+    self.errorMsg = @"";
     int count = [[DataBaseTool shareInstance] querySearchListNum];
+ 
+    __weak HomeViewController *safeSelf = self;
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+    
+
+    dispatch_group_t group = dispatch_group_create();
+
+    dispatch_group_enter(group);
+
+    [self getPersonRepairList:^(NSString *errorMsg, id result) {
+        if(![errorMsg isEqualToString:@""]){
+            safeSelf.errorMsg = errorMsg;
+        }
+        dispatch_group_leave(group);
+    }];
+    
     if(count==0){
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [self loadCarList:@"0"];
-        });
+        dispatch_group_enter(group);
+        
+        [self loadCarData:^(NSString *errorMsg, id result) {
+            dispatch_group_leave(group);
+        }];
     }
+    
+    //通知更新
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        [safeSelf.progress hideAnimated:YES];
+        if(![safeSelf.errorMsg isEqualToString:@""]){
+            [ToolsObject show:safeSelf.errorMsg With:safeSelf];
+        }else{
+            
+        }
+        
+    });
+}
+
+#pragma 更新修理数据
+-(void)getPersonRepairList:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_down_repairman";//车间管理
+    dict[@"company_code"] = @"A";//车间管理
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [RepairInfoModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+            
+            [[DataBaseTool shareInstance] insertRepairListData:array];
+            callback(@"",items);
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
+
+-(void)loadCarData:(asyncCallback)callback{
+    [self loadCarList:@"0" callback:callback];
 }
 
 //加载数据
--(void)loadCarList:(NSString*)previous_xh{
+-(void)loadCarList:(NSString*)previous_xh callback:(asyncCallback)callback{
     __weak HomeViewController *safeSelf = self;
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_down_plate_number";
     dict[@"company_code"] = @"A";
     dict[@"previous_xh"] = previous_xh;
@@ -387,13 +470,19 @@
             [[DataBaseTool shareInstance] insertCarListData:dataArr];
             //继续调用
             NSString* tmpPrevious_xh = [responseObject objectForKey:@"Previous_xh"];
-            [safeSelf loadCarList:tmpPrevious_xh];
+            if([tmpPrevious_xh isEqualToString:@"end"]){
+                callback(@"",nil);
+            }else{
+                [safeSelf loadCarList:tmpPrevious_xh callback:callback];
+
+            }
         }else{
             
             
         }
     } failure:^(NSError * _Nonnull error) {
-        
+        callback(@"网络错误",nil);
+
     }];
 }
 
@@ -409,7 +498,7 @@
     NSString* tjr = _textFieldTjr.text;
     NSString* gzms = _textFieldGzms.text;
     NSString* keys_no = _textFieldKeysNo.text;
-    NSString* nsDate = _textFieldNSDate.text;
+    NSString* nsDate = _textLabelNSDate.text;
     NSString* memo = _textFieldMemo.text;
     NSString* gls = _textFieldGls.text;
 
@@ -469,7 +558,7 @@
 -(void)attention:(UIButton *)sender{
     __weak HomeViewController *safeSelf = self;
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_get_wxgzh_account";//上传
     dict[@"company_code"] = @"A";
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -490,7 +579,7 @@
     __weak HomeViewController *safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_upload_customer_info";//上传
     dict[@"plate_number"] = model.mc;
     dict[@"cz"]=model.cz;
@@ -527,7 +616,7 @@
     __weak HomeViewController *safeSelf = self;
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_check_repair_list_cp";//检测
     dict[@"customer_id"] = model.customer_id;
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
@@ -550,7 +639,7 @@
 //            alertView.contentView.backgroundColor = [UIColor redColor];
             [alertView showHNAlertView:^(NSInteger index) {
                 if(index == 0){
-                    [safeSelf enterProject:jsd_id];
+                    [safeSelf enterProjectOrder:model];
                 }else{
                     
                 }
@@ -575,7 +664,7 @@
     _progress = [ToolsObject showLoading:@"加载中" with:self];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_update_customer_info";//更新
     dict[@"cz"]=model.cz;
     dict[@"phone"]=model.phone;
@@ -600,14 +689,20 @@
 }
 
 #pragma mark - 进入工单
--(void)enterProject:(NSString*)jsd_id{
+-(void)enterProjectOrder:(CarInfoModel*)model{
     ProjectOrderViewController *vc  =[[ProjectOrderViewController alloc] init];
     vc.hidesBottomBarWhenPushed = YES;
-    vc.jsd_id = jsd_id;
-    [self.navigationController setNavigationBarHidden:YES];
+    vc.model = model;
     [self.navigationController pushViewController:vc animated:YES];
 }
 
+#pragma mark - 进入工单
+-(void)enterProject:(CarInfoModel*)model{
+    ProjectViewController *vc  =[[ProjectViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
 #pragma mark - 生成接车单
 -(void)createPickUpOrder:(CarInfoModel*) model {
     __weak HomeViewController *safeSelf = self;
@@ -616,7 +711,7 @@
     [formatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *dateStr = [formatter stringFromDate:date];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_upload_repair_list_main";//接车单
     dict[@"company_code"] = @"A";
     dict[@"cz"]=model.cz;
@@ -640,13 +735,14 @@
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
             NSString* jsd_id = [responseObject objectForKey:@"jsd_id"];
+            model.jsd_id = jsd_id;
             if(![model.gzms isEqualToString:@""]&&model.gzms !=NULL){
                 //上传故障描述
                 [safeSelf uploadGuZhang:model];
             }else{
                 //进入工单页面
                 [safeSelf.progress hideAnimated:YES];
-                [safeSelf enterProject:jsd_id];
+                [safeSelf enterProject:model];
 
             }
             //sp.putString(Constance.JSD_ID,jsd_id);
@@ -671,7 +767,7 @@
     NSString *dateStr = [formatter stringFromDate:date];
 
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    dict[@"db"] = @"asa_to_sql";
+    dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_update_fault_info";//故障信息
     dict[@"customer_id"] = model.customer_id;
     dict[@"car_fault"] = model.gzms;

@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-
+    self.view.backgroundColor = [UIColor whiteColor];
      HomeViewController *item1 = [[HomeViewController alloc] init];
     FactoryManagerController *item2 = [[FactoryManagerController alloc] init];
      FactoryIntroduceController *item3 = [[FactoryIntroduceController alloc] init];

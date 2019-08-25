@@ -17,11 +17,12 @@
 #import "DataBaseTool.h"
 #import "ToolsObject.h"
 #import "MJRefresh.h"
-
+#import "HnTextField.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface BaseViewController : UIViewController
+@property (nonatomic, strong) NSString* errorMsg;
 
 -(void)setNavTitle:(NSString *)title withleftImage:(NSString *)leftImage withleftAction:(SEL)leftAction  withRightImage:(NSString *)righImage  rightAction:(SEL)rightaction withVC:(id)VC;
 

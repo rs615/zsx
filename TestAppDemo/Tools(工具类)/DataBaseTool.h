@@ -10,6 +10,10 @@
 #import "FMDB.h"
 #import "CarInfoModel.h"
 #import "ManageInfoModel.h"
+#import "FirstIconInfoModel.h"
+#import "SecondIconInfoModel.h"
+#import "RepairInfoModel.h"
+#import "PartsModel.h"
 NS_ASSUME_NONNULL_BEGIN
 
 @interface DataBaseTool : NSObject
@@ -20,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 +(instancetype )shareInstance;
 
 #pragma carInfo
-- (void)insertCarListData:(NSArray *)array;
+-(void)insertCarListData:(NSArray *)array;
 
 -(NSMutableArray *)querySearchCarListData:(NSString*)param;
 
@@ -38,6 +42,27 @@ NS_ASSUME_NONNULL_BEGIN
 -(NSMutableArray*)queryWxgzList:(NSString*)states;
 -(void)insertManagerListData:(NSArray *)array states:(NSString*)states;
 -(NSMutableArray*)queryManagerList:(NSString*)cp wxgz:(NSString*)wxgz assgin:(NSString*)assgin orderStr:(NSString*)orderStr states:(NSString*)states;
+-(void)insertFirstIconListData:(NSArray *)array;
+-(void)insertRepairListData:(NSArray *)array;
+-(void)insertPartsListData:(NSArray *)array;
+-(NSMutableArray*)queryPartsListData:(NSString*)pjmc;
+
+-(NSMutableArray*)querySecondIconListData:(NSString* )wxgz;
+-(NSMutableArray*)queryFirstIconListData;
+-(void)insertSecondIconListData:(NSArray *)array;
+
+-(NSMutableArray*)queryRepairListStringData;
+
+#pragma 查询修理组
+-(NSMutableArray*)queryRepairZuListData;
+
+-(NSMutableArray*)queryRepairPersonListData:(NSString*)xlzStr;
+
+-(void)updateSecondIconData:(SecondIconInfoModel*)item;
+
+#pragma 更新配件数据
+-(void)updatePartsInfo:(PartsModel*)item;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CarInfoModel.h"
 #import "BaseViewController.h"
 
 @interface ProjectOrderViewController : BaseViewController
+@property (nonatomic, strong) CarInfoModel* model;
 @property (nonatomic, strong) NSString* jsd_id;
+@property (nonatomic, assign) BOOL isNeedRefresh;//是否需要刷新
+
 
 @end
