@@ -203,4 +203,11 @@
 {
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:hasLogin] forKey:HASLOGIN];
 }
+
+//获取字符串大小
++(CGRect)getStringFrame:(NSString *)str withFont:(NSInteger)fontSize withMaxSize:(CGSize)size{
+    
+    CGRect rect = [str boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:Font(fontSize)} context:nil];
+    return rect;
+}
 @end

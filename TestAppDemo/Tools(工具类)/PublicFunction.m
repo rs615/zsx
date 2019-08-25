@@ -225,9 +225,9 @@
 
 +(UILabel *)getlabel:(CGRect)frame text:(NSString *)text align:(NSString *)align
 {
-    if ([text rangeOfString:@".00"].location!=NSNotFound) {
-        text=[text stringByReplacingOccurrencesOfString:@".00" withString:@""];
-    }
+//    if ([text rangeOfString:@".00"].location!=NSNotFound) {
+//        text=[text stringByReplacingOccurrencesOfString:@".00" withString:@""];
+//    }
 	UILabel *labelPrice=[[UILabel alloc] initWithFrame:frame];
 	labelPrice.textColor = [UIColor blackColor];
 	labelPrice.font = [UIFont fontWithName:@"Arial" size:15];
@@ -358,18 +358,18 @@
 	TextField.leftView=leftView;
     TextField.delegate=control;
 	TextField.leftViewMode = UITextFieldViewModeAlways;
-	
+//
+//
+//    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
+//    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
+//    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
+//    UIView *view = [[UIView alloc] init];
+//    view.frame = CGRectMake(0, 0, MainS_Width, 32);
+//    btnDowd.frame = CGRectOffset(btnDowd.frame,MainS_Width  - btnDowd.bounds.size.width, 0);
+//    [view addSubview:btnDowd];
+//    TextField.inputAccessoryView =view;
     
-    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
-    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
-    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
-    UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(0, 0, MainS_Width, 32);
-    btnDowd.frame = CGRectOffset(btnDowd.frame,MainS_Width  - btnDowd.bounds.size.width, 0);
-    [view addSubview:btnDowd];
-    TextField.inputAccessoryView =view;
-     
    
     return TextField;
     
@@ -406,15 +406,15 @@
 	TextField.leftViewMode = UITextFieldViewModeAlways;
 	
     
-    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
-    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
-    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
-    UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(0, 0, MainS_Width, 32);
-    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
-    [view addSubview:btnDowd];
-    TextField.inputAccessoryView =view;
+//    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
+//    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
+//    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
+//    UIView *view = [[UIView alloc] init];
+//    view.frame = CGRectMake(0, 0, MainS_Width, 32);
+//    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
+//    [view addSubview:btnDowd];
+//    TextField.inputAccessoryView =view;
     return TextField;
     
 }
@@ -439,15 +439,15 @@
     else {
         textView.returnKeyType = UIReturnKeyDone;
     }
-    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
-    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
-    [btnDowd  addTarget:textView action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
-    UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(0, 0, MainS_Width, 32);
-    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
-    [view addSubview:btnDowd];
-    textView.inputAccessoryView =view;
+//    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
+//    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
+//    [btnDowd  addTarget:textView action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
+//    UIView *view = [[UIView alloc] init];
+//    view.frame = CGRectMake(0, 0, MainS_Width, 32);
+//    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
+//    [view addSubview:btnDowd];
+//    textView.inputAccessoryView =view;
     return textView;
     
 }
@@ -479,15 +479,15 @@
 	TextField.leftViewMode = UITextFieldViewModeAlways;
 	
     
-    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
-    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
-    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
-    UIView *view = [[UIView alloc] init];
-    view.frame = CGRectMake(0, 0, MainS_Width, 32);
-    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
-    [view addSubview:btnDowd];
-    TextField.inputAccessoryView =view;
+//    UIButton* btnDowd= [UIButton buttonWithType:UIButtonTypeCustom];
+//    [btnDowd setImage:[UIImage imageNamed:@"down.png"] forState:UIControlStateNormal];
+//    [btnDowd setFrame:CGRectMake(0,0, 32,32)];
+//    [btnDowd  addTarget:TextField action:@selector(resignFirstResponder) forControlEvents:UIControlEventTouchUpInside];
+//    UIView *view = [[UIView alloc] init];
+//    view.frame = CGRectMake(0, 0, MainS_Width, 32);
+//    btnDowd.frame = CGRectOffset(btnDowd.frame, MainS_Width - btnDowd.bounds.size.width, 0);
+//    [view addSubview:btnDowd];
+//    TextField.inputAccessoryView =view;
     
     return TextField;
     
@@ -536,7 +536,7 @@
 //        btnCamera.titleLabel.numberOfLines=0;
 //        btnCamera.layer.cornerRadius = 3; // this value vary as per your desire
 //        btnCamera.layer.masksToBounds = YES;
-         btnCamera.titleLabel.font=[UIFont fontWithName:@"Arial" size:16];
+         btnCamera.titleLabel.font=[UIFont fontWithName:@"Arial" size:14];
 	}
     
 	btnCamera.frame = frame;
