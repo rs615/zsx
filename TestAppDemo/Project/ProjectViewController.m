@@ -114,7 +114,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         if(ywg_date.length>10){
             ywg_date = [ywg_date substringToIndex:10];
         }
-        NSString* gzms = _model.gzms;
+        NSString* gzms = _model.gzms!=nil?_model.gzms:@"";
         NSString* jsr = _orderCarInfoModel!=nil?_orderCarInfoModel.custom5:@"";
         NSString* memo = _orderCarInfoModel!=nil?_orderCarInfoModel.memo:@"";
         NSArray* valueArr = @[gls,cjh,cx,ywg_date,gzms,jsr,memo];
