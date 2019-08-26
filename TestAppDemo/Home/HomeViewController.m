@@ -558,6 +558,12 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         [ToolsObject show:@"手机号不能为空" With:self];
         return;
     }
+    
+    if([cz isEqualToString:@""]){
+        [ToolsObject show:@"车主不能为空" With:self];
+        return;
+    }
+    
     if(![ToolsObject isMobileNumber:mobile]){
         [ToolsObject show:@"手机号输入有误" With:self];
         return;
@@ -738,6 +744,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             //更新本地数据库
             [[DataBaseTool shareInstance] updateCarInfo:model];
             [safeSelf checkHasNotComplete:model];
+
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            [ToolsObject show:msg With:safeSelf];
 
         }
     } failure:^(NSError * _Nonnull error) {
