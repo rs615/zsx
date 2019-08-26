@@ -440,6 +440,24 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
 }
 
+-(void)enterWorkOrder:(CarInfoModel*)model{
+    
+    BOOL isHave = NO;
+    for(UIViewController*temp in self.navigationController.viewControllers) {
+        if([temp isKindOfClass:[ProjectOrderViewController class]]){
+            isHave = YES;
+            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
+            vc.model = model;
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
+    if(!isHave){
+        ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
+}
 
 #pragma 搜索内容
 -(void)searchContent:(UITapGestureRecognizer *)tap{
@@ -473,14 +491,15 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
     [self confirmGd:^(NSString *errorMsg, id result) {
         if([errorMsg isEqualToString:@""]){
-            UIViewController *ctl = safeSelf.navigationController.viewControllers[safeSelf.navigationController.viewControllers.count - 2];
-            if ([ctl isKindOfClass:[ProjectOrderViewController class]]) {
-                ProjectOrderViewController * ctl2 = (ProjectOrderViewController*)ctl;
-                ctl2.isNeedRefresh = YES;
-                [safeSelf.navigationController popToViewController:ctl2 animated:YES];
-            }else{
-                [safeSelf backBtnClick];
-            }
+//            UIViewController *ctl = safeSelf.navigationController.viewControllers[safeSelf.navigationController.viewControllers.count - 2];
+//            if ([ctl isKindOfClass:[ProjectOrderViewController class]]) {
+//                ProjectOrderViewController * ctl2 = (ProjectOrderViewController*)ctl;
+//                ctl2.isNeedRefresh = YES;
+//                [safeSelf.navigationController popToViewController:ctl2 animated:YES];
+//            }else{
+//                [safeSelf backBtnClick];
+//            }
+            [self enterWorkOrder:_model];
         }else{
             [ToolsObject show:errorMsg With:safeSelf];
         }

@@ -14,7 +14,7 @@
 #import "ProjectOrderViewController.h"
 #import "HomeViewController.h"
 #import "BRPickerView.h"
-
+#import "GuzhangListViewController.h"
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 @interface ProjectViewController ()<UITableViewDelegate,UITableViewDataSource>
@@ -30,7 +30,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"项目首页" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"项目首页" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:@selector(backHome:) withVC:self];
     // Do any additional setup after loading the view.
     [self initView];
     [self initData];
@@ -114,7 +114,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         if(ywg_date.length>10){
             ywg_date = [ywg_date substringToIndex:10];
         }
-        NSString* gzms = _model.gzms;
+        NSString* gzms = _model.gzms!=nil?_model.gzms:@"";
         NSString* jsr = _orderCarInfoModel!=nil?_orderCarInfoModel.custom5:@"";
         NSString* memo = _orderCarInfoModel!=nil?_orderCarInfoModel.memo:@"";
         NSArray* valueArr = @[gls,cjh,cx,ywg_date,gzms,jsr,memo];
@@ -231,11 +231,17 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         }];
     }else if([titleLabel.text isEqualToString:@"故障描述"]){
         //跳转
+        GuzhangListViewController* vc = [[GuzhangListViewController alloc] init];
+        vc.model = _model;
+        [self.navigationController pushViewController:vc animated:YES];
+        
     }else{
         NSString* data = [dataArr objectAtIndex:btn.tag-100];
         [self showDialog:titleLabel.text value:valueLabel.text data:data tag:btn.tag];
     }
 }
+
+
 
 /*
  编辑

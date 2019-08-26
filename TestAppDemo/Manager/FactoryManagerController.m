@@ -27,6 +27,8 @@
 @property (nonatomic, strong)EBDropdownListView *dropdownListView;//下拉列表
 @end
 
+typedef void (^asyncCallback)(NSString* errorMsg,id result);
+
 @implementation FactoryManagerController
 
 
@@ -52,18 +54,22 @@
  
 //    [segment setDividerImage:_dividerImage forLeftSegmentState:UIControlStateNormal rightSegmentState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
   
-    segment.layer.masksToBounds = YES;               //    默认为no，不设置则下面一句无效
+    segment.backgroundColor = [UIColor grayColor];
+    segment.layer.masksToBounds = NO;               //    默认为no，不设置则下面一句无效
     segment.layer.cornerRadius = 0;               //    设置圆角大小，同UIView
-    segment.layer.borderWidth = 1;                   //    边框宽度，重新画边框，若不重新画，可能会出现圆角处无边框的情况
-    segment.layer.borderColor =   [UIColor whiteColor].CGColor;
+    segment.layer.borderWidth = 0;                   //    边框宽度，重新画边框，若不重新画，可能会出现圆角处无边框的情况
+    segment.layer.borderColor = [UIColor clearColor].CGColor;
     //segment.frame = CGRectMake(0, 0.15029*CFG, 0.2716*CFW, 0.0814*CFG); // 0.3642*CFW
     segment.selectedSegmentIndex = 0;
-    segment.tintColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //    segment.tintColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
     //    选中的颜色
-    [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} forState:UIControlStateSelected];
+    
+    [segment setTintColor:hotPinkColor];
+    
+    [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
     //    未选中的颜色
     [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
-    
+    //添加到主视图
     //当选中不同的segment时,会触发不同的点击事件
     [segment addTarget:self action:@selector(selected:) forControlEvents:UIControlEventValueChanged];
 
@@ -90,7 +96,7 @@
 
     UIImage* image2 = [UIImage imageNamed:@"red_white_search"];
     UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
-    imageView2.frame = CGRectMake(MainS_Width-20-50, segment.frame.origin.y+segment.frame.size.height+10, 50, 30);
+    imageView2.frame = CGRectMake(MainS_Width-20-50, segment.frame.origin.y+segment.frame.size.height+10, 30, 30);
     imageView2.layer.cornerRadius = 6;
     imageView2.layer.masksToBounds = YES;
     //添加搜索事件
@@ -370,6 +376,34 @@
     }];
 }
 
+#pragma 获取第一页的数据
+-(void)getFirstIconList:(asyncCallback)callback{
+    NSMutableArray* array = [[DataBaseTool shareInstance] queryFirstIconListData];
+    if(array.count!=0){
+        callback(@"",array);
+    }else{
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        dict[@"db"] = [ToolsObject getDataSouceName];
+        dict[@"function"] = @"sp_fun_down_maintenance_category";//车间管理
+        [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+            
+            if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+                NSMutableArray *items = [responseObject objectForKey:@"data"];
+                NSMutableArray* array = [FirstIconInfoModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+                [[DataBaseTool shareInstance] insertFirstIconListData:array];
+                callback(@"",array);
+                
+            }else{
+                NSString* msg = [responseObject objectForKey:@"msg"];
+                callback(msg,nil);
+            }
+        } failure:^(NSError * _Nonnull error) {
+            callback(@"网络错误",nil);
+        }];
+    }
+    
+}
+
 #pragma 显示空白view
 -(void)showErrorInfo:(NSString*)error{
     [self.progress hideAnimated:YES];
@@ -393,6 +427,14 @@
     [self.tableView reloadData];
     //刷新下拉
     NSMutableArray* wxgzArr = [[DataBaseTool shareInstance] queryWxgzList:[_arr objectAtIndex:self.curSelectIndex]];
+    
+    if(wxgzArr.count==0){
+        [self getFirstIconList:^(NSString *errorMsg, id result) {
+            if(![errorMsg isEqualToString:@""]){
+                [ToolsObject show:errorMsg With:self];
+            }
+        }];
+    }
     for (int i=0; i<wxgzArr.count; i++) {
         EBDropdownListItem *item = [[EBDropdownListItem alloc] initWithItem:[NSString stringWithFormat:@"%d",i] itemName:wxgzArr[i]];
         [self.dropDownListArr addObject:item];
@@ -400,6 +442,8 @@
     [_dropdownListView setDataSource:self.dropDownListArr];
   
 }
+
+
 
 
 

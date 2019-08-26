@@ -21,4 +21,6 @@ typedef void(^alertBlock)(NSInteger index);
 //-(void)showHNAlertView:(alertBlock)myblock isAudoClose:(BOOL)close;
 
 -(void)showHNAlertView:(alertBlock)myblock;
+
+-(id)initProviceChooseView:(NSArray *)titlesArray;
 @end

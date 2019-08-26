@@ -68,6 +68,51 @@
     return self;
 }
 
+
+#pragma Mark--- 省份初始化
+-(id)initProviceChooseView:(NSArray *)titlesArray{
+    
+    self = [super initWithFrame:[UIScreen mainScreen].bounds];
+    if (self)
+    {
+        [self creatProviceTitle:titlesArray ];
+    }
+    return self;
+    
+}
+
+-(void)dismiss:(UITapGestureRecognizer *)tap{
+    [self dismissView];
+}
+
+#pragma mark ---- 电台选择相册图片的接口
+-(void)creatProviceTitle:(NSArray *)array{
+    self.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.3];
+    CGFloat btnWidth = (MainS_Width-40*PXSCALE)/7-5*PXSCALEH;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(dismiss:)];
+    self.userInteractionEnabled = YES;
+    [self addGestureRecognizer:tap];
+
+    self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, MainS_Height-(5*btnWidth+4*5*PXSCALEH+20*PXSCALEH) ,MainS_Width,5*btnWidth+4*5*PXSCALEH+20*PXSCALEH)];
+
+    self.bgView.backgroundColor = SetColor(@"#d9d9d9", 1.0);
+    self.bgView.layer.masksToBounds = YES;
+    [self addSubview:_bgView];
+    //添加按钮
+    NSArray* proArr = @[@"闽",@"京",@"津",@"冀",@"晋",@"蒙",@"辽",@"吉",@"黑",
+                        @"沪",@"苏",@"浙",@"皖",@"赣",@"鲁",@"豫",@"鄂",
+                        @"湘",@"粤",@"桂",@"琼",@"川",@"贵",@"云",@"渝",@"藏",
+                        @"陕",@"甘",@"青",@"宁",@"新",@"港",@"澳",@"台"];
+    for (int i=0; i<proArr.count; i++) {
+        UIButton* itemBtn =  [PublicFunction getButtonInControl:self frame:CGRectMake(i%7*(btnWidth+5*PXSCALEH)+20*PXSCALE, (i/7*(btnWidth+5*PXSCALEH)+10*PXSCALEH), btnWidth, btnWidth) title:proArr[i] align:@"center" color:[UIColor whiteColor] fontsize:14 tag:i clickAction:@selector(btnClick:)];
+        itemBtn.backgroundColor = lightGreenColor;
+        [_bgView addSubview:itemBtn];
+    }
+}
+
+
+
+
 -(void)showHNAlertView:(alertBlock)myblock{
     
     UIWindow *window = [[[UIApplication sharedApplication] delegate] window];

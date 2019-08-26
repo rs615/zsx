@@ -62,8 +62,12 @@ static HttpRequestManager *_instance;
 +(void)HttpPostCallBack:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure
 {
 
-    NSString   *urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
-    
+    NSString   *urlStr = @"";
+    if([Url rangeOfString:@"http://"].location!=NSNotFound||[Url rangeOfString:@"https://"].location!=NSNotFound){
+        urlStr = Url;
+    }else{
+        urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
+    }
     AFHTTPSessionManager *manager = [HttpRequestManager shareInstance].manager;
 
     manager.responseSerializer = [AFHTTPResponseSerializer serializer];
@@ -110,8 +114,13 @@ static HttpRequestManager *_instance;
     manager.responseSerializer = responseSerializer;
     //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"JSON/text",@"text/plain", nil];
-    NSString   *urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
+    NSString   *urlStr = @"";
     
+    if([Url rangeOfString:@"http://"].location!=NSNotFound||[Url rangeOfString:@"https://"].location!=NSNotFound){
+        urlStr = Url;
+    }else{
+        urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
+    }
     [manager GET:urlStr parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
         
     } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {

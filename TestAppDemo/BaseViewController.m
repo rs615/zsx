@@ -8,6 +8,7 @@
 
 #import "BaseViewController.h"
 #import "CarInfoModel.h"
+#import "HomeViewController.h"
 @interface BaseViewController ()
 
 @end
@@ -70,7 +71,16 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)backHome{
+    
+    for(UIViewController*temp in self.navigationController.viewControllers) {
+        if([temp isKindOfClass:[HomeViewController class]]){
+           
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
 
+}
 
 
 @end

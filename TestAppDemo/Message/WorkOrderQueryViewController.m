@@ -11,6 +11,7 @@
 #import "EBDropdownListView.h"
 #import "OrderModel.h"
 #import "BRPickerView.h"
+#import "ProjectOrderViewController.h"
 #import "WorkOrderCell.h"
 @interface WorkOrderQueryViewController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UILabel *startDateLabel;
@@ -182,8 +183,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    
+    //进入工单
+    OrderModel* orderModel = self.dataSource[indexPath.row];
+    NSMutableArray* items =  [[DataBaseTool shareInstance] queryCarListData:orderModel.cp isLike:NO];
+    CarInfoModel* model = [items objectAtIndex:0];
+    model.jsd_id = orderModel.jsd_id;
+    [self enterWorkOrder:model];
 }
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
 //
@@ -382,6 +387,25 @@
         _dropDownListArr = [NSMutableArray array];
     }
     return _dropDownListArr;
+}
+
+-(void)enterWorkOrder:(CarInfoModel*)model{
+    
+    BOOL isHave = NO;
+    for(UIViewController*temp in self.navigationController.viewControllers) {
+        if([temp isKindOfClass:[ProjectOrderViewController class]]){
+            isHave = YES;
+            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
+            vc.model = model;
+            [self.navigationController popToViewController:temp animated:YES];
+        }
+    }
+    if(!isHave){
+        ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
+        vc.model = model;
+        [self.navigationController pushViewController:vc animated:YES];
+    }
+    
 }
 
 #pragma mark - 属性

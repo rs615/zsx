@@ -252,13 +252,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
     }
  
-    if(indexPath.row==self.xmsData.count-1){
-        NSArray* xjArr = @[@"小计",[NSString stringWithFormat:@"%.2f",_totalXlf],[NSString stringWithFormat:@"%.2f",_totalZkMoney]];
+    if(indexPath.row==self.partsData.count-1){
+        NSArray* xjArr = @[@"小计",[NSString stringWithFormat:@"%.2f",_totalPartSl],@"0.00",[NSString stringWithFormat:@"%.2f",_totalPartMoney]];
         for (int i=0; i<xjArr.count; i++) {
             UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/4, 30*PXSCALEH) text:xjArr[i] align:@"center"];
             [valueLabel setTextColor:SetColor(@"#999999", 1)];
             if(indexPath.row==0){
-                valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/3+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/3, 70*PXSCALEH);
+                valueLabel.frame = CGRectMake(i*(MainS_Width-20*PXSCALE)/4+20*PXSCALE,40*PXSCALEH , (MainS_Width-20*PXSCALE)/4, 70*PXSCALEH);
             }
             [cell.contentView addSubview:valueLabel];
         }
@@ -348,6 +348,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         return 320*PXSCALEH;
     }
     return 40*PXSCALEH;
+}
+
+-(void)textFieldValueChanged:(UITextField *)textField{
+    
 }
 
 

@@ -84,14 +84,14 @@
 - (void)setModel:(ManageInfoModel *)model
 {
     _model = model;
-    _cpNameLabel.text = [NSString stringWithFormat:@"车牌: %@",model.cp];
-    _jsdLabel.text = [NSString stringWithFormat:@"结算单: %@",model.jsd_id];
-    _cjhLabel.text = [NSString stringWithFormat:@"车架号码: %@",model.cjhm];
+    _cpNameLabel.text = [NSString stringWithFormat:@"车牌: %@",model.cp!=nil?model.cp:@""];
+    _jsdLabel.text = [NSString stringWithFormat:@"结算单: %@",model.jsd_id!=nil?model.jsd_id:@""];
+    _cjhLabel.text = [NSString stringWithFormat:@"车架号码: %@",model.cjhm!=nil?model.cjhm:@""];
     _projectStatusLabel.text = [NSString stringWithFormat:@"项目状态: %@",model.states];
-    _cxLabel.text = [NSString stringWithFormat:@"车型: %@",model.cx];
-    _wxgzLabel.text = [NSString stringWithFormat:@"维修工种: %@",model.wxgz];
-    _lgryLabel.text = [NSString stringWithFormat:@"领工人员: %@",model.assign];
-    _zpryLabel.text = [NSString stringWithFormat:@"指派人员: %@",model.xlg];
+    _cxLabel.text = [NSString stringWithFormat:@"车型: %@",model.cx!=nil?model.cx:@""];
+    _wxgzLabel.text = [NSString stringWithFormat:@"维修工种: %@",model.wxgz!=nil?model.wxgz:@""];
+    _lgryLabel.text = [NSString stringWithFormat:@"领工人员: %@",model.assign!=nil?model.assign:@""];
+    _zpryLabel.text = [NSString stringWithFormat:@"指派人员: %@",model.xlg!=nil?model.xlg:@""];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];

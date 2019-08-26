@@ -14,7 +14,8 @@
 #import "HNAlertView.h"
 #import "BRPickerView.h"
 #import "ToolsObject.h"
-
+#import "CareInfoModel.h"
+#import "SecondViewController.h"
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
@@ -35,6 +36,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic,strong)UITextField *textFieldTjr;
 @property (nonatomic,strong)UITextField *textFieldMemo;
 @property (nonatomic,strong)UILabel *textLabelNSDate;
+@property (nonatomic,strong)UILabel *proviceLabel;
 @property (nonatomic,strong)MBProgressHUD *progress;
 @property (nonatomic,strong)NSString* errorMsg;
 
@@ -69,7 +71,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     // 将控件添加到当前视图上
     [self.view addSubview:textField3];
     UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0,29, 259, 1)];
-    lineView.backgroundColor = [UIColor orangeColor];
+    lineView.backgroundColor = lightPinkColor;
     [textField3 addSubview:lineView];
     UIImage* image2 = [UIImage imageNamed:@"red_white_search"];
     UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
@@ -93,15 +95,18 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     //设置frame
     segment.frame = CGRectMake(0, 235, self.view.frame.size.width, 40);
     segment.backgroundColor = [UIColor grayColor];
-    segment.layer.masksToBounds = YES;               //    默认为no，不设置则下面一句无效
+    segment.layer.masksToBounds = NO;               //    默认为no，不设置则下面一句无效
     segment.layer.cornerRadius = 0;               //    设置圆角大小，同UIView
-    segment.layer.borderWidth = 2;                   //    边框宽度，重新画边框，若不重新画，可能会出现圆角处无边框的情况
-    segment.layer.borderColor =   [UIColor whiteColor].CGColor;
+    segment.layer.borderWidth = 0;                   //    边框宽度，重新画边框，若不重新画，可能会出现圆角处无边框的情况
+    segment.layer.borderColor = [UIColor clearColor].CGColor;
     //segment.frame = CGRectMake(0, 0.15029*CFG, 0.2716*CFW, 0.0814*CFG); // 0.3642*CFW
     segment.selectedSegmentIndex = 0;
-    segment.tintColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
+    //    segment.tintColor = [UIColor colorWithRed:0.23 green:0.50 blue:0.82 alpha:0.90];
     //    选中的颜色
-    [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor redColor]} forState:UIControlStateSelected];
+    
+    [segment setTintColor:hotPinkColor];
+    
+    [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateSelected];
     //    未选中的颜色
     [segment setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor blackColor]} forState:UIControlStateNormal];
     //添加到主视图
@@ -118,7 +123,15 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     labelCp.frame = CGRectMake(100, 0, 50, 30);
     labelCp.text = @"车牌";
     [self.baseView addSubview:labelCp];
-    
+
+    _proviceLabel = [PublicFunction getlabel:CGRectMake(100-40, 0, 50, 30) text:@"right"];
+    _proviceLabel.text = @"";
+    _proviceLabel.textColor = lightBlueColor;
+    [self.baseView addSubview:_proviceLabel];
+    UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectProvice:)];
+    _proviceLabel.userInteractionEnabled = YES;
+    [_proviceLabel addGestureRecognizer:tap0];
+
     
     _textFieldCp = [[UITextField alloc]initWithFrame:CGRectMake(160, 0, 200, 30)];
     _textFieldCp.borderStyle = UITextBorderStyleNone;
@@ -127,7 +140,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     // 将控件添加到当前视图上
     [self.baseView addSubview:_textFieldCp];
     
-    
+    [_textFieldCp addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+
     UILabel* labelCjh = [[UILabel alloc] init];
     labelCjh.frame = CGRectMake(90, 30, 60, 30);
     labelCjh.text = @"车架号";
@@ -196,20 +210,23 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [self.view  addSubview:self.baseView];
     
     UIView *lineView2 = [[UIView alloc]initWithFrame:CGRectMake(0,460, GZDeviceWidth, 2)];
-    lineView2.backgroundColor = [UIColor orangeColor];
+    lineView2.backgroundColor = lightPinkColor;
     [self.view addSubview:lineView2];
     [self initMoreView];
     
     UIButton *buttonGz=[UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    buttonGz.backgroundColor = [UIColor greenColor];
+    buttonGz.backgroundColor = lightGreenColor;
     buttonGz.frame = CGRectMake(80, 470, 100, 40);
+    [buttonGz setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [buttonGz setTitle:@"关注" forState:UIControlStateNormal];
     [buttonGz addTarget:self action:@selector(attention:) forControlEvents:UIControlEventTouchUpInside];
 
     UIButton *buttonJc=[UIButton buttonWithType:(UIButtonTypeRoundedRect)];
-    buttonJc.backgroundColor = [UIColor greenColor];
+    buttonJc.backgroundColor = lightGreenColor;
     buttonJc.frame = CGRectMake(240, 470, 100, 40);
     [buttonJc setTitle:@"接车" forState:UIControlStateNormal];
+    [buttonJc setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
     [buttonJc addTarget:self action:@selector(pickUpCar:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:buttonGz];
     [self.view addSubview:buttonJc];
@@ -218,7 +235,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 -(void) initMoreView
 {
-   UIView* gdView = [[UIView alloc] init];
+    UIView* gdView = [[UIView alloc] init];
     self.moreView = gdView;
     self.moreView.frame = CGRectMake(0, 275, GZDeviceWidth, 200);
     UILabel* labelCp = [[UILabel alloc] init];
@@ -309,7 +326,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 
-
+-(void)textFieldValueChanged:(UITextField *)textField{
+    NSMutableArray* array= [[DataBaseTool shareInstance] querySearchCarListData:textField.text];
+    
+}
 
 -(void)selected:(id)sender{
     UISegmentedControl* control = (UISegmentedControl*)sender;
@@ -330,6 +350,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     }
 }
 
+#pragma 选择日期
 -(void)selectDate:(UITapGestureRecognizer *)tap{
     NSInteger tag = tap.view.tag;
     __weak HomeViewController *safeSelf = self;
@@ -348,6 +369,23 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
 }
 
+#pragma 选择省份
+-(void)selectProvice:(UITapGestureRecognizer *)tap{
+   
+    __weak HomeViewController* safeSelf = self;
+    //添加按钮
+    NSArray* proArr = @[@"闽",@"京",@"津",@"冀",@"晋",@"蒙",@"辽",@"吉",@"黑",
+        @"沪",@"苏",@"浙",@"皖",@"赣",@"鲁",@"豫",@"鄂",
+        @"湘",@"粤",@"桂",@"琼",@"川",@"贵",@"云",@"渝",@"藏",
+        @"陕",@"甘",@"青",@"宁",@"新",@"港",@"澳",@"台"];
+    HNAlertView* alertView = [[HNAlertView alloc] initProviceChooseView:proArr];
+    [alertView showHNAlertView:^(NSInteger index) {
+        safeSelf.proviceLabel.text = proArr[index];
+    }];
+
+
+}
+
 
 #pragma mark - 搜索车辆
 -(void)searchCar:(UITapGestureRecognizer *)tap{
@@ -359,7 +397,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     vc.hidesBottomBarWhenPushed = YES;
     vc.block = ^(CarInfoModel* model){
 //        NSLog(@"%@",model.mobile);
-        safeSelf.textFieldCp.text = model.mc;
+        safeSelf.textFieldCp.text = [model.mc substringFromIndex:1];
+        safeSelf.proviceLabel.hidden = NO;
+        safeSelf.proviceLabel.text = [model.mc substringToIndex:1];
         safeSelf.textFieldCjh.text = model.cjhm;
         safeSelf.textFieldCx.text = model.cx;
         safeSelf.textFieldGls.text = model.gls;
@@ -491,7 +531,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)pickUpCar:(UIButton *)sender{
     NSString* linkman = _textFieldSxr.text;
     NSString* mobile = _textFieldSjh.text;
-    NSString* mc = _textFieldCp.text;
+    NSString* mc = [NSString stringWithFormat:@"%@%@",_proviceLabel.text,_textFieldCp.text];
     NSString* cjh = _textFieldCjh.text;
     NSString* cx = _textFieldCx.text;
     NSString* cz = _textFieldChezhu.text;
@@ -518,6 +558,12 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         [ToolsObject show:@"手机号不能为空" With:self];
         return;
     }
+    
+    if([cz isEqualToString:@""]){
+        [ToolsObject show:@"车主不能为空" With:self];
+        return;
+    }
+    
     if(![ToolsObject isMobileNumber:mobile]){
         [ToolsObject show:@"手机号输入有误" With:self];
         return;
@@ -553,6 +599,15 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     }
 }
 
+#pragma 省份选择
+-(void)itemClick:(UIButton *)sender{
+    UIView* bgView = [sender superview];
+    [UIView animateWithDuration:0.35 animations:^{
+        bgView.frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height, bgView.bounds.size.width, bgView.bounds.size.height);
+    } completion:^(BOOL finished) {
+        [[bgView superview] removeFromSuperview];
+    }];
+}
 
 #pragma mark - 关注
 -(void)attention:(UIButton *)sender{
@@ -561,9 +616,18 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     dict[@"db"] = [ToolsObject getDataSouceName];
     dict[@"function"] = @"sp_fun_get_wxgzh_account";//上传
     dict[@"company_code"] = @"A";
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
     [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        [safeSelf.progress hideAnimated:YES];
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
-            
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [CarInfoModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+            CareInfoModel* model = [array objectAtIndex:0];
+            //进入关注
+            [safeSelf enterSecond:model];
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            [ToolsObject show:msg With:safeSelf];
         }
     } failure:^(NSError * _Nonnull error) {
         [ToolsObject show:@"网络错误" With:safeSelf];
@@ -681,12 +745,24 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             [[DataBaseTool shareInstance] updateCarInfo:model];
             [safeSelf checkHasNotComplete:model];
 
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            [ToolsObject show:msg With:safeSelf];
+
         }
     } failure:^(NSError * _Nonnull error) {
         [ToolsObject show:@"网络错误" With:safeSelf];
 
     }];
 }
+#pragma mark - 进入二维码
+-(void)enterSecond:(CareInfoModel*)model{
+    SecondViewController *vc  =[[SecondViewController alloc] init];
+    vc.hidesBottomBarWhenPushed = YES;
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 
 #pragma mark - 进入工单
 -(void)enterProjectOrder:(CarInfoModel*)model{
@@ -776,6 +852,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
             //进入工单页面
             [safeSelf.progress hideAnimated:YES];
+            [safeSelf enterProjectOrder:model];
 
         }else{
             [safeSelf.progress hideAnimated:YES];
