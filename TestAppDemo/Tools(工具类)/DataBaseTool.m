@@ -263,6 +263,26 @@
 
 }
 
+#pragma 查询维修工种
+-(NSMutableArray*)queryWxgzList{
+    NSMutableArray *array = [NSMutableArray array];
+    NSString* sql = @"select distinct wxgz from first_icon where 1=1";
+    if ([_db open]) {
+        FMResultSet *cursor = [_db executeQuery:sql];
+        while([cursor next]){
+            NSString* wxgz = [cursor stringForColumn:@"wxgz"];
+            if(wxgz!=nil&&![wxgz isEqualToString:@""]){
+                [array addObject:wxgz];
+                
+            }
+        }
+    }
+    [_db close];
+    
+    return array;
+    
+}
+
 -(NSMutableArray*)queryManagerList:(NSString*)cp wxgz:(NSString*)wxgz assgin:(NSString*)assgin orderStr:(NSString*)orderStr states:(NSString*)states{
     NSMutableArray *array = [NSMutableArray array];
     NSString* sql = @"select * from manager_info where 1=1";

@@ -30,7 +30,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"项目首页" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:@selector(backHome:) withVC:self];
+    [self setNavTitle:@"项目首页" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     // Do any additional setup after loading the view.
     [self initView];
     [self initData];

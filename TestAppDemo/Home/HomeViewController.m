@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "SearchCarViewController.h"
 #import "CarInfoModel.h"
+#import "MPGTextField.h"
 #import "ProjectViewController.h"
 #import "ProjectOrderViewController.h"
 #import "HNAlertView.h"
@@ -20,7 +21,7 @@
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
-@interface HomeViewController ()
+@interface HomeViewController ()<UITextFieldDelegate, MPGTextFieldDelegate>
 @property (nonatomic, weak) UIView* baseView;
 @property (nonatomic, weak) UIView* moreView;
 @property (nonatomic, strong) CarInfoModel *carInfo;
@@ -39,6 +40,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 @property (nonatomic,strong)UILabel *proviceLabel;
 @property (nonatomic,strong)MBProgressHUD *progress;
 @property (nonatomic,strong)NSString* errorMsg;
+
+@property (nonatomic,strong)NSMutableArray* carDataArray;
+@property (nonatomic,strong)NSMutableArray* queryArray;
 
 @end
 
@@ -125,7 +129,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [self.baseView addSubview:labelCp];
 
     _proviceLabel = [PublicFunction getlabel:CGRectMake(100-40, 0, 50, 30) text:@"right"];
-    _proviceLabel.text = @"";
+    _proviceLabel.text = @"闽";
     _proviceLabel.textColor = lightBlueColor;
     [self.baseView addSubview:_proviceLabel];
     UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectProvice:)];
@@ -133,14 +137,16 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [_proviceLabel addGestureRecognizer:tap0];
 
     
-    _textFieldCp = [[UITextField alloc]initWithFrame:CGRectMake(160, 0, 200, 30)];
+//    _textFieldCp = [[UITextField alloc]initWithFrame:CGRectMake(160, 0, 200, 30)];
+    _textFieldCp = [[MPGTextField alloc] initWithFrame:CGRectMake(160, 0, 200, 30)];
+    [_textFieldCp setDelegate:self];
     _textFieldCp.borderStyle = UITextBorderStyleNone;
     // 设置提示文字
     _textFieldCp.placeholder = @"必填";
     // 将控件添加到当前视图上
     [self.baseView addSubview:_textFieldCp];
     
-    [_textFieldCp addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+//    [_textFieldCp addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
 
     UILabel* labelCjh = [[UILabel alloc] init];
     labelCjh.frame = CGRectMake(90, 30, 60, 30);
@@ -369,6 +375,34 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
 }
 
+
+#pragma MGPTextField
+- (BOOL)textFieldShouldSelect:(MPGTextField *)textField
+{
+    return YES;
+}
+
+- (NSArray *)dataForPopoverInTextField:(MPGTextField *)textField
+{
+    if(textField==_textFieldCp){
+        return self.queryArray;
+    }
+   
+    return nil;
+}
+
+- (void)textField:(MPGTextField *)textField didEndEditingWithSelection:(NSDictionary *)result{
+    NSLog(@"%@",result);
+    if(textField==_textFieldCp){
+//        self.textFieldCp.text = [[result objectForKey:@"DisplayText"] substringFromIndex:1];
+//        self.proviceLabel.hidden = NO;
+        if(result){
+            [self updateCarInfo:[result objectForKey:@"CustomObject"]];
+
+        }
+    }
+}
+
 #pragma 选择省份
 -(void)selectProvice:(UITapGestureRecognizer *)tap{
    
@@ -386,6 +420,23 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 }
 
+#pragma 更新model
+-(void)updateCarInfo:(CarInfoModel* )model{
+    self.textFieldCp.text = [model.mc substringFromIndex:1];
+    self.proviceLabel.text = [model.mc substringToIndex:1];
+    self.textFieldCjh.text = model.cjhm;
+    self.textFieldCx.text = model.cx;
+    self.textFieldGls.text = model.gls;
+    self.textFieldSxr.text = model.linkman;
+    self.textFieldSjh.text = model.mobile;
+    self.textFieldChezhu.text = model.cz;
+    self.textFieldTjr.text = model.custom5;
+    self.textFieldGzms.text = model.gzms;
+    self.textFieldKeysNo.text = model.keys_no;
+    self.textLabelNSDate.text = [model.ns_date isEqualToString:@""]?@"选择日期":model.ns_date;
+    self.textFieldMemo.text = model.memo;
+}
+
 
 #pragma mark - 搜索车辆
 -(void)searchCar:(UITapGestureRecognizer *)tap{
@@ -397,20 +448,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     vc.hidesBottomBarWhenPushed = YES;
     vc.block = ^(CarInfoModel* model){
 //        NSLog(@"%@",model.mobile);
-        safeSelf.textFieldCp.text = [model.mc substringFromIndex:1];
-        safeSelf.proviceLabel.hidden = NO;
-        safeSelf.proviceLabel.text = [model.mc substringToIndex:1];
-        safeSelf.textFieldCjh.text = model.cjhm;
-        safeSelf.textFieldCx.text = model.cx;
-        safeSelf.textFieldGls.text = model.gls;
-        safeSelf.textFieldSxr.text = model.linkman;
-        safeSelf.textFieldSjh.text = model.mobile;
-        safeSelf.textFieldChezhu.text = model.cz;
-        safeSelf.textFieldTjr.text = model.custom5;
-        safeSelf.textFieldGzms.text = model.gzms;
-        safeSelf.textFieldKeysNo.text = model.keys_no;
-        safeSelf.textLabelNSDate.text = [model.ns_date isEqualToString:@""]?@"选择日期":model.ns_date;
-        safeSelf.textFieldMemo.text = model.memo;
+        [safeSelf updateCarInfo:model];
 
     };
     vc.searchName = textField.text;
@@ -422,6 +460,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 {
     [self initView];
     self.errorMsg = @"";
+    self.queryArray = [NSMutableArray array];
     int count = [[DataBaseTool shareInstance] querySearchListNum];
  
     __weak HomeViewController *safeSelf = self;
@@ -444,7 +483,32 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
         [self loadCarData:^(NSString *errorMsg, id result) {
             dispatch_group_leave(group);
+            safeSelf.carDataArray = result;
+            if(safeSelf.carDataArray.count>0){
+                for(int i=0;i<safeSelf.carDataArray.count;i++){
+                    CarInfoModel* model = [safeSelf.carDataArray objectAtIndex:i];
+//                    NSDictionary* dict = @{@"DisplayText":model.mc,@"DisplaySubText":@"",@"CustomObject":nil};
+//                    [safeSelf.queryArray addObject:dict];
+                    [safeSelf.queryArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:model.mc, @"DisplayText",@"", @"DisplaySubText",model,@"CustomObject", nil]];
+
+                }
+                
+                
+            }
         }];
+    }else{
+       self.carDataArray  =  [[DataBaseTool shareInstance] querySearchCarListData:@""];
+        if(safeSelf.carDataArray.count>0){
+            for(int i=0;i<safeSelf.carDataArray.count;i++){
+                CarInfoModel* model = [safeSelf.carDataArray objectAtIndex:i];
+//                NSDictionary* dict = @{@"DisplayText":model.mc,@"DisplaySubText":@"",@"CustomObject":model};
+//                [safeSelf.queryArray addObject:dict];
+                [safeSelf.queryArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:model.mc, @"DisplayText",@"", @"DisplaySubText",model,@"CustomObject", nil]];
+
+            }
+            
+            
+        }
     }
     
     //通知更新
@@ -453,7 +517,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         if(![safeSelf.errorMsg isEqualToString:@""]){
             [ToolsObject show:safeSelf.errorMsg With:safeSelf];
         }else{
-            
+           
         }
         
     });

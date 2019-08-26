@@ -45,7 +45,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setNavTitle:@"收银" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"收银" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     [self initView];
     [self initData];
     // Do any additional setup after loading the view.
@@ -321,11 +321,49 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak ProjectShouYinViewController* safeSelf = self;
     if(btn.tag==110||btn.tag==111||btn.tag==114||btn.tag==210||btn.tag==211||btn.tag==213){
         //现金支付
+        if(btn.tag==110){
+            _xinjinNum =  0;
+        }
+        if(btn.tag==111){
+            _shuakaNum = 0;
+        }
+        if(btn.tag==114){
+            _zhuanzhangNum =  0;
+        }
+        if(btn.tag==210){
+            _guazhangNum =  0;
+        }
+        if(btn.tag == 211){
+            _wxNum =  0;
+        }
+        if(btn.tag==213){
+            _zfbNum =  0;
+        }
+
         double other = _xinjinNum+_shuakaNum+_zhuanzhangNum+_guazhangNum+_wxNum+_zfbNum;
         double ysje = [_shouyinModel.zje doubleValue];
         double shengYuTotal = ysje - other >0? (ysje - other):0;
         UITextField* textField = [[[btn superview] superview] viewWithTag:btn.tag-10];
         textField.text = [NSString stringWithFormat:@"%.2f",shengYuTotal];
+        if(btn.tag==110){
+            _xinjinNum =  [textField.text doubleValue];
+        }
+        if(btn.tag==111){
+            _shuakaNum =  [textField.text doubleValue];
+        }
+        if(btn.tag==114){
+            _zhuanzhangNum =  [textField.text doubleValue];
+        }
+        if(btn.tag==210){
+            _guazhangNum =  [textField.text doubleValue];
+        }
+        if(btn.tag == 211){
+            _wxNum =  [textField.text doubleValue];
+        }
+        if(btn.tag==213){
+            _zfbNum =  [textField.text doubleValue];
+        }
+
         //未分配
         UILabel* wfpLabel = [self.tableView viewWithTag:300];
         wfpLabel.text = [NSString stringWithFormat:@"未分配:%d",0];
@@ -386,7 +424,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
                 if([model.moneyDesc rangeOfString:@"刷卡"].location!=NSNotFound){
                     model.moneyDesc = self.shuaKa;
                 }
-                moneyTotal+=model.sxf;//计算各项付款方式金额的总和
+                moneyTotal+=moneyNum;//计算各项付款方式金额的总和
                 sxfTotal+= [moneySxfArr[i] doubleValue];//计算各项手续费总和
                 [newMoneyArr addObject:model];//将对象push到结算数组中
             }
@@ -499,6 +537,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         dict[@"sxf2"] =  [NSString stringWithFormat:@"%.2f",sxf2 ];
         dict[@"pre_payment"] =  _shouyinModel.Pre_payment;
         dict[@"vipcard_no"] = _vipCard;
+        dict[@"plate_number"] = _model.mc;
         self.progress = [ToolsObject showLoading:@"加载中" with:self];
         [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
             [self.progress hideAnimated:YES];

@@ -95,7 +95,7 @@
 
     self.bgView = [[UIView alloc]initWithFrame:CGRectMake(0, MainS_Height-(5*btnWidth+4*5*PXSCALEH+20*PXSCALEH) ,MainS_Width,5*btnWidth+4*5*PXSCALEH+20*PXSCALEH)];
 
-    self.bgView.backgroundColor = SetColor(@"#d9d9d9", 1.0);
+    self.bgView.backgroundColor = SetColor(@"#ffffff", 1.0);
     self.bgView.layer.masksToBounds = YES;
     [self addSubview:_bgView];
     //添加按钮

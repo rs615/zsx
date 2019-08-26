@@ -51,7 +51,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma --------------------view
 
 -(void)initView{
-    [self setNavTitle:@"配件" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"配件" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     [self initSegment];
     [self initContentView];
     [self initBottomView];

@@ -11,7 +11,7 @@
 
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
-@interface PerformanceController ()
+@interface PerformanceController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic, strong) UILabel *sgjxLabel;
 @property (nonatomic, strong) UILabel *xsjxLabel;
 @property (nonatomic, strong) UIView* baseView;
@@ -37,7 +37,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"我的绩效" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"我的绩效" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     [self initView];
     [self initData];
 }
@@ -50,7 +50,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)initView{
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, NavBarHeight, MainS_Width, 40*PXSCALEH)];
     view.backgroundColor = SetColor(@"#A58BBA", 1);
-    UILabel* nameLabel =  [PublicFunction getlabel:CGRectMake(0, 0, MainS_Width/2,  40*PXSCALEH) text:[NSString stringWithFormat:@"姓名:%@",@"superuser"] fontSize:navTitleFont color:[UIColor whiteColor] align:@"center"];
+    UILabel* nameLabel =  [PublicFunction getlabel:CGRectMake(0, 0, MainS_Width/2,  40*PXSCALEH) text:[NSString stringWithFormat:@"姓名:%@",[ToolsObject getUserName]] fontSize:navTitleFont color:[UIColor whiteColor] align:@"center"];
     UILabel* jxsjLabel =  [PublicFunction getlabel:CGRectMake( MainS_Width/2, 0, MainS_Width/2,  40*PXSCALEH) text:@"当月绩效数据" fontSize:navTitleFont color:[UIColor whiteColor] align:@"center"];
     [view addSubview:nameLabel];
     [view addSubview:jxsjLabel];
@@ -183,22 +183,17 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [_bottomView addSubview:valueBackgroundView];
     [self.view addSubview:_bottomView];
 //
-//    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 , _bottomView.frame.origin.y+_bottomView.bounds.size.height , MainS_Width, MainS_Height-NavBarHeight)];
-//    if (@available(iOS 11.0, *)) {
-//        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
-//    } else {
-//        self.automaticallyAdj5ustsScrollViewInsets = NO;
-//    }
-//    //    //self.tableView.contentInset=UIEdgeInsetsMake(0.0, 0, 0, 0);//tableview scrollview的contentview的顶点相对于scrollview的位置
-//    //    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//    if (NetworkIsStatusNotReachable) {     // 加载失败，网络原因
-//        NotNetworkTip;
-//    }
-//    else{
-//        [self.view addSubview:self.tableView];
-//    }
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0 ,_bottomView.frame.origin.y+_bottomView.bounds.size.height, MainS_Width, MainS_Height-_baseView.frame.origin.y-_baseView.bounds.size.height-60*PXSCALEH)];
+    if (@available(iOS 11.0, *)) {
+        self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;
+    } else {
+        self.automaticallyAdjustsScrollViewInsets = NO;
+    }
+//    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    [self.view addSubview:self.tableView];
+
 }
 
 
@@ -270,7 +265,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         [safeSelf updateCard];
         [safeSelf updateJieChe];
         [safeSelf updateShigong];
-
+        [safeSelf.tableView reloadData];
     });
    
 }
@@ -283,11 +278,15 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             self.baseView.hidden = NO;
             self.moreView.hidden = YES;
             self.bottomView.frame = CGRectMake(0, _baseView.frame.origin.y+_baseView.bounds.size.height+10*PXSCALEH, MainS_Width, 40*PXSCALEH);
+            self.tableView.frame = CGRectMake(0 ,_bottomView.frame.origin.y+_bottomView.bounds.size.height, MainS_Width, MainS_Height-_baseView.frame.origin.y-_baseView.bounds.size.height-60*PXSCALEH);
+            [self.tableView reloadData];
             break;
         case 1:
             self.baseView.hidden = YES;
             self.moreView.hidden = NO;
             self.bottomView.frame = CGRectMake(0, _moreView.frame.origin.y+_moreView.bounds.size.height+10*PXSCALEH, MainS_Width, 40*PXSCALEH);
+            self.tableView.frame = CGRectMake(0 ,_bottomView.frame.origin.y+_bottomView.bounds.size.height, MainS_Width, MainS_Height-_moreView.frame.origin.y-_moreView.bounds.size.height-60*PXSCALEH);
+            [self.tableView reloadData];
 
             break;
         default:
@@ -400,8 +399,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
             NSMutableArray *items = [responseObject objectForKey:@"data"];
-            NSMutableDictionary* dict = [items objectAtIndex:0];
-            callback(@"",dict);
+//            NSMutableDictionary* dict = [items objectAtIndex:0];
+            callback(@"",items);
         }else{
             NSString* msg = [responseObject objectForKey:@"msg"];
             callback(msg,nil);
@@ -425,8 +424,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         
         if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
             NSMutableArray *items = [responseObject objectForKey:@"data"];
-            NSMutableDictionary* dict = [items objectAtIndex:0];
-            callback(@"",dict);
+//            NSMutableDictionary* dict = [items objectAtIndex:0];
+            callback(@"",items);
         }else{
             NSString* msg = [responseObject objectForKey:@"msg"];
             callback(msg,nil);
@@ -480,12 +479,76 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
 }
 
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    if(!self.baseView.hidden){
+        return self.yejiGroupListData.count;
+    }else{
+        return self.shigongGroupListData.count;
+    }
+    
+    return 0;
+}
+
+
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+  
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    if(cell==nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault  reuseIdentifier:@"cell"];
+    }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;//no
+    cell.selectedBackgroundView = [[UIView alloc] init];
+    //就这两句代码
+    cell.multipleSelectionBackgroundView = [[UIView alloc] initWithFrame:cell.bounds];
+    cell.multipleSelectionBackgroundView.backgroundColor = [UIColor clearColor];
+    
+    UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 40*PXSCALEH)];
+    
+    NSMutableDictionary* dict;
+    if(!self.baseView.hidden){
+        dict = [self.yejiGroupListData objectAtIndex:indexPath.row];
+        
+    }else{
+        dict = [self.shigongGroupListData objectAtIndex:indexPath.row];
+
+    }
+    NSArray* array = @[@"项目名称",@"销售项目数",@"销售总额",@"销售利润",@"销售绩效"];
+    NSString* serviceTime = dict[@"service_time"]!=nil?dict[@"service_time"]:@"";
+    NSString* sale_time = dict[@"sale_time"]!=nil?dict[@"sale_time"]:@"";
+    NSString* sale_money = dict[@"sale_money"]!=nil?dict[@"sale_money"]:@"";
+    NSString* sale_profit = dict[@"sale_profit"]!=nil?dict[@"sale_profit"]:@"";
+    NSString* sale_achievement = dict[@"sale_achievement"]!=nil?dict[@"sale_achievement"]:@"";
+    
+    NSArray* valueArr = @[serviceTime,sale_time,sale_money,sale_profit,sale_achievement];
+    for(int i=0;i<array.count;i++){
+        //            UILabel* titleLabel = [PublicFunction getlabel:CGRectMake(i*MainS_Width/5 ,0, MainS_Width/5, 40*PXSCALEH) text:[array objectAtIndex:i] fontSize:12 color:SetColor(@"#111111", 1.0) align:@"center"];
+        UILabel* valueLabel = [PublicFunction getlabel:CGRectMake(i*MainS_Width/5 , 0, MainS_Width/5, 40*PXSCALEH) text:valueArr[i] fontSize:12 color:SetColor(@"#111111", 1.0) align:@"center"];
+        [contentView addSubview:valueLabel];
+    }
+    [cell.contentView addSubview:contentView];
+    
+    
+    return cell;
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 40*PXSCALEH;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+   
+}
+
 
 #pragma 搜索内容
 -(void)searchContent:(UITapGestureRecognizer *)tap{
     [self initData];
-    
 }
+
+
 
 #pragma mark - Getters
 - (NSMutableDictionary *)shiGongData

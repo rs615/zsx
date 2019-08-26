@@ -20,7 +20,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"二维码" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"二维码" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     _codeImageView = [PublicFunction getImageView:CGRectMake((MainS_Width-150)/2, (MainS_Height-100)/2, 150, 100) imageName:@"img_wg"];
     _codeImageView.hidden = YES;
     [self.view addSubview:_codeImageView];
