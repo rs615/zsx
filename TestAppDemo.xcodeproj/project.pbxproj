@@ -82,6 +82,7 @@
 		7F4B42DC23068FA300A0D133 /* PeijianCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F4B42DB23068FA300A0D133 /* PeijianCell.m */; };
 		7F59C0C623126F47005FB0D7 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C523126F47005FB0D7 /* SecondViewController.m */; };
 		7F59C0C9231271EB005FB0D7 /* CareInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */; };
+		7F59C0CE23137A48005FB0D7 /* MPGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0CD23137A48005FB0D7 /* MPGTextField.m */; };
 		7F754958230D7869005A94DA /* JCIPAddressConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754954230D7869005A94DA /* JCIPAddressConfig.m */; };
 		7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754957230D7869005A94DA /* RequestIPAddress.m */; };
 		7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495B230D86D4005A94DA /* GuzhangListViewController.m */; };
@@ -314,6 +315,8 @@
 		7F59C0C523126F47005FB0D7 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		7F59C0C7231271EB005FB0D7 /* CareInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CareInfoModel.h; sourceTree = "<group>"; };
 		7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CareInfoModel.m; sourceTree = "<group>"; };
+		7F59C0CC23137A48005FB0D7 /* MPGTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGTextField.h; sourceTree = "<group>"; };
+		7F59C0CD23137A48005FB0D7 /* MPGTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGTextField.m; sourceTree = "<group>"; };
 		7F754954230D7869005A94DA /* JCIPAddressConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIPAddressConfig.m; sourceTree = "<group>"; };
 		7F754955230D7869005A94DA /* RequestIPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestIPAddress.h; sourceTree = "<group>"; };
 		7F754956230D7869005A94DA /* JCIPAddressConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIPAddressConfig.h; sourceTree = "<group>"; };
@@ -993,6 +996,15 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		7F59C0CB23137A48005FB0D7 /* MPGTextField */ = {
+			isa = PBXGroup;
+			children = (
+				7F59C0CC23137A48005FB0D7 /* MPGTextField.h */,
+				7F59C0CD23137A48005FB0D7 /* MPGTextField.m */,
+			);
+			path = MPGTextField;
+			sourceTree = "<group>";
+		};
 		7F754953230D785B005A94DA /* ip */ = {
 			isa = PBXGroup;
 			children = (
@@ -1082,6 +1094,7 @@
 		7FAADFBB22FF988200790102 /* Thridpart(第三方库） */ = {
 			isa = PBXGroup;
 			children = (
+				7F59C0CB23137A48005FB0D7 /* MPGTextField */,
 				7F1234D0230F939D007BDB6E /* IQKeyboardManager */,
 				7F453F95230466940063EC0A /* BRPickerView */,
 				7F453EE92303EE900063EC0A /* MJRefresh */,
@@ -1431,6 +1444,7 @@
 				7F453F2F2303EE900063EC0A /* MJRefreshComponent.m in Sources */,
 				7F1234C9230F7893007BDB6E /* JsPartModel.m in Sources */,
 				41E5B21222A7B5A30056C7F2 /* MessageInfoController.m in Sources */,
+				7F59C0CE23137A48005FB0D7 /* MPGTextField.m in Sources */,
 				7F4B42D923068EB500A0D133 /* ProjectCell.m in Sources */,
 				7F453EE4230315260063EC0A /* ManageInfoModel.m in Sources */,
 				7F1234FE230F939E007BDB6E /* IQUIView+Hierarchy.m in Sources */,
