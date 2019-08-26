@@ -733,6 +733,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     __weak ProjectOrderViewController* safeSelf = self;
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"项目名称:",@"性质:",@"项目价格:",@"项目优惠:",@"保存新价格:"];
+    NSArray* valueTypeArr = @[@"string",@"select",@"number",@"number",@"check"];
+
     NSString* pname =model.xlxm!=nil?model.xlxm:@"";
     NSString* wxgz = model.wxgz!=nil?model.wxgz:@"";
     NSString* xlf = model.xlf!=nil?model.xlf:@"";
@@ -781,6 +783,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
 
             valueTextField.tag = 800+i;
+            NSString* valueType = valueTypeArr[i];
+            if([valueType isEqualToString:@"number"]){
+                valueTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
             [contentView addSubview:valueTextField];
         }
         
@@ -827,6 +833,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     _tmpProject = nil;
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"配件名称:",@"规格:",@"数量:",@"单价:",@"保存新价格:"];
+    NSArray* valueTypeArr = @[@"string",@"number",@"number",@"number",@"check"];
+
     NSString* peijianname =model.pjmc!=nil?model.pjmc:@"";
     NSString* guige = model.pjbm!=nil?model.pjbm:@"";
     NSString* sl = model.sl!=nil?model.sl:@"";
@@ -847,6 +855,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             valueTextField.text = [valueArr objectAtIndex:i];
             valueTextField.tag = 500+i;
             [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
+            NSString* valueType = valueTypeArr[i];
+            if([valueType isEqualToString:@"number"]){
+                valueTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
             [contentView addSubview:valueTextField];
         }
     
@@ -970,6 +982,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
     UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0,50,MainS_Width-40*PXSCALE,270*PXSCALEH)];
     NSArray* titleArr = @[@"项目名称",@"维修成本",@"项目价格",@"项目类别"];
+    NSArray* valueTypeArr = @[@"string",@"number",@"number",@"select"];
     __weak ProjectOrderViewController* safeSelf = self;
     NSMutableArray* array = [[DataBaseTool shareInstance] queryRepairListStringData];
     _tmpProject.wxgz =array.count>0?[array objectAtIndex:0]:@"";
@@ -1002,6 +1015,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             valueTextField.tag = 900+i;
             [valueTextField addTarget:self action:@selector(textFieldValueChanged:) forControlEvents:UIControlEventEditingChanged];
             valueTextField.placeholder = [NSString stringWithFormat:@"请输入%@",[titleArr objectAtIndex:i]];
+            NSString* valueType = valueTypeArr[i];
+            if([valueType isEqualToString:@"number"]){
+                valueTextField.keyboardType = UIKeyboardTypeDecimalPad;
+            }
             [contentView addSubview:valueTextField];
         }
         

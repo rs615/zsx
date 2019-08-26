@@ -33,7 +33,7 @@
 
              UITextField* valueTextField = [PublicFunction getTextFieldInControl:self frame:CGRectMake(titleLabel.frame.origin.x+titleLabel.bounds.size.width, i*30*PXSCALEH+10*PXSCALEH*(i+1), (contentView.bounds.size.width-20*PXSCALE)/6*5, 30*PXSCALEH) tag:i returnType:@""];
             if(i!=0){
-                valueTextField.keyboardType = UIKeyboardTypeNumberPad;
+                valueTextField.keyboardType = UIKeyboardTypeDecimalPad;
             }
             [valueTextField addTarget:self action:@selector(textFieldWithText:) forControlEvents:UIControlEventEditingChanged];
 

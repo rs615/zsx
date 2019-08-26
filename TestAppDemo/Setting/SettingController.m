@@ -212,6 +212,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)updateData:(UITapGestureRecognizer *)tap{
     //这里查询了本地数据
     __weak SettingController *safeSelf = self;
+    self.errorMsg = @"";
     self.progress = [ToolsObject showLoading:@"加载中" with:self];
 
     dispatch_group_t group = dispatch_group_create();

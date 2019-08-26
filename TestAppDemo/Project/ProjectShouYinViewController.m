@@ -209,7 +209,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
                 }
                 [textField setEnabled:NO];
             }else{
-                textField.keyboardType = UIKeyboardTypeNumberPad;
+                textField.keyboardType = UIKeyboardTypeDecimalPad;
             }
             [cell.contentView addSubview:textField];
         }
@@ -266,7 +266,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             btn.tag = 210+i;
             [btn setTitle:btnTitle forState:UIControlStateNormal];
             btn.backgroundColor = lightGreenColor;
-            textField.keyboardType = UIKeyboardTypeNumberPad;
+            textField.keyboardType = UIKeyboardTypeDecimalPad;
 
             [btn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [cell.contentView addSubview:btn];
@@ -286,7 +286,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             }
         }
         if(i==5){
-            textField.keyboardType = UIKeyboardTypeNumberPad;
+            textField.keyboardType = UIKeyboardTypeDecimalPad;
         }
         
        
