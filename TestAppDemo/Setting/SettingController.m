@@ -197,7 +197,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             
                 }
         
-        }
+        }//首佳演示
     
     [newviewControlles addObject:vc];
     

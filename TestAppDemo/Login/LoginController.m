@@ -25,7 +25,11 @@
 @implementation LoginController
 -(void) createUI
 {
+    UIImageView *backImageView=[[UIImageView alloc]initWithFrame:self.view.bounds];
+    backImageView.image=[UIImage imageNamed:@"zsx_back_login"];
+    [self.view insertSubview:backImageView atIndex:0];
     
+
 //    UITextField * textField = [[UITextField alloc]initWithFrame:CGRectMake(80, 100, 280, 30)];
 //    // 设置输入框界面风格,枚举如下:
 //    // UITextBorderStyleNone        // 无风格
@@ -75,6 +79,7 @@
     _factoryNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 30*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"修理厂名称/分店名称"];
     _factoryNameField.backgroundColor = SetColor(@"#ffffff", 0.53);
     [contentView addSubview:_factoryNameField];
+
     
     _userNameField  = [PublicFunction getTextFieldInControl:self frame:CGRectMake(10*PXSCALE, 20*PXSCALEH+_factoryNameField.frame.origin.y+40*PXSCALEH, contentView.bounds.size.width-20*PXSCALE, 40*PXSCALEH) tag:100 returnType:nil text:@"" placeholder:@"请输入用户名"];
     _userNameField.backgroundColor = SetColor(@"#ffffff", 0.53);

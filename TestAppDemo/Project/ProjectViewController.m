@@ -10,7 +10,7 @@
 #import "OrderCarInfoModel.h"
 #import "HnAlertView.h"
 #import "ProjectSelectViewController.h"
-#import "HistoryViewController.h"
+#import "HistoryDataListController.h"
 #import "ProjectOrderViewController.h"
 #import "HomeViewController.h"
 #import "BRPickerView.h"
@@ -342,7 +342,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 -(void)enterHistory{
-    HistoryViewController* vc = [[HistoryViewController alloc] init];
+    HistoryDataListController* vc = [[HistoryDataListController alloc] init];
     vc.model = _model;
     [self.navigationController pushViewController:vc animated:YES];
 }
