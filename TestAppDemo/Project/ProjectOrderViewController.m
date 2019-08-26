@@ -68,7 +68,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 -(void)initView
 {
-    [self setNavTitle:@"工单" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"工单" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, NavBarHeight, MainS_Width, 40*PXSCALEH)];
     view.backgroundColor = SetColor(@"#A58BBA", 1);
     UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];

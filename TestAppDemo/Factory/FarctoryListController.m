@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"在厂车辆" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"在厂车辆" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     _contentArr = @[@"估价中",@"待派工",@"待领工",@"修理中",@"待质检",@"待结算",@"待出厂" ];
 
     [self initView];
@@ -297,20 +297,21 @@
 
 -(void)enterWorkOrder:(CarInfoModel*)model{
     
-    BOOL isHave = NO;
-    for(UIViewController*temp in self.navigationController.viewControllers) {
-        if([temp isKindOfClass:[ProjectOrderViewController class]]){
-            isHave = YES;
-            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
-            vc.model = model;
-            [self.navigationController popToViewController:temp animated:YES];
-        }
-    }
-    if(!isHave){
-        ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
-        vc.model = model;
-        [self.navigationController pushViewController:vc animated:YES];
-    }
+//    BOOL isHave = NO;
+//    for(UIViewController*temp in self.navigationController.viewControllers) {
+//        if([temp isKindOfClass:[ProjectOrderViewController class]]){
+//            isHave = YES;
+//            ProjectOrderViewController* vc  = (ProjectOrderViewController*)temp;
+//            vc.model = model;
+//            [self.navigationController popToViewController:temp animated:YES];
+//        }
+//    }
+//    if(!isHave){
+//
+//    }
+    ProjectOrderViewController* vc = [[ProjectOrderViewController alloc] init];
+    vc.model = model;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

@@ -9,6 +9,8 @@
 #import "BaseViewController.h"
 #import "CarInfoModel.h"
 #import "HomeViewController.h"
+#import "TabViewController.h"
+#import "AppDelegate.h"
 @interface BaseViewController ()
 
 @end
@@ -72,14 +74,9 @@
 }
 
 -(void)backHome{
+    [self.navigationController.tabBarController setSelectedIndex:0];
+    [self.navigationController popToRootViewControllerAnimated:NO];
     
-    for(UIViewController*temp in self.navigationController.viewControllers) {
-        if([temp isKindOfClass:[HomeViewController class]]){
-           
-            [self.navigationController popToViewController:temp animated:YES];
-        }
-    }
-
 }
 
 

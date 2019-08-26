@@ -36,7 +36,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    [self setNavTitle:@"工单查询" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"" rightAction:nil withVC:self];
+    [self setNavTitle:@"工单查询" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     [self initView];
     [self initData];
 }
@@ -88,7 +88,7 @@
     
     UIImage* image2 = [UIImage imageNamed:@"red_white_search"];
     UIImageView* imageView2 = [[UIImageView alloc] initWithImage:image2];
-    imageView2.frame = CGRectMake(MainS_Width-20-50, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10, 50, 30);
+    imageView2.frame = CGRectMake(MainS_Width-20-50, _endDateLabel.frame.origin.y+_endDateLabel.frame.size.height+10, 30, 30);
     imageView2.layer.cornerRadius = 6;
     imageView2.layer.masksToBounds = YES;
     //添加搜索事件

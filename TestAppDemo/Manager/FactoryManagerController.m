@@ -7,8 +7,11 @@
 //
 
 #import "FactoryManagerController.h"
+#import "MangerLinggongViewController.h"
 #import "EBDropdownListView.h"
 #import "ManageInfoModel.h"
+
+
 #import "FactoryManagerCell.h"
 @interface FactoryManagerController ()<UITableViewDelegate,UITableViewDataSource>
 @property (nonatomic,strong)MBProgressHUD *progress;
@@ -502,7 +505,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 //        self.block(model);
 //        [self.navigationController popViewControllerAnimated:YES];
 //    }
-    
+    MangerLinggongViewController* vc = [[MangerLinggongViewController alloc] init];
+    vc.model =  self.dataSource[indexPath.row];
+    vc.hidesBottomBarWhenPushed = YES;
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 

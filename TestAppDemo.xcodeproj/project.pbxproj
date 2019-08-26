@@ -83,10 +83,12 @@
 		7F59C0C623126F47005FB0D7 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C523126F47005FB0D7 /* SecondViewController.m */; };
 		7F59C0C9231271EB005FB0D7 /* CareInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */; };
 		7F59C0CE23137A48005FB0D7 /* MPGTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0CD23137A48005FB0D7 /* MPGTextField.m */; };
+		7F59C0D12313B28E005FB0D7 /* MangerLinggongViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F59C0D02313B28E005FB0D7 /* MangerLinggongViewController.m */; };
 		7F754958230D7869005A94DA /* JCIPAddressConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754954230D7869005A94DA /* JCIPAddressConfig.m */; };
 		7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F754957230D7869005A94DA /* RequestIPAddress.m */; };
 		7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495B230D86D4005A94DA /* GuzhangListViewController.m */; };
 		7F75495F230E4D81005A94DA /* GuzhangInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495E230E4D81005A94DA /* GuzhangInfoModel.m */; };
+		7FA7595B2313C72E00C597EA /* ManagerLinggongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7595A2313C72E00C597EA /* ManagerLinggongCell.m */; };
 		7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */; };
 		7FAAB33B230981B10096B401 /* PartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33A230981B10096B401 /* PartsModel.m */; };
 		7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33D230982CD0096B401 /* PartsCell.m */; };
@@ -317,6 +319,8 @@
 		7F59C0C8231271EB005FB0D7 /* CareInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CareInfoModel.m; sourceTree = "<group>"; };
 		7F59C0CC23137A48005FB0D7 /* MPGTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MPGTextField.h; sourceTree = "<group>"; };
 		7F59C0CD23137A48005FB0D7 /* MPGTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MPGTextField.m; sourceTree = "<group>"; };
+		7F59C0CF2313B28E005FB0D7 /* MangerLinggongViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MangerLinggongViewController.h; sourceTree = "<group>"; };
+		7F59C0D02313B28E005FB0D7 /* MangerLinggongViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MangerLinggongViewController.m; sourceTree = "<group>"; };
 		7F754954230D7869005A94DA /* JCIPAddressConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCIPAddressConfig.m; sourceTree = "<group>"; };
 		7F754955230D7869005A94DA /* RequestIPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RequestIPAddress.h; sourceTree = "<group>"; };
 		7F754956230D7869005A94DA /* JCIPAddressConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCIPAddressConfig.h; sourceTree = "<group>"; };
@@ -325,6 +329,8 @@
 		7F75495B230D86D4005A94DA /* GuzhangListViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuzhangListViewController.m; sourceTree = "<group>"; };
 		7F75495D230E4D81005A94DA /* GuzhangInfoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GuzhangInfoModel.h; sourceTree = "<group>"; };
 		7F75495E230E4D81005A94DA /* GuzhangInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuzhangInfoModel.m; sourceTree = "<group>"; };
+		7FA759592313C72E00C597EA /* ManagerLinggongCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManagerLinggongCell.h; sourceTree = "<group>"; };
+		7FA7595A2313C72E00C597EA /* ManagerLinggongCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManagerLinggongCell.m; sourceTree = "<group>"; };
 		7FAAB336230850BD0096B401 /* PeijianSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianSelectViewController.h; sourceTree = "<group>"; };
 		7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianSelectViewController.m; sourceTree = "<group>"; };
 		7FAAB339230981B10096B401 /* PartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PartsModel.h; sourceTree = "<group>"; };
@@ -632,6 +638,8 @@
 				7F453EE1230314ED0063EC0A /* Model */,
 				41E5B20722A7AAA40056C7F2 /* FactoryManagerController.h */,
 				41E5B20822A7AAB20056C7F2 /* FactoryManagerController.m */,
+				7F59C0CF2313B28E005FB0D7 /* MangerLinggongViewController.h */,
+				7F59C0D02313B28E005FB0D7 /* MangerLinggongViewController.m */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -759,6 +767,8 @@
 			children = (
 				7F453EE623031A720063EC0A /* FactoryManagerCell.h */,
 				7F453EE723031A720063EC0A /* FactoryManagerCell.m */,
+				7FA759592313C72E00C597EA /* ManagerLinggongCell.h */,
+				7FA7595A2313C72E00C597EA /* ManagerLinggongCell.m */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1438,6 +1448,7 @@
 				7F754959230D7869005A94DA /* RequestIPAddress.m in Sources */,
 				7F4B42CF2305AB6800A0D133 /* ProjectModel.m in Sources */,
 				C1BAC444231348530017DD27 /* ManageModel.m in Sources */,
+				7FA7595B2313C72E00C597EA /* ManagerLinggongCell.m in Sources */,
 				7FAAB33B230981B10096B401 /* PartsModel.m in Sources */,
 				7FAAE05D2301B4EB00790102 /* FMResultSet.m in Sources */,
 				41D0851322B23D290003F07D /* ProjectOrderViewController.m in Sources */,
@@ -1460,6 +1471,7 @@
 				7FAAE03C2301B33A00790102 /* NSObject+MJKeyValue.m in Sources */,
 				7F453F272303EE900063EC0A /* MJRefreshAutoNormalFooter.m in Sources */,
 				7F453F3B230440AE0063EC0A /* WorkOrderCell.m in Sources */,
+				7F59C0D12313B28E005FB0D7 /* MangerLinggongViewController.m in Sources */,
 				7FAAB34E230A3AD80096B401 /* FirstIconInfoModel.m in Sources */,
 				7FAAE0592301B4EB00790102 /* FMDatabaseQueue.m in Sources */,
 				7F453F292303EE900063EC0A /* MJRefreshStateHeader.m in Sources */,

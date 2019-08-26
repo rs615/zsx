@@ -27,6 +27,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void)setNavTitle:(NSString *)title withleftImage:(NSString *)leftImage withleftAction:(SEL)leftAction  withRightImage:(NSString *)righImage  rightAction:(SEL)rightaction withVC:(id)VC;
 
 -(void)backBtnClick;
+-(void)backHome;
+
 @end
 
 NS_ASSUME_NONNULL_END

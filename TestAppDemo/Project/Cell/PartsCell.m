@@ -56,12 +56,12 @@
     [_checkBtn setImage:[UIImage imageNamed:checkedImgName] forState:UIControlStateNormal];
 
 
-    ((UILabel*)[self.contentView viewWithTag:100]).text = [NSString stringWithFormat:@"名称:%@",model.pjmc];
-    ((UILabel*)[self.contentView viewWithTag:102]).text =  [NSString stringWithFormat:@"仓库:%@号仓",model.cd];
-    ((UILabel*)[self.contentView viewWithTag:101]).text = [NSString stringWithFormat:@"规格:%@",model.cd];
+    ((UILabel*)[self.contentView viewWithTag:100]).text = [NSString stringWithFormat:@"名称:%@",model.pjmc!=nil?model.pjmc:@""];
+    ((UILabel*)[self.contentView viewWithTag:102]).text =  [NSString stringWithFormat:@"仓库:%@号仓",model.ck!=nil?model.ck:@""];
+    ((UILabel*)[self.contentView viewWithTag:101]).text = [NSString stringWithFormat:@"规格:%@",model.cd!=nil?model.cd:@""];
     ((UILabel*)[self.contentView viewWithTag:103]).text = [NSString stringWithFormat:@"库存量:%d",[model.kcl intValue]];
     ((UILabel*)[self.contentView viewWithTag:104]).text =[NSString stringWithFormat:@"销售价: ¥%.2f",[model.xsj floatValue]];
-    ((UILabel*)[self.contentView viewWithTag:105]).text = [NSString stringWithFormat:@"配件型号:%@",model.cx];
+    ((UILabel*)[self.contentView viewWithTag:105]).text = [NSString stringWithFormat:@"配件型号:%@",model.cx!=nil?model.cx:@""];
 
 }
 
