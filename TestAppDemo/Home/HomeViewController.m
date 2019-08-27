@@ -124,11 +124,11 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     self.baseView = jbView;
     self.baseView.frame = CGRectMake(0, 275, GZDeviceWidth, 200);
     UILabel* labelCp = [[UILabel alloc] init];
-    labelCp.frame = CGRectMake(100, 0, 50, 30);
+    labelCp.frame = CGRectMake(90, 0, 50, 30);
     labelCp.text = @"车牌";
     [self.baseView addSubview:labelCp];
 
-    _proviceLabel = [PublicFunction getlabel:CGRectMake(100-40, 0, 50, 30) text:@"right"];
+    _proviceLabel = [PublicFunction getlabel:CGRectMake(130, 0, 50, 30) text:@"right"];
     _proviceLabel.text = @"闽";
     _proviceLabel.textColor = lightBlueColor;
     [self.baseView addSubview:_proviceLabel];
@@ -208,6 +208,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     
     _textFieldSjh= [[UITextField alloc]initWithFrame:CGRectMake(160, 150, 200, 30)];
     _textFieldSjh.borderStyle = UITextBorderStyleNone;
+    _textFieldSjh.keyboardType = UIKeyboardTypePhonePad;
     // 设置提示文字
     _textFieldSjh.placeholder = @"输入";
     // 将控件添加到当前视图上

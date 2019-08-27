@@ -124,7 +124,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma bottomView
 -(UIView*)createBottomView{
-    UIView* bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainS_Height-60*PXSCALEH, MainS_Width, 60*PXSCALEH)];
+    UIView* bottomView = [[UIView alloc] initWithFrame:CGRectMake(0, MainS_Height-50*PXSCALEH, MainS_Width, 60*PXSCALEH)];
     NSArray* array ;
     if([_model.states isEqualToString:@"待领工"]){
         array = @[@"调整派工",@"领工"];
