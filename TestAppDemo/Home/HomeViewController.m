@@ -17,6 +17,12 @@
 #import "ToolsObject.h"
 #import "CareInfoModel.h"
 #import "SecondViewController.h"
+#import "PlateIDCameraViewController.h"
+#if TARGET_IPHONE_SIMULATOR//模拟器
+#elif TARGET_OS_IPHONE//真机
+#import "PlateIDOCR.h"
+#endif
+
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
@@ -62,6 +68,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     imageView.layer.masksToBounds = YES;
     //自适应图片宽高比例
     imageView.contentMode = UIViewContentModeScaleAspectFit;
+    UITapGestureRecognizer *ocrScanRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(ocrScanCar:)];
+    imageView.userInteractionEnabled = YES;
+    [imageView addGestureRecognizer:ocrScanRecognizer];
     [self.view addSubview:imageView];
     UILabel* label = [[UILabel alloc] init];
     label.frame = CGRectMake(175, 165, 100, 30);
@@ -130,7 +139,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
     _proviceLabel = [PublicFunction getlabel:CGRectMake(130, 0, 50, 30) text:@"right"];
     _proviceLabel.text = @"闽";
-    _proviceLabel.textColor = lightBlueColor;
+    _proviceLabel.textColor = SetColor(@"#6cbee9", 1);
     [self.baseView addSubview:_proviceLabel];
     UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectProvice:)];
     _proviceLabel.userInteractionEnabled = YES;
@@ -398,8 +407,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 //        self.textFieldCp.text = [[result objectForKey:@"DisplayText"] substringFromIndex:1];
 //        self.proviceLabel.hidden = NO;
         if(result){
-            [self updateCarInfo:[result objectForKey:@"CustomObject"]];
-
+            id obj = [result objectForKey:@"CustomObject"];
+            if(![obj isKindOfClass:[NSString class]]){
+                [self updateCarInfo:obj];
+            }
         }
     }
 }
@@ -456,6 +467,22 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [self.navigationController pushViewController:vc animated:YES];
 
 }
+
+-(void)ocrScanCar:(UITapGestureRecognizer *)tap{
+    [self recogWithRecogMode:0 isphotographRecog:YES];
+}
+
+#pragma 识别
+- (void)recogWithRecogMode:(int)recogMode isphotographRecog:(BOOL)isphotographRecog{
+    PlateIDCameraViewController *camera = [[PlateIDCameraViewController alloc] init];
+    camera.recogMode = recogMode;
+    camera.isPphotographRecog = isphotographRecog;
+    camera.hidesBottomBarWhenPushed = YES;
+//    self.navigationController.navigationBarHidden = YES;
+    [self.navigationController pushViewController:camera animated:YES];
+    
+}
+
 
 -(void) viewDidLoad
 {

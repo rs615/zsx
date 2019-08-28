@@ -210,4 +210,6 @@
     CGRect rect = [str boundingRectWithSize:size options:NSStringDrawingUsesLineFragmentOrigin attributes:@{NSFontAttributeName:Font(fontSize)} context:nil];
     return rect;
 }
+
+
 @end

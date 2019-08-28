@@ -50,7 +50,7 @@
     [leftBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [titleView addSubview:leftBtn];
     
-    UILabel *titleLabel = [PublicFunction getlabel:CGRectMake((MainS_Width-150)/2, 21, 150, 40) text:title fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
+    UILabel *titleLabel = [PublicFunction getlabel:CGRectMake((MainS_Width-200)/2, 21, 200, 40) text:title fontSize:navTitleFont color:SetColor(@"#111111", 1.0) align:@"center"];
     titleLabel.tag = 10002;
     [titleView addSubview:titleLabel];
     

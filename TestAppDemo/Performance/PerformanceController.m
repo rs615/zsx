@@ -446,22 +446,22 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #pragma 分组数据
 -(void)updateGroup:(NSMutableDictionary*)dict{
-    ((UILabel*)[self.view viewWithTag:121]).text = [dict objectForKey:@"service_time"];
-    ((UILabel*)[self.view viewWithTag:122]).text = [dict objectForKey:@"sale_time"];
-    ((UILabel*)[self.view viewWithTag:123]).text = [dict objectForKey:@"sale_money"];
-    ((UILabel*)[self.view viewWithTag:124]).text = [dict objectForKey:@"sale_profit"];
-    ((UILabel*)[self.view viewWithTag:125]).text = [dict objectForKey:@"sale_achievement"];
+    ((UILabel*)[self.view viewWithTag:120]).text = [dict objectForKey:@"service_time"];
+    ((UILabel*)[self.view viewWithTag:121]).text = [dict objectForKey:@"sale_time"];
+    ((UILabel*)[self.view viewWithTag:122]).text = [dict objectForKey:@"sale_money"];
+    ((UILabel*)[self.view viewWithTag:123]).text = [dict objectForKey:@"sale_profit"];
+    ((UILabel*)[self.view viewWithTag:124]).text = [dict objectForKey:@"sale_achievement"];
 }
 
 
 #pragma 接车
 -(void)updateJieChe{
     if(self.jieDaiData.count>0){
-        ((UILabel*)[self.view viewWithTag:101]).text = [self.jieDaiData objectForKey:@"service_time"];
-        ((UILabel*)[self.view viewWithTag:102]).text = [self.jieDaiData objectForKey:@"sale_time"];
-        ((UILabel*)[self.view viewWithTag:103]).text = [self.jieDaiData objectForKey:@"sale_money"];
-        ((UILabel*)[self.view viewWithTag:104]).text = [self.jieDaiData objectForKey:@"sale_profit"];
-        ((UILabel*)[self.view viewWithTag:105]).text = [self.jieDaiData objectForKey:@"sale_achievement"];
+        ((UILabel*)[self.view viewWithTag:100]).text = [self.jieDaiData objectForKey:@"service_time"];
+        ((UILabel*)[self.view viewWithTag:101]).text = [self.jieDaiData objectForKey:@"sale_time"];
+        ((UILabel*)[self.view viewWithTag:102]).text = [self.jieDaiData objectForKey:@"sale_money"];
+        ((UILabel*)[self.view viewWithTag:103]).text = [self.jieDaiData objectForKey:@"sale_profit"];
+        ((UILabel*)[self.view viewWithTag:104]).text = [self.jieDaiData objectForKey:@"sale_achievement"];
     }
     
 }
@@ -469,12 +469,12 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 施工
 -(void)updateShigong{
     if(self.shiGongData.count>0){
-        ((UILabel*)[self.view viewWithTag:111]).text = [self.shiGongData objectForKey:@"service_time"];
-        ((UILabel*)[self.view viewWithTag:112]).text = [self.shiGongData objectForKey:@"repair_time"];
-        ((UILabel*)[self.view viewWithTag:113]).text = [self.shiGongData objectForKey:@"repair_money"];
-        ((UILabel*)[self.view viewWithTag:114]).text = [self.shiGongData objectForKey:@"repair_profit"];
-        ((UILabel*)[self.view viewWithTag:115]).text = [self.shiGongData objectForKey:@"hours"];
-        ((UILabel*)[self.view viewWithTag:116]).text = [self.shiGongData objectForKey:@"repair_achievement"];
+        ((UILabel*)[self.view viewWithTag:110]).text = [self.shiGongData objectForKey:@"service_time"];
+        ((UILabel*)[self.view viewWithTag:111]).text = [self.shiGongData objectForKey:@"repair_time"];
+        ((UILabel*)[self.view viewWithTag:112]).text = [self.shiGongData objectForKey:@"repair_money"];
+        ((UILabel*)[self.view viewWithTag:113]).text = [self.shiGongData objectForKey:@"repair_profit"];
+        ((UILabel*)[self.view viewWithTag:114]).text = [self.shiGongData objectForKey:@"hours"];
+        ((UILabel*)[self.view viewWithTag:115]).text = [self.shiGongData objectForKey:@"repair_achievement"];
     }
     
 }

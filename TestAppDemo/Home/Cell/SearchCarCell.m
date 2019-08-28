@@ -35,10 +35,10 @@
 - (void)setModel:(CarInfoModel *)model
 {
     _model = model;
-    _licensePlateLabel.text = [NSString stringWithFormat:@"车牌：%@",model.mc];
-    _carOwnerLabel.text = [NSString stringWithFormat:@"车主：%@",model.cz];
-    _phoneLabel.text = [NSString stringWithFormat:@"手机号：%@",model.mobile];
-    _vehicleTypeLabel.text = [NSString stringWithFormat:@"车型： %@",model.cx];
+    _licensePlateLabel.text = [NSString stringWithFormat:@"车牌：%@",model.mc!=nil?model.mc:@""];
+    _carOwnerLabel.text = [NSString stringWithFormat:@"车主：%@",model.cz!=nil?model.cz:@""];
+    _phoneLabel.text = [NSString stringWithFormat:@"手机号：%@",model.mobile!=nil?model.mobile:@""];
+    _vehicleTypeLabel.text = [NSString stringWithFormat:@"车型： %@",model.cx!=nil?model.cx:@""];
 }
 
 
