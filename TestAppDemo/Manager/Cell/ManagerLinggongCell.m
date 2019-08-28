@@ -15,7 +15,8 @@
 
 @property (strong, nonatomic) UILabel *repair_assignLabel;//
 @property (strong, nonatomic) UILabel *repair_typeLabel;//进厂日期
-@property (strong, nonatomic) UILabel *repair_nameLabel;//进厂日期
+@property (strong, nonatomic) UILabel *repair_nameLabel;
+@property (strong, nonatomic) UILabel *repair_xlgLabel;
 
 @end
 
@@ -35,12 +36,12 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self){
-        UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 85*PXSCALEH)];
+        UIView* contentView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 125*PXSCALEH)];
         NSArray* imgArr = @[@"repair_shop:",@"gou_red",@"person"];
         contentView.backgroundColor = SetColor(@"#eeeeee", 1);
         
         
-        UIImageView* nameImgView = [PublicFunction getImageView:CGRectMake(40*PXSCALE, 10*PXSCALEH, 30*PXSCALE, 30*PXSCALE) imageName:@"person"];
+        UIImageView* nameImgView = [PublicFunction getImageView:CGRectMake(40*PXSCALE, 10*PXSCALEH, 30*PXSCALE, 30*PXSCALE) imageName:@"repair_shop"];
         _repair_nameLabel = [PublicFunction getlabel:CGRectMake(nameImgView.frame.origin.x+nameImgView.bounds.size.width+10*PXSCALE, nameImgView.frame.origin.y, (MainS_Width-70*PXSCALE)/3*2, 30*PXSCALEH) text:@"" align:@"left"];
         [contentView addSubview:nameImgView];
         [contentView addSubview:_repair_nameLabel];
@@ -51,12 +52,16 @@
         [contentView addSubview:typeImgView];
         [contentView addSubview:_repair_typeLabel];
         
-        UIImageView* assginImgView = [PublicFunction getImageView:CGRectMake(40*PXSCALE, 10*PXSCALEH+_repair_nameLabel.frame.origin.y+_repair_nameLabel.bounds.size.height, 30*PXSCALE, 30*PXSCALE) imageName:@"repair_shop"];
+        UIImageView* assginImgView = [PublicFunction getImageView:CGRectMake(40*PXSCALE, 10*PXSCALEH+_repair_nameLabel.frame.origin.y+_repair_nameLabel.bounds.size.height, 30*PXSCALE, 30*PXSCALE) imageName:@"person"];
         _repair_assignLabel = [PublicFunction getlabel:CGRectMake(assginImgView.frame.origin.x+assginImgView.bounds.size.width+10*PXSCALE, assginImgView.frame.origin.y, (MainS_Width-70*PXSCALE)/3*2, 30*PXSCALEH) text:@"" align:@"left"];
         [contentView addSubview:assginImgView];
         [contentView addSubview:_repair_assignLabel];
        
-
+        UIImageView* xlgImgView = [PublicFunction getImageView:CGRectMake(40*PXSCALE, 10*PXSCALEH+assginImgView.frame.origin.y+assginImgView.bounds.size.height, 30*PXSCALE, 30*PXSCALE) imageName:@"person"];
+        _repair_xlgLabel = [PublicFunction getlabel:CGRectMake(assginImgView.frame.origin.x+assginImgView.bounds.size.width+10*PXSCALE, xlgImgView.frame.origin.y, (MainS_Width-70*PXSCALE)/3*2, 30*PXSCALEH) text:@"" align:@"left"];
+        [contentView addSubview:xlgImgView];
+        [contentView addSubview:_repair_xlgLabel];
+        
         NSString* checkedImgName = _model.isChecked?@"right_now":@"right_now_no";
         _checkBtn = [PublicFunction getButtonInControl:self frame:CGRectMake((30*PXSCALE-20*PXSCALE)/2, (80*PXSCALEH-20*PXSCALE)/2,  20*PXSCALEH, 20*PXSCALEH) imageName:checkedImgName title:@"" clickAction:@selector(btnSelect:)];
         _checkBtn.tag = 200;
@@ -76,6 +81,8 @@
     _repair_nameLabel.text = model.xlxm!=nil?model.xlxm:@"";
     _repair_typeLabel.text = model.wxgz!=nil?model.wxgz:@"";
     _repair_assignLabel.text = [NSString stringWithFormat:@"指派给: %@",model.assign!=nil?model.assign:@""];
+    _repair_xlgLabel.text = [NSString stringWithFormat:@"修理工: %@",model.xlg!=nil?model.xlg:@""];
+
 }
 
 -(void)btnSelect:(UIButton*)btn{

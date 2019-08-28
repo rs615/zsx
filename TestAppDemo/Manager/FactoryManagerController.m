@@ -92,7 +92,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [_dropdownListView setDropdownListViewSelectedBlock:^(EBDropdownListView *dropdownListView) {
         safeSelf.wxgz = dropdownListView.selectedItem.itemName;
         //排序
-        [safeSelf getData];
+//        [safeSelf getData];
+        [safeSelf queryLocalData];
     }];
     [self.view addSubview:_dropdownListView];
     
@@ -200,9 +201,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     //    [self.tableView registerNib:[UINib nibWithNibName:@"SearchCarCell" bundle:nil] forCellReuseIdentifier:kCellIdentifier_SearchCarCell];
     //    //self.tableView.contentInset=UIEdgeInsetsMake(0.0, 0, 0, 0);//tableview scrollview的contentview的顶点相对于scrollview的位置
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
-        [safeSelf refreshManagerList];
-    }] ;
+//    self.tableView.mj_header = [MJRefreshNormalHeader headerWithRefreshingBlock:^{
+//        [safeSelf refreshManagerList];
+//    }] ;
     //第一次进来可以刷新
     [self.tableView.mj_header beginRefreshing];
     self.tableView.delegate = self;
@@ -225,6 +226,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     _orderByJiaoChe = @"ywg_date desc";
     _orderByEnterFactory = @"jc_date asc";
     _orderStr = [NSString stringWithFormat:@"%@,%@",_orderByJiaoChe,_orderByEnterFactory];
+    [self refreshManagerList];
     
 }
 
@@ -314,16 +316,17 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 #pragma 初始化数据
 -(void)getData{
     //查找本地数据
-    NSMutableArray* array =[[DataBaseTool shareInstance] queryManagerList:@"" wxgz:@"" assgin:@"" orderStr:_orderStr states:[_arr objectAtIndex:self.curSelectIndex]];
-    //    [self resetDropDownList];//重置下拉列表
-    if(array.count!=0){
-        //有值
-        self.dataSource = array;
-        [self showView];
-    }else{
-        [self.dataSource removeAllObjects];
-        [self refreshManagerList];
-    }
+//    NSMutableArray* array =[[DataBaseTool shareInstance] queryManagerList:@"" wxgz:@"" assgin:@"" orderStr:_orderStr states:[_arr objectAtIndex:self.curSelectIndex]];
+//    //    [self resetDropDownList];//重置下拉列表
+//    if(array.count!=0){
+//        //有值
+//        self.dataSource = array;
+//        [self showView];
+//    }else{
+//        [self.dataSource removeAllObjects];
+//        [self refreshManagerList];
+//    }
+     [self refreshManagerList];
 }
 
 #pragma mark -监听输入值变化

@@ -105,18 +105,18 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     [rightView addSubview:dpgLabel];
     [topView addSubview:rightView];
 
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
-    NSDate *date = [dateFormatter dateFromString:_model.jc_date];
-    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
-    
-    NSString* dateStr = [dateFormatter stringFromDate:date] !=nil ?[dateFormatter stringFromDate:date] :@"";
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"YYYY-MM-dd HH:mm:ss"];
+//    NSDate *date = [dateFormatter dateFromString:_model.jc_date];
+//    [dateFormatter setDateFormat:@"YYYY-MM-dd"];
+//
+//    NSString* dateStr = [dateFormatter stringFromDate:date] !=nil ?[dateFormatter stringFromDate:date] :@"";
 
-    NSDate *tcDate = [dateFormatter dateFromString:_model.ywg_date];
-    NSString* tcDateStr = [dateFormatter stringFromDate:tcDate] !=nil ?[dateFormatter stringFromDate:tcDate] :@"";
-    UILabel* enterDateLabel = [PublicFunction getlabel:CGRectMake(0, 50*PXSCALEH, MainS_Width/3*2, 30*PXSCALE) text:[NSString stringWithFormat:@"进厂时间: %@",dateStr] align:@"left"];
+//    NSDate *tcDate = [dateFormatter dateFromString:_model.ywg_date];
+//    NSString* tcDateStr = [dateFormatter stringFromDate:tcDate] !=nil ?[dateFormatter stringFromDate:tcDate] :@"";
+    UILabel* enterDateLabel = [PublicFunction getlabel:CGRectMake(0, 50*PXSCALEH, MainS_Width/3*2, 30*PXSCALE) text:[NSString stringWithFormat:@"进厂时间: %@",_model.jc_date!=nil?_model.jc_date:@""] align:@"left"];
     
-    UILabel* yjtcLabel = [PublicFunction getlabel:CGRectMake(0, 80*PXSCALEH, MainS_Width/3*2, 30*PXSCALE) text:[NSString stringWithFormat:@"提车时间: %@",tcDateStr] align:@"left"];
+    UILabel* yjtcLabel = [PublicFunction getlabel:CGRectMake(0, 80*PXSCALEH, MainS_Width/3*2, 30*PXSCALE) text:[NSString stringWithFormat:@"提车时间: %@",_model.ywg_date!=nil?_model.ywg_date:@""] align:@"left"];
     [rightView addSubview:enterDateLabel];
     [rightView addSubview:yjtcLabel];
     return topView;
@@ -164,7 +164,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    return 85*PXSCALEH;
+    return 125*PXSCALEH;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -494,6 +494,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     item.mc = _model.cp;
     item.cx  = _model.cx;
     item.jsd_id = _model.jsd_id;
+    item.cz = _model.cz;
     vc.model = item;
     [self.navigationController pushViewController:vc animated:YES];
 }

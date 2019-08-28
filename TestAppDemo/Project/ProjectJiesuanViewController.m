@@ -14,7 +14,7 @@
 #import "JsCompModel.h"
 typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
-@interface ProjectJiesuanViewController ()<UITableViewDelegate,UITableViewDataSource>
+@interface ProjectJiesuanViewController ()<UITableViewDelegate,UITableViewDataSource,UIPrintInteractionControllerDelegate>
 @property (nonatomic, strong) UITableView* tableView;
 @property (nonatomic, strong) NSMutableArray *dataSource;
 @property (nonatomic,strong)MBProgressHUD *progress;
@@ -77,14 +77,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(UIView*)createTopView{
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, NavBarHeight, MainS_Width, 40*PXSCALEH)];
     view.backgroundColor = SetColor(@"#A58BBA", 1);
-    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
-    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
+    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/4-20*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
+    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(headImgView.frame.origin.x+headImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
     [personLabel setTextColor:[UIColor whiteColor]];
     personLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:headImgView];
     [view addSubview:personLabel];
-    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2-10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
-    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4*3, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
+    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2+MainS_Width/4-30*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
+    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(carImgView.frame.origin.x+carImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
     [carLabel setTextColor:[UIColor whiteColor]];
     carLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:carLabel];
@@ -117,7 +117,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(void)selectItemBtnClick:(UIButton*)btn{
     
     switch (btn.tag) {
-        case 110:
+        case 120:
+        case 121:
+            //打印
+            [self printData];
+            break;
+        case 122://取消
+            [self backBtnClick];
             break;
         case 123:
             [self enterShouYin];
@@ -488,6 +494,35 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     }];
 }
 
+#pragma 获取基本数据
+-(void)uploadMoney:(asyncCallback)callback{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    dict[@"db"] = [ToolsObject getDataSouceName];
+    dict[@"function"] = @"sp_fun_update_repair_main_money";//车间管理
+    dict[@"jsd_id"] = _model.jsd_id;
+    dict[@"zje"] = [NSString stringWithFormat:@"%.2f",_totalXlf+_totalPartMoney];
+    dict[@"wxfzj"] = [NSString stringWithFormat:@"%.2f",_totalXlf];
+    dict[@"clfzj"] = [NSString stringWithFormat:@"%.2f",_totalPartMoney];
+    dict[@"totalCb"] = [NSString stringWithFormat:@"%.2f",_totalCb];
+//    dataMap.put("zje", Float.parseFloat(totalPartMoney+totalXlf+"")+"");
+//    dataMap.put("wxfzj", Float.parseFloat(totalXlf+"")+"");
+//    dataMap.put("clfzj", Float.parseFloat(totalPartMoney+"")+"");
+//    dataMap.put("totalCb", Float.parseFloat(totalCb+"")+"");
+    [HttpRequestManager HttpPostCallBack:@"/restful/pro" Parameters:dict success:^(id  _Nonnull responseObject) {
+        
+        if([[responseObject objectForKey:@"state"] isEqualToString:@"ok"]){
+            NSMutableArray *items = [responseObject objectForKey:@"data"];
+            NSMutableArray* array = [JsBaseModel mj_objectArrayWithKeyValuesArray:items] ;//获取第一个
+            callback(@"",[array objectAtIndex:0]);
+            
+        }else{
+            NSString* msg = [responseObject objectForKey:@"msg"];
+            callback(msg,nil);
+        }
+    } failure:^(NSError * _Nonnull error) {
+        callback(@"网络错误",nil);
+    }];
+}
 
 #pragma 获取公司信息
 -(void)getCompanyData:(asyncCallback)callback{
@@ -531,9 +566,96 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 -(void)enterShouYin{
-    ProjectShouYinViewController* vc = [[ProjectShouYinViewController alloc] init];
-    vc.model = _model;
-    vc.totalZkMoney = [NSString stringWithFormat:@"%.2f",_totalZkMoney];
-    [self.navigationController pushViewController:vc animated:YES];
+    //同步数据
+    __weak ProjectJiesuanViewController* safeSelf = self;
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+    [self uploadMoney:^(NSString *errorMsg, id result) {
+        [safeSelf.progress hideAnimated:YES];
+        if(![errorMsg isEqualToString:@""]){
+            [ToolsObject show:errorMsg With:safeSelf];
+        }else{
+            ProjectShouYinViewController* vc = [[ProjectShouYinViewController alloc] init];
+            vc.model = safeSelf.model;
+            vc.totalZkMoney = [NSString stringWithFormat:@"%.2f",safeSelf.totalZkMoney];
+            [safeSelf.navigationController pushViewController:vc animated:YES];
+        }
+    }];
+    
+}
+
+- (UIImage *)getImage:(UITableView *)cell
+
+{
+    UIImage* viewImage = nil;
+    UITableView *scrollView = self.tableView;
+    UIGraphicsBeginImageContextWithOptions(scrollView.contentSize, scrollView.opaque, 0.0);
+    {
+         CGPoint savedContentOffset = scrollView.contentOffset;
+         CGRect savedFrame = scrollView.frame;
+         scrollView.contentOffset = CGPointZero;
+         scrollView.frame = CGRectMake(0, 0, scrollView.contentSize.width, scrollView.contentSize.height);
+         [scrollView.layer renderInContext: UIGraphicsGetCurrentContext()];
+         viewImage = UIGraphicsGetImageFromCurrentImageContext();
+         scrollView.contentOffset = savedContentOffset;
+        
+         scrollView.frame = savedFrame;
+    }
+    
+    UIGraphicsEndImageContext();
+    return viewImage;
+    
+}
+
+-(void)printData{
+    UIPrintInteractionController* printer = [UIPrintInteractionController sharedPrintController];
+    printer.delegate = self;
+    
+    //配置打印信息
+    UIPrintInfo *prinfo = [UIPrintInfo printInfo];
+    prinfo.outputType = UIPrintInfoOutputGeneral;//可打印文本、图形、图像
+    //    Pinfo.jobName = @"Print for xiaodui";//可选属性，用于在打印中心中标识打印作业
+    prinfo.duplex = UIPrintInfoDuplexNone;//双面打印绕长边翻页，NONE为禁止双面
+    prinfo.orientation = UIPrintInfoOrientationPortrait;//打印纵向还是横向
+    
+    //    Pinfo.printerID = @"";//指定默认打印机，也可以使用UIPrintInteractionControllerDelegate来知悉
+    printer.printInfo = prinfo;
+    
+    //内容
+//    _jsBaseModel.jsd_id = _model.jsd_id;
+//    _jsBaseModel.totalXlf = _totalXlf;
+//    _jsBaseModel.totalPartMoney = _totalPartMoney;
+//    _jsBaseModel.totalZkMoney = _totalZkMoney;
+//    _jsBaseModel.totalPartSl = _totalPartSl;
+//    if(_jsCompModel!=nil){
+//        _jsBaseModel.compName = _jsCompModel.company_name;
+//        _jsCompModel.address = _jsCompModel.address;
+//        _jsBaseModel.telphone = _jsCompModel.telphone;
+//
+//    }
+    self.tableView.tableHeaderView.hidden = YES;
+    UIImage* image = [self getImage:self.tableView];
+    self.tableView.tableHeaderView.hidden = NO;
+    printer.printingItem = image;
+//    NSMutableString* content = [[NSMutableString alloc] initWithCapacity:10];
+//    [content appendString:@"<FH><FB><center>首佳软件</center></FB></FH>"];
+//    [content appendString:@" <FH2>"];
+//    [content appendString:[NSString stringWithFormat:@"<center> 结算单号： %@  预完工时间：%@",_jsBaseModel.jsd_id,_jsBaseModel.jc_date]];
+//    UIViewPrintFormatter* viewFormatter = [self.tableView viewPrintFormatter];
+//    printer.printFormatter = viewFormatter;
+    
+//    UITextView* textView = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, MainS_Width, 300)];
+//    [textView addSubview:self.tableView];
+//    printer.printFormatter = [textView viewPrintFormatter];
+//    UISimpleTextPrintFormatter *textFormatter = [[UISimpleTextPrintFormatter alloc] initWithText:content];
+//    printer.printFormatter = textFormatter;
+    //    printer.showsPageRange = NO;
+    [printer presentAnimated:YES completionHandler:^(UIPrintInteractionController * _Nonnull printInteractionController, BOOL completed, NSError * _Nullable error) {
+        
+        if (!completed && error) {
+            NSLog(@"Error");
+        }
+    }];
+    
+    
 }
 @end

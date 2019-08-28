@@ -130,7 +130,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
     _proviceLabel = [PublicFunction getlabel:CGRectMake(130, 0, 50, 30) text:@"right"];
     _proviceLabel.text = @"闽";
-    _proviceLabel.textColor = lightBlueColor;
+    _proviceLabel.textColor = SetColor(@"#6cbee9", 1);
     [self.baseView addSubview:_proviceLabel];
     UITapGestureRecognizer *tap0 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(selectProvice:)];
     _proviceLabel.userInteractionEnabled = YES;
@@ -398,8 +398,10 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 //        self.textFieldCp.text = [[result objectForKey:@"DisplayText"] substringFromIndex:1];
 //        self.proviceLabel.hidden = NO;
         if(result){
-            [self updateCarInfo:[result objectForKey:@"CustomObject"]];
-
+            id obj = [result objectForKey:@"CustomObject"];
+            if(![obj isKindOfClass:[NSString class]]){
+                [self updateCarInfo:obj];
+            }
         }
     }
 }

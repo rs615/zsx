@@ -68,17 +68,17 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 -(void)initView
 {
-    [self setNavTitle:@"工单" withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
+    [self setNavTitle:[NSString stringWithFormat:@"工单(%@)",_model.jsd_id] withleftImage:@"back" withleftAction:@selector(backBtnClick) withRightImage:@"home_icon" rightAction:@selector(backHome) withVC:self];
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, NavBarHeight, MainS_Width, 40*PXSCALEH)];
     view.backgroundColor = SetColor(@"#A58BBA", 1);
-    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
-    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
+    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/4-20*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
+    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(headImgView.frame.origin.x+headImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
     [personLabel setTextColor:[UIColor whiteColor]];
     personLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:headImgView];
     [view addSubview:personLabel];
-    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2-10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
-    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4*3, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
+    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2+MainS_Width/4-30*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
+    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(carImgView.frame.origin.x+carImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
     [carLabel setTextColor:[UIColor whiteColor]];
     carLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:carLabel];
@@ -588,7 +588,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
             valueLabel.text =[valueArr objectAtIndex:i]!=nil?[valueArr objectAtIndex:i]:@"";
             [tmpView addSubview:titleLabel];
             [tmpView addSubview:valueLabel];
+            if(i==titleArr.count-1){
+                UIButton* editRemarkBtn  = [PublicFunction getButtonInControl:self frame:CGRectMake( MainS_Width-30,  10, 20, 20) imageName:@"edit" title:nil clickAction:@selector(btnSelect:)];
+                editRemarkBtn.tag = 303;
+                [tmpView addSubview:editRemarkBtn];
+            }
             [view addSubview:tmpView];
+
         }
         [cell.contentView addSubview:view];
         return cell;
@@ -626,13 +632,13 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     if(indexPath.section==0){
         if(self.moreView.hidden){
-            return 110*PXSCALEH;
+            return 120*PXSCALEH;
         }else{
             return 40*PXSCALEH;
         }
     }else if(indexPath.section==2){
         if(self.moreView.hidden){
-            return 150*PXSCALEH;
+            return 160*PXSCALEH;
         }else{
             return 120*PXSCALEH;
         }

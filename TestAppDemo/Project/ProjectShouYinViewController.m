@@ -96,14 +96,14 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 -(UIView*)createTopView{
     UIView* view = [[UIView alloc] initWithFrame:CGRectMake(0, NavBarHeight, MainS_Width, 40*PXSCALEH)];
     view.backgroundColor = SetColor(@"#A58BBA", 1);
-    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
-    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
+    UIImageView* headImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/4-20*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_person"];
+    UILabel* personLabel = [PublicFunction getlabel:CGRectMake(headImgView.frame.origin.x+headImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.cz size:14 align:@"left"];
     [personLabel setTextColor:[UIColor whiteColor]];
     personLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:headImgView];
     [view addSubview:personLabel];
-    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2-10*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
-    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(MainS_Width/4*3, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
+    UIImageView* carImgView = [PublicFunction getImageView:CGRectMake(MainS_Width/2+MainS_Width/4-30*PXSCALE, 10*PXSCALEH, 20*PXSCALE, 20*PXSCALE) imageName:@"car_yellow"];
+    UILabel* carLabel = [PublicFunction getlabel:CGRectMake(carImgView.frame.origin.x+carImgView.bounds.size.width+5*PXSCALE, 0, MainS_Width/4, 40*PXSCALE) text:_model.mc size:14 align:@"left"];
     [carLabel setTextColor:[UIColor whiteColor]];
     carLabel.backgroundColor = [UIColor clearColor];
     [view addSubview:carLabel];
@@ -723,6 +723,8 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
         callback(@"网络错误",nil);
     }];
 }
+
+
 
 #pragma mark - Getters
 - (NSMutableArray *)ratesData
