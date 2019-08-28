@@ -89,6 +89,13 @@
 		7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495B230D86D4005A94DA /* GuzhangListViewController.m */; };
 		7F75495F230E4D81005A94DA /* GuzhangInfoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F75495E230E4D81005A94DA /* GuzhangInfoModel.m */; };
 		7FA7595B2313C72E00C597EA /* ManagerLinggongCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7595A2313C72E00C597EA /* ManagerLinggongCell.m */; };
+		7FA759612316259E00C597EA /* libPlateIDOCR.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA7595D2316259E00C597EA /* libPlateIDOCR.a */; };
+		7FA75963231625D400C597EA /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA75962231625D400C597EA /* CoreMotion.framework */; };
+		7FA75965231625DC00C597EA /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FA75964231625DC00C597EA /* libxml2.tbd */; };
+		7FA7596F2316271700C597EA /* PlateIDOverView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA759692316271700C597EA /* PlateIDOverView.m */; };
+		7FA759702316271700C597EA /* PlateIDCameraViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7596A2316271700C597EA /* PlateIDCameraViewController.mm */; };
+		7FA759712316271700C597EA /* PlateIDSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FA7596C2316271700C597EA /* PlateIDSlider.m */; };
+		7FA7597323162AD300C597EA /* wtproject.lsc in Resources */ = {isa = PBXBuildFile; fileRef = 7FA7597223162AD300C597EA /* wtproject.lsc */; };
 		7FAAB338230850BD0096B401 /* PeijianSelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */; };
 		7FAAB33B230981B10096B401 /* PartsModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33A230981B10096B401 /* PartsModel.m */; };
 		7FAAB33E230982CD0096B401 /* PartsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FAAB33D230982CD0096B401 /* PartsCell.m */; };
@@ -331,6 +338,19 @@
 		7F75495E230E4D81005A94DA /* GuzhangInfoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GuzhangInfoModel.m; sourceTree = "<group>"; };
 		7FA759592313C72E00C597EA /* ManagerLinggongCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ManagerLinggongCell.h; sourceTree = "<group>"; };
 		7FA7595A2313C72E00C597EA /* ManagerLinggongCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ManagerLinggongCell.m; sourceTree = "<group>"; };
+		7FA7595D2316259E00C597EA /* libPlateIDOCR.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPlateIDOCR.a; sourceTree = "<group>"; };
+		7FA7595E2316259E00C597EA /* PlateIDOCR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateIDOCR.h; sourceTree = "<group>"; };
+		7FA7595F2316259E00C597EA /* PlateFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateFormat.h; sourceTree = "<group>"; };
+		7FA759602316259E00C597EA /* PlateResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateResult.h; sourceTree = "<group>"; };
+		7FA75962231625D400C597EA /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		7FA75964231625DC00C597EA /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		7FA759692316271700C597EA /* PlateIDOverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlateIDOverView.m; sourceTree = "<group>"; };
+		7FA7596A2316271700C597EA /* PlateIDCameraViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PlateIDCameraViewController.mm; sourceTree = "<group>"; };
+		7FA7596B2316271700C597EA /* PlateIDCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateIDCameraViewController.h; sourceTree = "<group>"; };
+		7FA7596C2316271700C597EA /* PlateIDSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlateIDSlider.m; sourceTree = "<group>"; };
+		7FA7596D2316271700C597EA /* PlateIDOverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateIDOverView.h; sourceTree = "<group>"; };
+		7FA7596E2316271700C597EA /* PlateIDSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlateIDSlider.h; sourceTree = "<group>"; };
+		7FA7597223162AD300C597EA /* wtproject.lsc */ = {isa = PBXFileReference; lastKnownFileType = file; name = wtproject.lsc; path = "TestAppDemo/Thridpart(第三方库）/PlateOcr/wtproject.lsc"; sourceTree = SOURCE_ROOT; };
 		7FAAB336230850BD0096B401 /* PeijianSelectViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PeijianSelectViewController.h; sourceTree = "<group>"; };
 		7FAAB337230850BD0096B401 /* PeijianSelectViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PeijianSelectViewController.m; sourceTree = "<group>"; };
 		7FAAB339230981B10096B401 /* PartsModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PartsModel.h; sourceTree = "<group>"; };
@@ -489,8 +509,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7FA75965231625DC00C597EA /* libxml2.tbd in Frameworks */,
+				7FA75963231625D400C597EA /* CoreMotion.framework in Frameworks */,
 				7FAAE0642301B54D00790102 /* libstdc++.tbd in Frameworks */,
 				7FAAE0622301B54700790102 /* libsqlite3.tbd in Frameworks */,
+				7FA759612316259E00C597EA /* libPlateIDOCR.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,6 +1058,32 @@
 			path = Linkage;
 			sourceTree = "<group>";
 		};
+		7FA7595C2316259E00C597EA /* PlateOcr */ = {
+			isa = PBXGroup;
+			children = (
+				7FA759682316271700C597EA /* camara */,
+				7FA7595D2316259E00C597EA /* libPlateIDOCR.a */,
+				7FA7595E2316259E00C597EA /* PlateIDOCR.h */,
+				7FA7595F2316259E00C597EA /* PlateFormat.h */,
+				7FA759602316259E00C597EA /* PlateResult.h */,
+			);
+			path = PlateOcr;
+			sourceTree = "<group>";
+		};
+		7FA759682316271700C597EA /* camara */ = {
+			isa = PBXGroup;
+			children = (
+				7FA7597223162AD300C597EA /* wtproject.lsc */,
+				7FA759692316271700C597EA /* PlateIDOverView.m */,
+				7FA7596A2316271700C597EA /* PlateIDCameraViewController.mm */,
+				7FA7596B2316271700C597EA /* PlateIDCameraViewController.h */,
+				7FA7596C2316271700C597EA /* PlateIDSlider.m */,
+				7FA7596D2316271700C597EA /* PlateIDOverView.h */,
+				7FA7596E2316271700C597EA /* PlateIDSlider.h */,
+			);
+			path = camara;
+			sourceTree = "<group>";
+		};
 		7FAAB34B230A3AC40096B401 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -1104,6 +1153,7 @@
 		7FAADFBB22FF988200790102 /* Thridpart(第三方库） */ = {
 			isa = PBXGroup;
 			children = (
+				7FA7595C2316259E00C597EA /* PlateOcr */,
 				7F59C0CB23137A48005FB0D7 /* MPGTextField */,
 				7F1234D0230F939D007BDB6E /* IQKeyboardManager */,
 				7F453F95230466940063EC0A /* BRPickerView */,
@@ -1279,6 +1329,8 @@
 		7FAAE05E2301B53100790102 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7FA75964231625DC00C597EA /* libxml2.tbd */,
+				7FA75962231625D400C597EA /* CoreMotion.framework */,
 				7FAAE0632301B54D00790102 /* libstdc++.tbd */,
 				7FAAE0612301B54700790102 /* libsqlite3.tbd */,
 				7FAAE05F2301B53100790102 /* libsqlite3.0.tbd */,
@@ -1379,6 +1431,7 @@
 				7F1234F9230F939E007BDB6E /* IQKeyboardManager.bundle in Resources */,
 				41DDD54A22A4CE1400D4A317 /* Main.storyboard in Resources */,
 				7FAAE01822FFF41900790102 /* SearchCarCell.xib in Resources */,
+				7FA7597323162AD300C597EA /* wtproject.lsc in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1391,6 +1444,7 @@
 			files = (
 				7FAAE03B2301B33A00790102 /* MJPropertyType.m in Sources */,
 				C11E42A8230D9C2E008DDFAC /* HistoryListCell.m in Sources */,
+				7FA759712316271700C597EA /* PlateIDSlider.m in Sources */,
 				7F1234FD230F939E007BDB6E /* IQUIScrollView+Additions.m in Sources */,
 				7F453F252303EE900063EC0A /* MJRefreshAutoStateFooter.m in Sources */,
 				7FAAE0212301AF2200790102 /* CarInfoModel.m in Sources */,
@@ -1441,6 +1495,7 @@
 				7FAAB35A230BF4BE0096B401 /* HNLinkageView.m in Sources */,
 				41E5B21622A7B6440056C7F2 /* SettingController.m in Sources */,
 				41DDD55222A4CE1800D4A317 /* main.m in Sources */,
+				7FA759702316271700C597EA /* PlateIDCameraViewController.mm in Sources */,
 				7FAAE0432301B33A00790102 /* MJPropertyKey.m in Sources */,
 				7FAAB35D230BFBBF0096B401 /* ProjectSelectViewController.m in Sources */,
 				7F75495C230D86D4005A94DA /* GuzhangListViewController.m in Sources */,
@@ -1511,6 +1566,7 @@
 				7FAAE0402301B33A00790102 /* NSObject+MJProperty.m in Sources */,
 				41E5B1FF22A771570056C7F2 /* TabViewController.m in Sources */,
 				7F1234CF230F79AB007BDB6E /* JsCompModel.m in Sources */,
+				7FA7596F2316271700C597EA /* PlateIDOverView.m in Sources */,
 				7FAADFD322FF9C4D00790102 /* UILabel+TapAction.m in Sources */,
 				41E5B20522A772AE0056C7F2 /* HomeViewController.m in Sources */,
 				7FAAE01022FFEBB400790102 /* AFURLRequestSerialization.m in Sources */,
@@ -1676,17 +1732,22 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = VQN83YH3C2;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S8473QN8E4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TestAppDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shoujia.zsx.TestAppDemo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestAppDemo/Thridpart(第三方库）/PlateOcr",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shoujia.zsx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = dev_aiyouyun;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1696,15 +1757,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = S8473QN8E4;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TestAppDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shoujia.zsx.TestAppDemo;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/TestAppDemo/Thridpart(第三方库）/PlateOcr",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.shoujia.zsx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
