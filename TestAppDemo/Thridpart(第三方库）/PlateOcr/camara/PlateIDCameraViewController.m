@@ -215,7 +215,7 @@ int nRotate = 1;
 {
     _plateIDRecog = [[PlateIDOCR alloc] init];
     /*在此填写开发码，初始化识别核心*/
-    int init = [_plateIDRecog initPalteIDWithDevcode:@"5YYX5LQS5PIT5RO" RecogType:self.recogMode];
+    int init = [_plateIDRecog initPalteIDWithDevcode:@"56AP5BEE5BIC6AA" RecogType:self.recogMode];
     NSLog(@"\n核心初始化返回值 = %d\n返回值为0成功 其他失败\n\n常见错误：\n-10601 开发码错误\n核心初始化方法- (int) initPalteIDWithDevcode: (NSString *)devcode RecogType:(int) type;参数为开发码\n\n-10602 Bundle identifier错误\n-10605 Bundle display name错误\n-10606 CompanyName错误\n请检查授权文件（wtproject.lsc）绑定的信息与Info.plist中设置是否一致!!!",init);
     
     //车牌识别设置
