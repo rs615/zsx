@@ -57,6 +57,39 @@ static HttpRequestManager *_instance;
         failure (error);
     }];
 }
++(void)get:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    AFJSONResponseSerializer *responseSerializer = [AFJSONResponseSerializer serializer];
+    manager.requestSerializer = [AFHTTPRequestSerializer serializer];
+    manager.requestSerializer.timeoutInterval = 25;
+    manager.responseSerializer = responseSerializer;
+    //    manager.responseSerializer = [AFHTTPResponseSerializer serializer];
+    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObjects:@"text/html",@"application/json",@"JSON/text",@"text/plain", nil];
+    NSString   *urlStr = @"";
+
+    if([Url rangeOfString:@"http://"].location!=NSNotFound||[Url rangeOfString:@"https://"].location!=NSNotFound){
+        urlStr = Url;
+    }else{
+        urlStr = [NSString stringWithFormat:@"%@%@",DEFULTURL,Url];
+    }
+    [manager GET:urlStr parameters:dict progress:^(NSProgress * _Nonnull downloadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        
+        // NSLog(@"---->>%@",[[NSString alloc]initWithData:responseObject encoding:NSUTF8StringEncoding]);
+        
+        success(responseObject);
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+#if DEBUG
+        if (error) {
+            //            [[JHAlertView alertView] jhShow:error];
+        }
+#endif
+        failure(error);
+    }];
+}
 
 #pragma mark  ===  post请求
 +(void)HttpPostCallBack:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure

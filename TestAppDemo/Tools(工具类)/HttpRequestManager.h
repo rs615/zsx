@@ -25,6 +25,8 @@ typedef void (^httpFailure)(NSError *error);
 
 +(void)post:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure;
 
++ (void)get:(NSString*)Url  Parameters:(NSDictionary*)dict success:(httpSuccess)success failure:(httpFailure)failure;
+
 @end
 
 NS_ASSUME_NONNULL_END

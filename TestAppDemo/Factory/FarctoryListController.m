@@ -189,7 +189,7 @@
                 [safeSelf showView];
             }else{
                 //继续
-                [safeSelf getCarList:pre_row_number chooseName:states];
+                [safeSelf getCarList:tmpRowNumber chooseName:states];
             }
             
         }else{
