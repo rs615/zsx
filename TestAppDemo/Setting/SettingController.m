@@ -22,7 +22,7 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 
 #define GZDeviceWidth ([UIScreen mainScreen].bounds.size.width)
 #define GZDeviceHeight ([UIScreen mainScreen].bounds.size.height)
-@interface SettingController()
+@interface SettingController()<NSURLSessionDelegate>
 @property (nonatomic,strong)NSString* errorMsg;
 @property (nonatomic,strong)MBProgressHUD *progress;
 
@@ -117,6 +117,9 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
     labelCheck.frame = CGRectMake(70, 15, 80, 30);
     labelCheck.text = @"检查更新";
     [item4 addSubview:labelCheck];
+    UITapGestureRecognizer *tap4 = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(checkUpdate:)];
+    item4.userInteractionEnabled = YES;
+    [item4 addGestureRecognizer:tap4];
     
     [item4 addSubview:imageView4];
     [self.view addSubview:item4];
@@ -206,6 +209,59 @@ typedef void (^asyncCallback)(NSString* errorMsg,id result);
 }
 
 
+
+
+//更新数据
+#pragma 检查更新
+-(void)checkUpdate:(UITapGestureRecognizer *)tap{
+    self.progress = [ToolsObject showLoading:@"加载中" with:self];
+    NSString *urlStr = @"https://itunes.apple.com//lookup?id=1312695672";
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLRequest *req = [NSURLRequest requestWithURL:url];
+    [NSURLConnection connectionWithRequest:req delegate:self];
+
+}
+
+- (void)alertUpdateVersion:(NSArray*)infoContent{
+    NSString *urlStr = @"https://itunes.apple.com//lookup?id=1312695672";
+    NSMutableDictionary* dict = [infoContent objectAtIndex:0];
+    NSString* info = [dict objectForKey:@"releaseNotes"];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"版本更新提示" message:info preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"去更新" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[UIApplication sharedApplication]openURL:[NSURL URLWithString:urlStr]];
+    }]];
+    [self presentViewController:alert animated:true completion:nil];
+}
+
+#pragma mark - NSURLConnectionDataDelegate
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+
+    //当前版本号
+    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+    NSString *currentVersion = [infoDic objectForKey:@"CFBundleShortVersionString"];
+    
+    NSError *error;//解析
+    NSDictionary *appInfo = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+    [self.progress hideAnimated:YES];
+    NSArray *infoContent = [appInfo objectForKey:@"results"];
+        //最新版本号
+    if(infoContent!=nil){
+        NSString *version = [[infoContent objectAtIndex:0] objectForKey:@"version"];
+        //应用程序介绍网址（用户升级跳转URL）
+        float abc =version.floatValue;
+        float haha =currentVersion.floatValue;
+        
+        if (abc > haha) {//线上版本比现在的版本要高
+            [self alertUpdateVersion:infoContent];
+        }else{
+            [ToolsObject show:@"您已经是最新版" With:self];
+        }
+    }else{
+        [ToolsObject show:@"更新失败" With:self];
+    }
+    
+}
 
 //更新数据
 #pragma 更新数据
